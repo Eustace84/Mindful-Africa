@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import heroImg from '../assets/hero.png'
-import heroPageGirl from '../assets/images/hero-page-girl.png'
 import communityGirl from '../assets/images/community-girl.png'
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -422,59 +421,65 @@ function Navbar() {
 
   return (
     <nav
-      className="sticky top-0 z-50 px-4"
-      style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E2DAC8' }}
+      className="sticky top-0 z-50 px-8 md:px-12"
+      style={{ backgroundColor: '#F5F0E8' }}
       aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-[72px]">
+
         {/* Logo */}
-        <a href="#" onClick={close} className="flex items-center gap-2.5 shrink-0">
+        <a href="#" onClick={close} className="flex items-center gap-[10px] shrink-0">
           <LogoMark size={28} />
-          <span className="font-heading font-bold text-sm" style={{ color: '#1B3A2D' }}>
+          <span className="font-heading font-semibold text-lg" style={{ color: '#1B3A2D' }}>
             Mindfully Aware
           </span>
         </a>
 
-        {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-5 lg:gap-7">
+        {/* Desktop: nav links + // + CTA */}
+        <div className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map(({ label, href }) => (
             <a
               key={label}
               href={href}
-              className="text-xs font-medium whitespace-nowrap transition-opacity hover:opacity-60"
-              style={{ color: '#5A7068' }}
+              className="text-sm font-medium whitespace-nowrap transition-opacity hover:opacity-70"
+              style={{ color: '#3A5446' }}
             >
               {label}
             </a>
           ))}
-        </div>
-
-        {/* CTA + hamburger */}
-        <div className="flex items-center gap-3 shrink-0">
+          <span
+            aria-hidden="true"
+            className="select-none"
+            style={{ color: '#A0B0A8', fontStyle: 'italic', fontWeight: 300, fontSize: '1.2rem', letterSpacing: '0.06em' }}
+          >
+            //
+          </span>
           <a
             href="#donate"
-            className="hidden sm:inline-block text-xs font-bold px-4 py-2 rounded-full text-white whitespace-nowrap transition-opacity hover:opacity-85"
+            className="text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90"
             style={{ backgroundColor: '#2D5A3D' }}
           >
             Support Our Mission
           </a>
-          <button
-            className="md:hidden p-2 rounded-lg focus:outline-none"
-            onClick={() => setOpen(prev => !prev)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-          >
-            {open ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ stroke: '#1B3A2D' }}>
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ stroke: '#1B3A2D' }}>
-                <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
-              </svg>
-            )}
-          </button>
         </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden p-2 rounded-lg focus:outline-none"
+          onClick={() => setOpen(prev => !prev)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+        >
+          {open ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ stroke: '#1B3A2D' }}>
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ stroke: '#1B3A2D' }}>
+              <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Mobile dropdown */}
@@ -494,7 +499,7 @@ function Navbar() {
           <a
             href="#donate"
             onClick={close}
-            className="block mt-4 py-3 text-sm font-bold rounded-full text-center text-white"
+            className="block mt-4 py-3 text-sm font-semibold rounded-lg text-center text-white"
             style={{ backgroundColor: '#2D5A3D' }}
           >
             Support Our Mission
@@ -509,31 +514,57 @@ function Navbar() {
    SECTION: HERO
    ═══════════════════════════════════════════════════════════════════════════ */
 
+function HeroQuoteCard({ className = '', style = {} }) {
+  return (
+    <div
+      className={`bg-white rounded-xl shadow-lg px-5 py-4 ${className}`}
+      style={{ maxWidth: '260px', ...style }}
+    >
+      <p className="text-sm font-medium mb-3" style={{ color: '#1B3A2D' }}>
+        "Healing starts with being heard."
+      </p>
+      <div className="flex items-center gap-2">
+        <div className="flex -space-x-1.5" aria-hidden="true">
+          {['#2D7A5F', '#E8C547', '#C17A4A'].map(bg => (
+            <div key={bg} className="w-6 h-6 rounded-full border-2 border-white" style={{ backgroundColor: bg }} />
+          ))}
+        </div>
+        <span className="text-xs" style={{ color: '#6B8A7A' }}>community voices</span>
+      </div>
+    </div>
+  )
+}
+
 function Hero() {
   return (
     <section
       id="hero"
       aria-labelledby="hero-heading"
       style={{ backgroundColor: '#F5F0E8' }}
-      className="pt-14 pb-20 px-4"
+      className="pt-12 pb-12 px-6 md:px-12"
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        {/* Left */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+        {/* Left column */}
         <div>
+          {/* Badge */}
           <div
             className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border"
-            style={{ borderColor: '#E2DAC8' }}
+            style={{ borderColor: '#C8BDAA' }}
           >
-            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#2D7A5F' }} aria-hidden="true" />
-            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#E8C547' }} aria-hidden="true" />
-            <span className="text-sm font-medium" style={{ color: '#5A7068' }}>
+            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: '#2D7A5F' }} aria-hidden="true" />
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A9A8E" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span className="text-sm font-medium" style={{ color: '#3A5446' }}>
               A registered African mental health nonprofit
             </span>
           </div>
 
+          {/* Headline */}
           <h1
             id="hero-heading"
-            className="font-heading text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-6"
+            className="font-heading font-extrabold leading-[1.1] mb-8 text-4xl md:text-5xl lg:text-6xl"
             style={{ color: '#1B3A2D' }}
           >
             Because struggling
@@ -543,8 +574,8 @@ function Hero() {
               <span
                 aria-hidden="true"
                 style={{
-                  position: 'absolute', bottom: '6px', left: '-2px', right: '-2px',
-                  height: '10px', backgroundColor: '#E8C547', zIndex: 0, borderRadius: '3px',
+                  position: 'absolute', bottom: '4px', left: 0, right: 0,
+                  height: '8px', backgroundColor: '#E8C547', zIndex: 0, borderRadius: '3px',
                 }}
               />
             </span>
@@ -553,63 +584,61 @@ function Hero() {
             <em style={{ color: '#2D7A5F', fontStyle: 'italic', fontWeight: 800 }}>normal</em>
           </h1>
 
-          <p className="text-base leading-relaxed mb-8 text-justify" style={{ color: '#5A7068', maxWidth: '520px' }}>
+          {/* Body copy */}
+          <p
+            className="text-base mb-10 text-justify"
+            style={{ color: '#4A6358', maxWidth: '480px', lineHeight: '1.7' }}
+          >
             Mindfully Aware is building safe, accessible mental health support systems for African
             communities through awareness, education, community support, and meaningful conversations
             around mental wellbeing.
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          {/* CTA buttons */}
+          <div className="flex flex-wrap gap-4">
             <a
               href="#community-social"
-              className="inline-flex items-center gap-2 text-white text-sm font-semibold px-6 py-3 rounded-full transition-opacity hover:opacity-85"
+              className="inline-flex items-center gap-2 text-white text-sm font-semibold px-6 py-3.5 rounded-full transition-opacity hover:opacity-85"
               style={{ backgroundColor: '#2D5A3D' }}
             >
-              <IcoPeople size={15} />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+              </svg>
               Join Our Community
             </a>
             <a
               href="#donate"
-              className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3 rounded-full border-2 transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3.5 rounded-full border-2 transition-opacity hover:opacity-80"
               style={{ color: '#2D5A3D', borderColor: '#2D5A3D' }}
             >
-              <IcoHeart size={15} />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#2D5A3D" stroke="none" aria-hidden="true">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+              </svg>
               Support Us
             </a>
           </div>
         </div>
 
-        {/* Right — image + floating testimonial card */}
+        {/* Right column — image + floating quote card */}
         <div className="relative">
-          <div className="rounded-2xl overflow-hidden shadow-lg" style={{ aspectRatio: '4/3' }}>
+          <div className="rounded-2xl overflow-hidden" style={{ aspectRatio: '4/3' }}>
             <img
-              src={heroPageGirl}
+              src={heroImg}
               alt="Smiling African woman with community members in background"
               className="w-full h-full object-cover"
               width={600}
               height={450}
             />
           </div>
-          <div className="absolute bottom-5 right-5 bg-white rounded-xl shadow-xl p-4" style={{ maxWidth: '230px' }}>
-            <p className="text-sm font-medium italic mb-3" style={{ color: '#1B3A2D' }}>
-              "Healing starts with being heard."
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="flex -space-x-2" aria-hidden="true">
-                {[['#2D7A5F', 'A'], ['#E8C547', 'K'], ['#C9784A', 'F']].map(([bg, initial]) => (
-                  <div
-                    key={initial}
-                    className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                    style={{ backgroundColor: bg }}
-                  >
-                    {initial}
-                  </div>
-                ))}
-              </div>
-              <span className="text-xs font-medium" style={{ color: '#5A7068' }}>community voices</span>
-            </div>
-          </div>
+          {/* Desktop: card floats outside bottom-right of image */}
+          <HeroQuoteCard
+            className="hidden md:block absolute"
+            style={{ bottom: 0, right: 0, transform: 'translate(-16px, 24px)' }}
+          />
+          {/* Mobile: card stacks below image */}
+          <HeroQuoteCard className="md:hidden mt-4" />
         </div>
+
       </div>
     </section>
   )
@@ -765,38 +794,63 @@ function NotAloneSection() {
     <section
       id="not-alone"
       aria-labelledby="not-alone-heading"
-      style={{ backgroundColor: '#FFFFFF' }}
-      className="py-24 px-4"
+      style={{ backgroundColor: '#F5F0E8' }}
+      className="py-28 px-4"
     >
-      <div className="max-w-2xl mx-auto text-center">
+      <div className="max-w-3xl mx-auto text-center">
         {/* Leaf icon */}
         <div className="flex justify-center mb-8" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" style={{ stroke: '#2D7A5F' }}>
-            <path d="M11 20A7 7 0 014 13c0-6 7-11 7-11s7 5 7 11a7 7 0 01-7 7z" />
-            <path d="M11 20v-9" />
+          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M24 52C24 52 4 40 4 22C4 11.5 13 3 24 3C35 3 44 11.5 44 22C44 40 24 52 24 52Z"
+              stroke="#8A9A8E"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M24 52V22"
+              stroke="#8A9A8E"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            <path
+              d="M24 30C24 30 14 26 12 18"
+              stroke="#8A9A8E"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
         </div>
+
+        {/* Headline */}
         <h2
           id="not-alone-heading"
-          className="font-heading font-extrabold leading-[1.15] mb-12"
-          style={{ color: '#1B3A2D', fontSize: 'clamp(1.85rem, 4.5vw, 2.85rem)' }}
+          className="font-heading font-extrabold leading-[1.1] mb-12 text-4xl md:text-5xl lg:text-6xl"
+          style={{ color: '#1B3A2D' }}
         >
           You do not have to carry
           <br />
-          <em style={{ color: '#2D7A5F', fontStyle: 'italic' }}>everything</em>{' '}alone.
+          <em style={{ color: '#2D7A5F', fontStyle: 'italic', fontWeight: 800 }}>everything</em>
+          {' '}
+          <span style={{ color: '#1B3A2D' }}>alone.</span>
         </h2>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-stretch">
-          {ALONE_QUOTES.map((quote, i) => (
-            <div
-              key={i}
-              className="rounded-lg border px-4 py-4"
-              style={{ borderColor: '#E2DAC8', width: '150px', minWidth: '130px', flexShrink: 0 }}
-            >
-              <p className="text-xs italic leading-relaxed text-center" style={{ color: '#5A7068' }}>
-                "{quote}"
-              </p>
-            </div>
-          ))}
+
+        {/* Affirmation cards */}
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 items-stretch">
+            {ALONE_QUOTES.map((quote, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-xl border px-6 py-6 flex items-center justify-center"
+                style={{ borderColor: '#E2DAC8' }}
+              >
+                <p className="text-sm italic leading-relaxed text-center" style={{ color: '#4A6358' }}>
+                  "{quote}"
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import logo from '../assets/images/Logo.png'
 
 const NAV_LINKS = [
   { label: 'About', href: '/about' },

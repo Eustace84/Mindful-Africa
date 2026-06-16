@@ -77,7 +77,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Mindfully Aware. All rights reserved.
           </p>
 
-          <p>Developed by EusTech</p>
+          <p className='text-gray-300 '>Developed by EusTech</p>
           <div className="flex gap-6">
             <a href="#" className="text-xs transition-colors hover:text-white" style={{ color: '#4A6358' }}>
               Privacy Policy
