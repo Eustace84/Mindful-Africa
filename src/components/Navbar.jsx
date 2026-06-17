@@ -1,30 +1,16 @@
 import { useState, useEffect } from 'react'
-import logo from '../assets/images/logo.png';
-
+import logo from '../assets/images/Logo.png'
 
 const NAV_LINKS = [
-  { label: 'About', href: '/about' },
-  { label: 'The Problem', href: '/#problem' },
-  { label: "What we're Building", href: '/#programs' },
-  { label: 'Community', href: '/#community' },
-  { label: 'Get Involved', href: '/#involved' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'About',               href: '/about'      },
+  { label: 'The Problem',         href: '/#problem'   },
+  { label: "What we're Building", href: '/#programs'  },
+  { label: 'Community',           href: '/#community' },
+  { label: 'Get Involved',        href: '/#involved'  },
+  { label: 'Contact',             href: '/contact'    },
 ]
 
-function LogoMark() {
-  return (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-      <rect width="36" height="36" rx="9" fill="#6B4E8C" />
-      <circle cx="18" cy="15" r="5" stroke="white" strokeWidth="1.8" fill="none" />
-      <path d="M12.5 14c-2.5 0-4 2-4 4s2 3.5 4 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-      <path d="M23.5 14c2.5 0 4 2 4 4s-2 3.5-4 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-      <line x1="15.5" y1="22" x2="15.5" y2="26" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
-      <line x1="20.5" y1="22" x2="20.5" y2="26" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
-      <line x1="15.5" y1="26" x2="20.5" y2="26" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="25" cy="9" r="3.5" fill="#E8C547" />
-    </svg>
-  )
-}
+
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -36,19 +22,17 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-
   return (
     <header
       role='banner'
       className={`sticky top-0 z-50 transition-shadow duration-200 ${scrolled ? 'shadow-sm' : ''}`}
       style={{ backgroundColor: '#FEFAF1', borderBottom: '1px solid #E2DAC8' }}>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3.5'>
-        {/* Logo */}
         <div className='flex items-center gap-2'>
           <img
             src={logo}
             alt='Mindfully Aware logo'
-            style={{ height: '48px', width: '48px', objectFit: 'contain' }}
+            style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
           />
           <span
             className='font-semibold text-lg'
@@ -76,7 +60,7 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className='hidden lg:block'>
+        <div className='hidden lg:block shrink-0'>
           <button
             className='text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-opacity hover:opacity-80'
             style={{ backgroundColor: '#1E4D35' }}>
@@ -87,7 +71,7 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           className='lg:hidden p-2 -mr-1.5 rounded-md'
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen((prev) => !prev)}
           aria-expanded={open}
           aria-label={open ? 'Close menu' : 'Open menu'}>
           <svg
@@ -118,7 +102,7 @@ export default function Navbar() {
       <div
         className={`lg:hidden overflow-hidden transition-all duration-300 ${open ? 'max-h-screen' : 'max-h-0'}`}
         style={{
-          backgroundColor: '#F5F0E8',
+          backgroundColor: '#FEFAF1',
           borderTop: open ? '1px solid #E2DAC8' : 'none',
         }}
         aria-hidden={!open}>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import heroImg from '../assets/hero.png'
+import heroImg from '../assets/images/hero-page-girl.png'
 import communityGirl from '../assets/images/community-girl.png'
 
 /* ═══════════════════════════════════════════════════════════════════════════
