@@ -9,6 +9,7 @@
     scroll-behavior: smooth;
   }
   body {
+     background-color: #FEFAF1;
     @apply font-body text-bark bg-cream antialiased;
     margin: 0;
   }

@@ -15,13 +15,6 @@ function IcoHeart({ size = 15, filled = false }) {
     : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
 }
 
-function IcoPeople({ size = 15 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  )
-}
 
 function IcoSend({ size = 12 }) {
   return (
@@ -421,11 +414,11 @@ function Navbar() {
 
   return (
     <nav
-      className="sticky top-0 z-50 px-8 md:px-12"
-      style={{ backgroundColor: '#F5F0E8' }}
+      className="fixed top-0 left-0 right-0 z-50 px-8 md:px-12 min-h-[138px] flex flex-col justify-center"
+      style={{ backgroundColor: '#FEFAF1' }}
       aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-[72px]">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
 
         {/* Logo */}
         <a href="#" onClick={close} className="flex items-center gap-[10px] shrink-0">
@@ -540,7 +533,7 @@ function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      style={{ backgroundColor: '#F5F0E8' }}
+      style={{ backgroundColor: '#FEFAF1' }}
       className="pt-12 pb-12 px-6 md:px-12"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -655,7 +648,7 @@ function StatsBar() {
     { prefix: '',     from: 0, to: 100, suffix: '%', label: 'Deserve to be heard'                    },
   ]
   return (
-    <div style={{ borderTop: '1px solid #D4CAB8', borderBottom: '1px solid #D4CAB8', backgroundColor: '#F5F0E8' }}>
+    <div style={{ borderTop: '1px solid #D4CAB8', borderBottom: '1px solid #D4CAB8', backgroundColor: '#FEFAF1' }}>
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3">
         {stats.map((s, i) => (
           <div
@@ -680,7 +673,7 @@ function OurStory() {
     <section
       id="our-story"
       aria-labelledby="story-heading"
-      style={{ backgroundColor: '#F5F0E8' }}
+      style={{ backgroundColor: '#FEFAF1' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -746,7 +739,7 @@ function ProblemSection() {
     <section
       id="problem"
       aria-labelledby="problem-heading"
-      style={{ backgroundColor: '#FAF6EE' }}
+      style={{ backgroundColor: '#F9F4E3' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
@@ -794,7 +787,7 @@ function NotAloneSection() {
     <section
       id="not-alone"
       aria-labelledby="not-alone-heading"
-      style={{ backgroundColor: '#F5F0E8' }}
+      style={{ backgroundColor: '#FEFAF1' }}
       className="py-28 px-4"
     >
       <div className="max-w-3xl mx-auto text-center">
@@ -866,7 +859,7 @@ function BuildingSection() {
     <section
       id="building"
       aria-labelledby="building-heading"
-      style={{ backgroundColor: '#FAF6EE' }}
+      style={{ backgroundColor: '#F9F4E3' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
@@ -930,7 +923,7 @@ function VoicesBanner() {
     <section
       id="voices"
       aria-labelledby="voices-heading"
-      style={{ backgroundColor: '#4F6F5C' }}
+      style={{ backgroundColor: '#547563' }}
       className="py-20 px-4"
     >
       <div className="max-w-2xl mx-auto text-center">
@@ -991,7 +984,7 @@ function CommunityAndSocial() {
     <section
       id="community-social"
       aria-labelledby="social-heading"
-      style={{ backgroundColor: '#FAF6EE' }}
+      style={{ backgroundColor: '#FEFAF1' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -1074,7 +1067,7 @@ function GetInvolvedSection() {
     <section
       id="get-involved"
       aria-labelledby="involved-heading"
-      style={{ backgroundColor: '#FAF6EE' }}
+      style={{ backgroundColor: '#F9F4E3' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
@@ -1188,7 +1181,7 @@ function DonateMission() {
     <section
       id="donate"
       aria-labelledby="donate-heading"
-      style={{ backgroundColor: '#FAF6EE' }}
+      style={{ backgroundColor: '#F9F4E3' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
@@ -1243,7 +1236,7 @@ function DonateMission() {
                   style={
                     amount === a
                       ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
-                      : { backgroundColor: '#F5F0E8', color: '#1B3A2D' }
+                      : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
                   }
                 >
                   {a}
@@ -1256,7 +1249,7 @@ function DonateMission() {
               style={
                 amount === 'other'
                   ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
-                  : { backgroundColor: '#F5F0E8', color: '#1B3A2D' }
+                  : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
               }
             >
               Other Amount
@@ -1285,7 +1278,7 @@ function BlogResources() {
     <section
       id="blog"
       aria-labelledby="blog-heading"
-      style={{ backgroundColor: '#FAF6EE' }}
+      style={{ backgroundColor: '#F9F4E3' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
@@ -1363,7 +1356,7 @@ function ContactSection() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      style={{ backgroundColor: '#F5F0E8' }}
+      style={{ backgroundColor: '#FEFAF1' }}
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -1492,7 +1485,7 @@ function SiteFooter() {
     <footer
       aria-label="Site footer"
       className="py-16 px-4"
-      style={{ backgroundColor: '#F5F0E8', borderTop: '1px solid #E2DAC8' }}
+      style={{ backgroundColor: '#FEFAF1', borderTop: '1px solid #E2DAC8' }}
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-14">
@@ -1580,6 +1573,7 @@ export default function HomePage() {
     <>
       {/* ── 1. Navbar ── */}
       <Navbar />
+      <main className="pt-[138px]">
       {/* ── 2. Hero ── */}
       <Hero />
       {/* ── 3. Stats Bar ── */}
@@ -1606,6 +1600,7 @@ export default function HomePage() {
       <ContactSection />
       {/* ── 14. Footer ── */}
       <SiteFooter />
+      </main>
     </>
   )
 }
