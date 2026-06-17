@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import logo from '../assets/images/Logo.png'
+import logo from '../assets/images/logo.png';
 
 const NAV_LINKS = [
   { label: 'About',               href: '/about'      },
@@ -28,25 +28,11 @@ export default function Navbar() {
       className={`sticky top-0 z-50 transition-shadow duration-200 ${scrolled ? 'shadow-sm' : ''}`}
       style={{ backgroundColor: '#FEFAF1', borderBottom: '1px solid #E2DAC8' }}>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3.5'>
-        <div className='flex items-center gap-2'>
-          <img
-            src={logo}
-            alt='Mindfully Aware logo'
-            style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
-          />
-          <span
-            className='font-semibold text-lg'
-            style={{
-              color: '#1B3A2D',
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-            }}>
-            Mindfully Aware
-          </span>
-        </div>
+        
 
         {/* Desktop nav */}
         <nav
-          className='hidden lg:flex items-center gap-5 xl:gap-7'
+          className='hidden lg:flex items-center gap-5 xl:gap-7 mr-12'
           aria-label='Main navigation'>
           {NAV_LINKS.map(({ label, href }) => (
             <a
