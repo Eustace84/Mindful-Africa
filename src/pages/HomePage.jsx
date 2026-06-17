@@ -1477,94 +1477,6 @@ function ContactSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: FOOTER — light cream, 3-column layout
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-function SiteFooter() {
-  return (
-    <footer
-      aria-label="Site footer"
-      className="py-16 px-4"
-      style={{ backgroundColor: '#FEFAF1', borderTop: '1px solid #E2DAC8' }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-14">
-
-          {/* Col 1 — Logo + description */}
-          <div>
-            <div className="flex items-center gap-2.5 mb-5">
-              <LogoMark size={30} />
-              <span className="font-heading font-bold text-base" style={{ color: '#1B3A2D' }}>
-                Mindfully Aware
-              </span>
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: '#5A7068', maxWidth: '260px' }}>
-              A registered African nonprofit building safe, accessible mental health support systems
-              for our communities. You are not alone.
-            </p>
-          </div>
-
-          {/* Col 2 — Explore */}
-          <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#8A9A8E' }}>
-              Explore
-            </p>
-            <ul className="space-y-3">
-              {[
-                { label: 'About',               href: '#our-story'    },
-                { label: "What we're building", href: '#building'     },
-                { label: 'Get Involved',        href: '#get-involved' },
-                { label: 'Donate',              href: '#donate'       },
-              ].map(({ label, href }) => (
-                <li key={label}>
-                  <a href={href} className="text-sm transition-opacity hover:opacity-60" style={{ color: '#5A7068' }}>
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 3 — Connect */}
-          <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#8A9A8E' }}>
-              Connect
-            </p>
-            <ul className="space-y-3">
-              {[
-                { label: 'Instagram',                href: '#'                              },
-                { label: 'Twitter / X',              href: '#'                              },
-                { label: 'LinkedIn',                 href: '#'                              },
-                { label: 'hello@mindfullyaware.org', href: 'mailto:hello@mindfullyaware.org' },
-              ].map(({ label, href }) => (
-                <li key={label}>
-                  <a href={href} className="text-sm transition-opacity hover:opacity-60" style={{ color: '#5A7068' }}>
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div
-          className="pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"
-          style={{ borderTop: '1px solid #E2DAC8' }}
-        >
-          <p className="text-xs" style={{ color: '#8A9A8E' }}>
-            © 2026 Mindfully Aware. Made with care across Africa.
-          </p>
-          <p className="text-xs italic" style={{ color: '#8A9A8E' }}>
-            Healing is a community we build together.
-          </p>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
    PAGE — assembles all 14 sections in order
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -1598,9 +1510,7 @@ export default function HomePage() {
       <BlogResources />
       {/* ── 13. Contact ── */}
       <ContactSection />
-      {/* ── 14. Footer ── */}
-      <SiteFooter />
-      </main>
+</main>
     </>
   )
 }
