@@ -9,11 +9,16 @@
     scroll-behavior: smooth;
   }
   body {
-     background-color: #FEFAF1;
+    font-family: 'Inter', sans-serif;
+    background-color: #FEFAF1;
     @apply font-body text-bark bg-cream antialiased;
     margin: 0;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    @apply font-heading;
+  }
+  h5, h6 {
     @apply font-heading;
   }
 }

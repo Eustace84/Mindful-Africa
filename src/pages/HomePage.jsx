@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import heroImg from '../assets/images/hero-page-girl.png'
-import communityGirl from '../assets/images/community-girl.png'
+import heroImg from '../images/hero-page-girl.png'
+import communityGirl from '../images/community-girl.png'
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SHARED ICON COMPONENTS
@@ -139,10 +139,10 @@ function StatCounter({ prefix = '', from = 0, to, suffix = '', label }) {
   const [count, ref] = useCountUp(from, to)
   return (
     <div ref={ref} className="text-center py-10 px-6">
-      <p className="font-heading text-4xl font-extrabold mb-2" style={{ color: '#2D7A5F' }}>
+      <p className="font-heading mb-2" style={{ color: '#2D7A5F', fontSize: '56px', fontWeight: 700 }}>
         {prefix}{count}{suffix}
       </p>
-      <p className="text-sm leading-snug max-w-[160px] mx-auto" style={{ color: '#5A7068' }}>
+      <p className="leading-snug max-w-[160px] mx-auto" style={{ color: '#4A6358', fontSize: '16px' }}>
         {label}
       </p>
     </div>
@@ -557,8 +557,8 @@ function Hero() {
           {/* Headline */}
           <h1
             id="hero-heading"
-            className="font-heading font-extrabold leading-[1.1] mb-8 text-4xl md:text-5xl lg:text-6xl"
-            style={{ color: '#1B3A2D' }}
+            className="font-heading mb-8"
+            style={{ color: '#1B3A2D', fontSize: '72px', fontWeight: 800, lineHeight: 1.08 }}
           >
             Because struggling
             <br />
@@ -579,8 +579,8 @@ function Hero() {
 
           {/* Body copy */}
           <p
-            className="text-base mb-10 text-justify"
-            style={{ color: '#4A6358', maxWidth: '480px', lineHeight: '1.7' }}
+            className="mb-10 text-justify"
+            style={{ color: '#4A6358', maxWidth: '480px', lineHeight: '1.7', fontSize: '18px' }}
           >
             Mindfully Aware is building safe, accessible mental health support systems for African
             communities through awareness, education, community support, and meaningful conversations
@@ -591,8 +591,8 @@ function Hero() {
           <div className="flex flex-wrap gap-4">
             <a
               href="#community-social"
-              className="inline-flex items-center gap-2 text-white text-sm font-semibold px-6 py-3.5 rounded-full transition-opacity hover:opacity-85"
-              style={{ backgroundColor: '#2D5A3D' }}
+              className="inline-flex items-center gap-2 text-white font-semibold rounded-full transition-opacity hover:opacity-85"
+              style={{ backgroundColor: '#2D5A3D', fontSize: '16px', padding: '14px 32px' }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
@@ -601,8 +601,8 @@ function Hero() {
             </a>
             <a
               href="#donate"
-              className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3.5 rounded-full border-2 transition-opacity hover:opacity-80"
-              style={{ color: '#2D5A3D', borderColor: '#2D5A3D' }}
+              className="inline-flex items-center gap-2 font-semibold rounded-full border-2 transition-opacity hover:opacity-80"
+              style={{ color: '#2D5A3D', borderColor: '#2D5A3D', fontSize: '16px', padding: '14px 32px' }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#2D5A3D" stroke="none" aria-hidden="true">
                 <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
@@ -700,13 +700,13 @@ function OurStory() {
 
         {/* Right — text content */}
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#2D7A5F' }}>
+          <p className="uppercase mb-5" style={{ color: '#2D7A5F', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
             Our Story
           </p>
           <h2
             id="story-heading"
-            className="font-heading font-extrabold leading-[1.1] mb-8"
-            style={{ color: '#1B3A2D', fontSize: 'clamp(2.25rem, 4vw, 3.5rem)' }}
+            className="font-heading mb-8"
+            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
           >
             Born from our own<br />journey to freedom.
           </h2>
@@ -716,7 +716,7 @@ function OurStory() {
               'The thought of others carrying that same weight alone, without support or safe spaces to be heard, became the motivation behind this journey.',
               'We believe that letting go creates room for healing, growth, and freedom. Through Mindfully Aware, we hope to be part of that journey for others too.',
             ].map(para => (
-              <p key={para.slice(0, 20)} className="text-base leading-relaxed text-justify" style={{ color: '#5A7068' }}>
+              <p key={para.slice(0, 20)} className="leading-relaxed text-justify" style={{ color: '#5A7068', fontSize: '17px' }}>
                 {para}
               </p>
             ))}
@@ -744,17 +744,17 @@ function ProblemSection() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#8A9A8E' }}>
+          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
             What We're Up Against
           </p>
           <h2
             id="problem-heading"
-            className="font-heading font-extrabold leading-[1.1] mb-5"
-            style={{ color: '#1B3A2D', fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)' }}
+            className="font-heading mb-5"
+            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
           >
             The weight too many<br />carry quietly.
           </h2>
-          <p className="text-sm leading-relaxed max-w-xs" style={{ color: '#5A7068' }}>
+          <p className="leading-relaxed max-w-xs" style={{ color: '#5A7068', fontSize: '17px' }}>
             Mental health challenges across Africa are real, common and largely unsupported.
             Naming them is the first step to changing them.
           </p>
@@ -768,8 +768,8 @@ function ProblemSection() {
               >
                 {icon}
               </div>
-              <h3 className="font-heading text-sm font-bold mb-1.5" style={{ color: '#1B3A2D' }}>{title}</h3>
-              <p className="text-xs leading-relaxed" style={{ color: '#5A7068' }}>{body}</p>
+              <h3 className="font-heading mb-1.5" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
+              <p className="leading-relaxed" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
             </article>
           ))}
         </div>
@@ -819,8 +819,8 @@ function NotAloneSection() {
         {/* Headline */}
         <h2
           id="not-alone-heading"
-          className="font-heading font-extrabold leading-[1.1] mb-12 text-4xl md:text-5xl lg:text-6xl"
-          style={{ color: '#1B3A2D' }}
+          className="font-heading mb-12"
+          style={{ color: '#1B3A2D', fontSize: '64px', fontWeight: 800, lineHeight: 1.1 }}
         >
           You do not have to carry
           <br />
@@ -864,17 +864,17 @@ function BuildingSection() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#8A9A8E' }}>
+          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
             What We're Building
           </p>
           <h2
             id="building-heading"
-            className="font-heading font-extrabold leading-[1.1] mb-5"
-            style={{ color: '#1B3A2D', fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)' }}
+            className="font-heading mb-5"
+            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
           >
             Support systems,<br />rooted in community.
           </h2>
-          <p className="text-sm leading-relaxed max-w-xs" style={{ color: '#5A7068' }}>
+          <p className="leading-relaxed max-w-xs" style={{ color: '#5A7068', fontSize: '17px' }}>
             We're early and growing. Here's what's taking shape with our community, volunteers and partners.
           </p>
         </div>
@@ -891,8 +891,8 @@ function BuildingSection() {
               >
                 {icon}
               </div>
-              <h3 className="font-heading text-sm font-bold mb-1.5" style={{ color: '#1B3A2D' }}>{title}</h3>
-              <p className="text-xs leading-relaxed mb-4 flex-1" style={{ color: '#5A7068' }}>{body}</p>
+              <h3 className="font-heading mb-1.5" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
+              <p className="leading-relaxed mb-4 flex-1" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
               <div className="flex items-center gap-1.5 mt-auto">
                 <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: '#2D7A5F' }} aria-hidden="true" />
                 <span className="text-xs font-medium" style={{ color: '#2D7A5F' }}>Actively growing</span>
@@ -927,13 +927,13 @@ function VoicesBanner() {
       className="py-20 px-4"
     >
       <div className="max-w-2xl mx-auto text-center">
-        <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: '#E8C547' }}>
+        <p className="uppercase mb-6" style={{ color: '#E8C547', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
           Dear Anonymous
         </p>
         <h2
           id="voices-heading"
-          className="font-heading font-extrabold text-white mb-3"
-          style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.25rem)' }}
+          className="font-heading text-white mb-3"
+          style={{ fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
         >
           Voices from our community.
         </h2>
@@ -949,8 +949,8 @@ function VoicesBanner() {
         </div>
         <blockquote
           key={active}
-          className="text-base md:text-lg italic leading-relaxed text-white mb-5 mx-auto"
-          style={{ maxWidth: '560px' }}
+          className="italic leading-relaxed text-white mb-5 mx-auto text-center"
+          style={{ maxWidth: '560px', fontSize: '22px' }}
         >
           {quote}
         </blockquote>
@@ -990,17 +990,17 @@ function CommunityAndSocial() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Left */}
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#8A9A8E' }}>
+          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
             Community &amp; Social
           </p>
           <h2
             id="social-heading"
-            className="font-heading font-extrabold leading-[1.1] mb-5"
-            style={{ color: '#1B3A2D', fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
+            className="font-heading mb-5"
+            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
           >
             The conversation is<br />already happening.
           </h2>
-          <p className="text-sm leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px' }}>
+          <p className="leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px', fontSize: '17px' }}>
             Follow along, share your story, or just lurk quietly, that's okay too.
             Every voice helps soften the silence.
           </p>
@@ -1072,17 +1072,17 @@ function GetInvolvedSection() {
     >
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#8A9A8E' }}>
+          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
             Get Involved
           </p>
           <h2
             id="involved-heading"
-            className="font-heading font-extrabold leading-tight mb-3"
-            style={{ color: '#1B3A2D', fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)' }}
+            className="font-heading mb-3"
+            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
           >
             Build this with us
           </h2>
-          <p className="text-sm" style={{ color: '#5A7068' }}>
+          <p style={{ color: '#5A7068', fontSize: '17px' }}>
             We grow stronger with every voice, hand and partnership.
           </p>
         </div>
@@ -1097,8 +1097,8 @@ function GetInvolvedSection() {
               >
                 {icon}
               </div>
-              <h3 className="font-heading text-xs font-bold mb-1 leading-tight" style={{ color: '#1B3A2D' }}>{title}</h3>
-              <p className="text-xs leading-relaxed" style={{ color: '#5A7068' }}>{body}</p>
+              <h3 className="font-heading mb-1 leading-tight" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
+              <p className="leading-relaxed" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
             </article>
           ))}
         </div>
@@ -1192,17 +1192,17 @@ function DonateMission() {
             style={{ background: 'linear-gradient(135deg, #4F6F5C 0%, #3A5547 100%)' }}
           >
             <div className="lg:max-w-[57%]">
-              <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#E8C547' }}>
+              <p className="uppercase mb-5" style={{ color: '#E8C547', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
                 Support our mission
               </p>
               <h2
                 id="donate-heading"
-                className="font-heading font-extrabold text-white leading-[1.1] mb-6"
-                style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)' }}
+                className="font-heading text-white leading-[1.1] mb-6"
+                style={{ fontSize: '44px', fontWeight: 700 }}
               >
                 Help us create safer mental health support systems for underserved communities.
               </h2>
-              <p className="text-sm leading-relaxed mb-8" style={{ color: '#D4DECE' }}>
+              <p className="leading-relaxed mb-8" style={{ color: '#D4DECE', fontSize: '17px' }}>
                 Every contribution funds peer-support circles, awareness campaigns, mental health
                 resources, and the long road toward affordable professional care. We publish how
                 every naira and dollar is used, transparency is part of the trust.
@@ -1284,13 +1284,13 @@ function BlogResources() {
       <div className="max-w-7xl mx-auto">
         <div className="flex items-end justify-between flex-wrap gap-4 mb-12">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#8A9A8E' }}>
+            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
               Blog &amp; Resources
             </p>
             <h2
               id="blog-heading"
-              className="font-heading font-extrabold leading-[1.1]"
-              style={{ color: '#1B3A2D', fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
+              className="font-heading leading-[1.1]"
+              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800 }}
             >
               Read, breathe, share.
             </h2>
@@ -1322,7 +1322,7 @@ function BlogResources() {
                 >
                   {category}
                 </p>
-                <h3 className="font-heading font-bold leading-snug mb-4" style={{ color: '#1B3A2D', fontSize: '0.9rem' }}>
+                <h3 className="font-heading leading-snug mb-4" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>
                   {title}
                 </h3>
                 <p className="text-xs" style={{ color: '#8A9A8E' }}>{readTime}</p>
@@ -1363,17 +1363,17 @@ function ContactSection() {
 
         {/* Left info column */}
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: '#8A9A8E' }}>
+          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
             Contact
           </p>
           <h2
             id="contact-heading"
-            className="font-heading font-extrabold leading-[1.1] mb-5"
-            style={{ color: '#1B3A2D', fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)' }}
+            className="font-heading leading-[1.1] mb-5"
+            style={{ color: '#1B3A2D', fontSize: '44px', fontWeight: 700 }}
           >
             Please reach out, we read every message.
           </h2>
-          <p className="text-sm leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px' }}>
+          <p className="leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px', fontSize: '17px' }}>
             Whether it's a question, an idea, or just hello, we're glad you're here.
           </p>
 
