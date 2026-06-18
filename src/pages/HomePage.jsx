@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 import heroImg from '../images/hero-page-girl.png'
 import communityGirl from '../images/community-girl.png'
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SHARED ICON COMPONENTS
-   Defined once, reused across sections to ensure visual consistency.
-   All icons: minimalist line style, 1.5–2px stroke, currentColor unless noted.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function IcoHeart({ size = 15, filled = false }) {
@@ -14,7 +13,6 @@ function IcoHeart({ size = 15, filled = false }) {
     ? <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d={d} /></svg>
     : <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>
 }
-
 
 function IcoSend({ size = 12 }) {
   return (
@@ -86,7 +84,7 @@ function IcoTwitterX({ size = 14 }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LOGO MARK — used in Navbar + Footer
+   LOGO MARK
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function LogoMark({ size = 30 }) {
@@ -95,6 +93,25 @@ function LogoMark({ size = 30 }) {
       <path d="M7 15C7 9 12 5 17 7C13 9 11 13 13 19C9 19 7 17 7 15Z" fill="#7C3AED" />
       <path d="M23 15C23 21 18 25 13 23C17 21 19 17 17 11C21 11 23 13 23 15Z" fill="#2D7A5F" />
     </svg>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REUSABLE SCROLL REVEAL WRAPPER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function RevealOnScroll({ children, delay = 0 }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay }}
+    >
+      {children}
+    </motion.div>
   )
 }
 
@@ -410,10 +427,23 @@ const EMPTY_CONTACT_FORM = { name: '', email: '', message: '' }
 
 function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const close = () => setOpen(false)
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <nav
+    <motion.nav
+      animate={{
+        boxShadow: scrolled
+          ? '0 2px 20px rgba(27, 58, 45, 0.08)'
+          : '0 0px 0px rgba(0,0,0,0)',
+      }}
+      transition={{ duration: 0.3 }}
       className="fixed top-0 left-0 right-0 z-50 px-8 md:px-12 min-h-[138px] flex flex-col justify-center"
       style={{ backgroundColor: '#FEFAF1' }}
       aria-label="Main navigation"
@@ -499,7 +529,7 @@ function Navbar() {
           </a>
         </div>
       )}
-    </nav>
+    </motion.nav>
   )
 }
 
@@ -507,11 +537,11 @@ function Navbar() {
    SECTION: HERO
    ═══════════════════════════════════════════════════════════════════════════ */
 
-function HeroQuoteCard({ className = '', style = {} }) {
+function HeroQuoteCard() {
   return (
     <div
-      className={`bg-white rounded-xl shadow-lg px-5 py-4 ${className}`}
-      style={{ maxWidth: '260px', ...style }}
+      className="bg-white rounded-xl shadow-lg px-5 py-4"
+      style={{ maxWidth: '260px' }}
     >
       <p className="text-sm font-medium mb-3" style={{ color: '#1B3A2D' }}>
         "Healing starts with being heard."
@@ -541,7 +571,10 @@ function Hero() {
         {/* Left column */}
         <div>
           {/* Badge */}
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0 }}
             className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border"
             style={{ borderColor: '#C8BDAA' }}
           >
@@ -552,84 +585,141 @@ function Hero() {
             <span className="text-sm font-medium" style={{ color: '#3A5446' }}>
               A registered African mental health nonprofit
             </span>
-          </div>
+          </motion.div>
 
-          {/* Headline */}
+          {/* Headline — each line slides up independently */}
           <h1
             id="hero-heading"
             className="font-heading mb-8"
             style={{ color: '#1B3A2D', fontSize: '72px', fontWeight: 800, lineHeight: 1.08 }}
           >
-            Because struggling
-            <br />
-            <span style={{ position: 'relative', display: 'inline-block' }}>
-              <span style={{ position: 'relative', zIndex: 1 }}>in silence</span>
-              <span
-                aria-hidden="true"
-                style={{
-                  position: 'absolute', bottom: '4px', left: 0, right: 0,
-                  height: '8px', backgroundColor: '#E8C547', zIndex: 0, borderRadius: '3px',
-                }}
-              />
-            </span>
-            <br />
-            shouldn't be{' '}
-            <em style={{ color: '#2D7A5F', fontStyle: 'italic', fontWeight: 800 }}>normal</em>
+            <motion.span
+              style={{ display: 'block' }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
+            >
+              Because struggling
+            </motion.span>
+            <motion.span
+              style={{ display: 'block' }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.25 }}
+            >
+              <span style={{ position: 'relative', display: 'inline-block' }}>
+                <span style={{ position: 'relative', zIndex: 1 }}>in silence</span>
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute', bottom: '4px', left: 0, right: 0,
+                    height: '8px', backgroundColor: '#E8C547', zIndex: 0, borderRadius: '3px',
+                  }}
+                />
+              </span>
+            </motion.span>
+            <motion.span
+              style={{ display: 'block' }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.35 }}
+            >
+              shouldn't be{' '}
+              <em style={{ color: '#2D7A5F', fontStyle: 'italic', fontWeight: 800 }}>normal</em>
+            </motion.span>
           </h1>
 
           {/* Body copy */}
-          <p
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
             className="mb-10 text-justify"
             style={{ color: '#4A6358', maxWidth: '480px', lineHeight: '1.7', fontSize: '18px' }}
           >
             Mindfully Aware is building safe, accessible mental health support systems for African
             communities through awareness, education, community support, and meaningful conversations
             around mental wellbeing.
-          </p>
+          </motion.p>
 
           {/* CTA buttons */}
-          <div className="flex flex-wrap gap-4">
-            <a
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.65 }}
+            className="flex flex-wrap gap-4"
+          >
+            <motion.a
               href="#community-social"
-              className="inline-flex items-center gap-2 text-white font-semibold rounded-full transition-opacity hover:opacity-85"
+              className="inline-flex items-center gap-2 text-white font-semibold rounded-full"
               style={{ backgroundColor: '#2D5A3D', fontSize: '16px', padding: '14px 32px' }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
               </svg>
               Join Our Community
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="#donate"
-              className="inline-flex items-center gap-2 font-semibold rounded-full border-2 transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-2 font-semibold rounded-full border-2"
               style={{ color: '#2D5A3D', borderColor: '#2D5A3D', fontSize: '16px', padding: '14px 32px' }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#2D5A3D" stroke="none" aria-hidden="true">
                 <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
               </svg>
               Support Us
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
         </div>
 
         {/* Right column — image + floating quote card */}
         <div className="relative">
-          <div className="rounded-2xl overflow-hidden" style={{ aspectRatio: '4/3' }}>
-            <img
+          <motion.div
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+            className="rounded-2xl overflow-hidden"
+            style={{ aspectRatio: '4/3' }}
+          >
+            <motion.img
               src={heroImg}
               alt="Smiling African woman with community members in background"
               className="w-full h-full object-cover"
               width={600}
               height={450}
+              loading="eager"
+              decoding="sync"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
             />
-          </div>
-          {/* Desktop: card floats outside bottom-right of image */}
-          <HeroQuoteCard
+          </motion.div>
+
+          {/* Desktop: float outside bottom-right of image */}
+          <motion.div
             className="hidden md:block absolute"
-            style={{ bottom: 0, right: 0, transform: 'translate(-16px, 24px)' }}
-          />
-          {/* Mobile: card stacks below image */}
-          <HeroQuoteCard className="md:hidden mt-4" />
+            style={{ bottom: '-24px', right: '16px' }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.8 }}
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1.4 }}
+            >
+              <HeroQuoteCard />
+            </motion.div>
+          </motion.div>
+
+          {/* Mobile: stacks below image */}
+          <div className="md:hidden mt-4">
+            <HeroQuoteCard />
+          </div>
         </div>
 
       </div>
@@ -656,7 +746,9 @@ function StatsBar() {
             className={i < 2 ? 'border-b md:border-b-0 md:border-r' : ''}
             style={{ borderColor: '#E2DAC8' }}
           >
-            <StatCounter {...s} />
+            <RevealOnScroll delay={i * 0.15}>
+              <StatCounter {...s} />
+            </RevealOnScroll>
           </div>
         ))}
       </div>
@@ -678,60 +770,68 @@ function OurStory() {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Left — image + floating quote card */}
-        <div className="relative pb-16">
-          <div className="rounded-3xl overflow-hidden shadow-lg" style={{ height: '440px' }}>
-            <img
-              src={communityGirl}
-              alt="Smiling African woman, portrait photo representing the Mindfully Aware community story"
-              className="w-full h-full object-cover"
-              width={580}
-              height={720}
-            />
+        <RevealOnScroll>
+          <div className="relative pb-16">
+            <div className="rounded-3xl overflow-hidden shadow-lg" style={{ height: '440px' }}>
+              <motion.img
+                src={communityGirl}
+                alt="Smiling African woman, portrait photo representing the Mindfully Aware community story"
+                className="w-full h-full object-cover"
+                width={580}
+                height={720}
+                loading="lazy"
+                decoding="async"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+              />
+            </div>
+            <div
+              className="absolute right-4 bottom-4 z-10 bg-white rounded-xl shadow-lg p-5"
+              style={{ maxWidth: '270px' }}
+            >
+              <p className="text-sm leading-relaxed" style={{ color: '#1B3A2D' }}>
+                "The first time someone said 'me too' I finally exhaled."
+              </p>
+            </div>
           </div>
-          <div
-            className="absolute right-4 bottom-4 z-10 bg-white rounded-xl shadow-lg p-5"
-            style={{ maxWidth: '270px' }}
-          >
-            <p className="text-sm leading-relaxed" style={{ color: '#1B3A2D' }}>
-              "The first time someone said 'me too' I finally exhaled."
-            </p>
-          </div>
-        </div>
+        </RevealOnScroll>
 
         {/* Right — text content */}
-        <div>
-          <p className="uppercase mb-5" style={{ color: '#2D7A5F', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-            Our Story
-          </p>
-          <h2
-            id="story-heading"
-            className="font-heading mb-8"
-            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
-          >
-            Born from our own<br />journey to freedom.
-          </h2>
-          <div className="space-y-5 mb-10">
-            {[
-              'Mindfully Aware was born from a journey to freedom. A freedom that revealed just how heavy the pain we had been carrying truly was.',
-              'The thought of others carrying that same weight alone, without support or safe spaces to be heard, became the motivation behind this journey.',
-              'We believe that letting go creates room for healing, growth, and freedom. Through Mindfully Aware, we hope to be part of that journey for others too.',
-            ].map(para => (
-              <p key={para.slice(0, 20)} className="leading-relaxed text-justify" style={{ color: '#5A7068', fontSize: '17px' }}>
-                {para}
-              </p>
-            ))}
+        <RevealOnScroll delay={0.15}>
+          <div>
+            <p className="uppercase mb-5" style={{ color: '#2D7A5F', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+              Our Story
+            </p>
+            <h2
+              id="story-heading"
+              className="font-heading mb-8"
+              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
+            >
+              Born from our own<br />journey to freedom.
+            </h2>
+            <div className="space-y-5 mb-10">
+              {[
+                'Mindfully Aware was born from a journey to freedom. A freedom that revealed just how heavy the pain we had been carrying truly was.',
+                'The thought of others carrying that same weight alone, without support or safe spaces to be heard, became the motivation behind this journey.',
+                'We believe that letting go creates room for healing, growth, and freedom. Through Mindfully Aware, we hope to be part of that journey for others too.',
+              ].map(para => (
+                <p key={para.slice(0, 20)} className="leading-relaxed text-justify" style={{ color: '#5A7068', fontSize: '17px' }}>
+                  {para}
+                </p>
+              ))}
+            </div>
+            <p className="text-base font-bold" style={{ color: '#1B3A2D' }}>
+              We are building the support we wish we had together.
+            </p>
           </div>
-          <p className="text-base font-bold" style={{ color: '#1B3A2D' }}>
-            We are building the support we wish we had together.
-          </p>
-        </div>
+        </RevealOnScroll>
       </div>
     </section>
   )
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: THE PROBLEM — "What We're Up Against"
+   SECTION: THE PROBLEM
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function ProblemSection() {
@@ -743,34 +843,46 @@ function ProblemSection() {
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="mb-12">
-          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-            What We're Up Against
-          </p>
-          <h2
-            id="problem-heading"
-            className="font-heading mb-5"
-            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
-          >
-            The weight too many<br />carry quietly.
-          </h2>
-          <p className="leading-relaxed max-w-xs" style={{ color: '#5A7068', fontSize: '17px' }}>
-            Mental health challenges across Africa are real, common and largely unsupported.
-            Naming them is the first step to changing them.
-          </p>
-        </div>
+        <RevealOnScroll>
+          <div className="mb-12">
+            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+              What We're Up Against
+            </p>
+            <h2
+              id="problem-heading"
+              className="font-heading mb-5"
+              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
+            >
+              The weight too many<br />carry quietly.
+            </h2>
+            <p className="leading-relaxed max-w-xs" style={{ color: '#5A7068', fontSize: '17px' }}>
+              Mental health challenges across Africa are real, common and largely unsupported.
+              Naming them is the first step to changing them.
+            </p>
+          </div>
+        </RevealOnScroll>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {PROBLEM_CARDS.map(({ title, body, icon }) => (
-            <article key={title} className="bg-white rounded-xl p-5 border" style={{ borderColor: '#E2DAC8' }}>
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0"
-                style={{ backgroundColor: '#EDEAE4', color: '#5A7068' }}
+          {PROBLEM_CARDS.map(({ title, body, icon }, index) => (
+            <RevealOnScroll key={title} delay={index * 0.1}>
+              <motion.article
+                className="bg-white rounded-xl p-5 border"
+                style={{ borderColor: '#E2DAC8' }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: '0 16px 40px rgba(27, 58, 45, 0.12)',
+                  transition: { duration: 0.25, ease: 'easeOut' },
+                }}
               >
-                {icon}
-              </div>
-              <h3 className="font-heading mb-1.5" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
-              <p className="leading-relaxed" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
-            </article>
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0"
+                  style={{ backgroundColor: '#EDEAE4', color: '#5A7068' }}
+                >
+                  {icon}
+                </div>
+                <h3 className="font-heading mb-1.5" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
+                <p className="leading-relaxed" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
+              </motion.article>
+            </RevealOnScroll>
           ))}
         </div>
       </div>
@@ -779,7 +891,7 @@ function ProblemSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: YOU ARE NOT ALONE — centered quote banner
+   SECTION: YOU ARE NOT ALONE
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function NotAloneSection() {
@@ -791,57 +903,42 @@ function NotAloneSection() {
       className="py-28 px-4"
     >
       <div className="max-w-3xl mx-auto text-center">
-        {/* Leaf icon */}
-        <div className="flex justify-center mb-8" aria-hidden="true">
-          <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M24 52C24 52 4 40 4 22C4 11.5 13 3 24 3C35 3 44 11.5 44 22C44 40 24 52 24 52Z"
-              stroke="#8A9A8E"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M24 52V22"
-              stroke="#8A9A8E"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M24 30C24 30 14 26 12 18"
-              stroke="#8A9A8E"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
+        <RevealOnScroll>
+          <div>
+            <div className="flex justify-center mb-8" aria-hidden="true">
+              <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 52C24 52 4 40 4 22C4 11.5 13 3 24 3C35 3 44 11.5 44 22C44 40 24 52 24 52Z" stroke="#8A9A8E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M24 52V22" stroke="#8A9A8E" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M24 30C24 30 14 26 12 18" stroke="#8A9A8E" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            </div>
+            <h2
+              id="not-alone-heading"
+              className="font-heading mb-12"
+              style={{ color: '#1B3A2D', fontSize: '64px', fontWeight: 800, lineHeight: 1.1 }}
+            >
+              You do not have to carry
+              <br />
+              <em style={{ color: '#2D7A5F', fontStyle: 'italic', fontWeight: 800 }}>everything</em>
+              {' '}
+              <span style={{ color: '#1B3A2D' }}>alone.</span>
+            </h2>
+          </div>
+        </RevealOnScroll>
 
-        {/* Headline */}
-        <h2
-          id="not-alone-heading"
-          className="font-heading mb-12"
-          style={{ color: '#1B3A2D', fontSize: '64px', fontWeight: 800, lineHeight: 1.1 }}
-        >
-          You do not have to carry
-          <br />
-          <em style={{ color: '#2D7A5F', fontStyle: 'italic', fontWeight: 800 }}>everything</em>
-          {' '}
-          <span style={{ color: '#1B3A2D' }}>alone.</span>
-        </h2>
-
-        {/* Affirmation cards */}
         <div className="max-w-4xl mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 items-stretch">
             {ALONE_QUOTES.map((quote, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-xl border px-6 py-6 flex items-center justify-center"
-                style={{ borderColor: '#E2DAC8' }}
-              >
-                <p className="text-sm italic leading-relaxed text-center" style={{ color: '#4A6358' }}>
-                  "{quote}"
-                </p>
-              </div>
+              <RevealOnScroll key={i} delay={i * 0.1}>
+                <div
+                  className="bg-white rounded-xl border px-6 py-6 flex items-center justify-center"
+                  style={{ borderColor: '#E2DAC8' }}
+                >
+                  <p className="text-sm italic leading-relaxed text-center" style={{ color: '#4A6358' }}>
+                    "{quote}"
+                  </p>
+                </div>
+              </RevealOnScroll>
             ))}
           </div>
         </div>
@@ -851,7 +948,7 @@ function NotAloneSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: WHAT WE'RE BUILDING — 6-card grid
+   SECTION: WHAT WE'RE BUILDING
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function BuildingSection() {
@@ -863,41 +960,49 @@ function BuildingSection() {
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="mb-12">
-          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-            What We're Building
-          </p>
-          <h2
-            id="building-heading"
-            className="font-heading mb-5"
-            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
-          >
-            Support systems,<br />rooted in community.
-          </h2>
-          <p className="leading-relaxed max-w-xs" style={{ color: '#5A7068', fontSize: '17px' }}>
-            We're early and growing. Here's what's taking shape with our community, volunteers and partners.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {BUILDING_CARDS.map(({ title, body, icon }) => (
-            <article
-              key={title}
-              className="bg-white rounded-xl p-5 border flex flex-col"
-              style={{ borderColor: '#E2DAC8' }}
+        <RevealOnScroll>
+          <div className="mb-12">
+            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+              What We're Building
+            </p>
+            <h2
+              id="building-heading"
+              className="font-heading mb-5"
+              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
             >
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center mb-4 shrink-0"
-                style={{ backgroundColor: '#F5E6A8', color: '#1B3A2D' }}
+              Support systems,<br />rooted in community.
+            </h2>
+            <p className="leading-relaxed max-w-xs" style={{ color: '#5A7068', fontSize: '17px' }}>
+              We're early and growing. Here's what's taking shape with our community, volunteers and partners.
+            </p>
+          </div>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {BUILDING_CARDS.map(({ title, body, icon }, index) => (
+            <RevealOnScroll key={title} delay={index * 0.1}>
+              <motion.article
+                className="bg-white rounded-xl p-5 border flex flex-col"
+                style={{ borderColor: '#E2DAC8' }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: '0 16px 40px rgba(27, 58, 45, 0.12)',
+                  transition: { duration: 0.25, ease: 'easeOut' },
+                }}
               >
-                {icon}
-              </div>
-              <h3 className="font-heading mb-1.5" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
-              <p className="leading-relaxed mb-4 flex-1" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
-              <div className="flex items-center gap-1.5 mt-auto">
-                <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: '#2D7A5F' }} aria-hidden="true" />
-                <span className="text-xs font-medium" style={{ color: '#2D7A5F' }}>Actively growing</span>
-              </div>
-            </article>
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center mb-4 shrink-0"
+                  style={{ backgroundColor: '#F5E6A8', color: '#1B3A2D' }}
+                >
+                  {icon}
+                </div>
+                <h3 className="font-heading mb-1.5" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
+                <p className="leading-relaxed mb-4 flex-1" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
+                <div className="flex items-center gap-1.5 mt-auto">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: '#2D7A5F' }} aria-hidden="true" />
+                  <span className="text-xs font-medium" style={{ color: '#2D7A5F' }}>Actively growing</span>
+                </div>
+              </motion.article>
+            </RevealOnScroll>
           ))}
         </div>
       </div>
@@ -906,7 +1011,7 @@ function BuildingSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: VOICES FROM OUR COMMUNITY — auto-rotating testimonial carousel
+   SECTION: VOICES FROM OUR COMMUNITY
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function VoicesBanner() {
@@ -917,8 +1022,6 @@ function VoicesBanner() {
     return () => clearInterval(timer)
   }, [])
 
-  const { quote, attribution } = CAROUSEL_TESTIMONIALS[active]
-
   return (
     <section
       id="voices"
@@ -927,19 +1030,24 @@ function VoicesBanner() {
       className="py-20 px-4"
     >
       <div className="max-w-2xl mx-auto text-center">
-        <p className="uppercase mb-6" style={{ color: '#E8C547', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-          Dear Anonymous
-        </p>
-        <h2
-          id="voices-heading"
-          className="font-heading text-white mb-3"
-          style={{ fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
-        >
-          Voices from our community.
-        </h2>
-        <p className="text-sm mb-10" style={{ color: '#D4DECE' }}>
-          Stories shared with permission, names withheld with care.
-        </p>
+        <RevealOnScroll>
+          <div>
+            <p className="uppercase mb-6" style={{ color: '#E8C547', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+              Dear Anonymous
+            </p>
+            <h2
+              id="voices-heading"
+              className="font-heading text-white mb-3"
+              style={{ fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
+            >
+              Voices from our community.
+            </h2>
+            <p className="text-sm mb-10" style={{ color: '#D4DECE' }}>
+              Stories shared with permission, names withheld with care.
+            </p>
+          </div>
+        </RevealOnScroll>
+
         <div
           className="font-heading font-extrabold leading-none mb-3 select-none"
           style={{ color: '#E8C547', fontSize: '4rem' }}
@@ -947,16 +1055,27 @@ function VoicesBanner() {
         >
           &#8220;
         </div>
-        <blockquote
-          key={active}
-          className="italic leading-relaxed text-white mb-5 mx-auto text-center"
-          style={{ maxWidth: '560px', fontSize: '22px' }}
-        >
-          {quote}
-        </blockquote>
-        <p className="text-sm mb-10" style={{ color: '#D4DECE' }}>
-          {attribution}
-        </p>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.4 }}
+          >
+            <blockquote
+              className="italic leading-relaxed text-white mb-5 mx-auto text-center"
+              style={{ maxWidth: '560px', fontSize: '22px' }}
+            >
+              {CAROUSEL_TESTIMONIALS[active].quote}
+            </blockquote>
+            <p className="text-sm mb-10" style={{ color: '#D4DECE' }}>
+              {CAROUSEL_TESTIMONIALS[active].attribution}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+
         <div className="flex justify-center gap-2.5" role="tablist" aria-label="Testimonials">
           {CAROUSEL_TESTIMONIALS.map((_, i) => (
             <button
@@ -989,56 +1108,63 @@ function CommunityAndSocial() {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Left */}
-        <div>
-          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-            Community &amp; Social
-          </p>
-          <h2
-            id="social-heading"
-            className="font-heading mb-5"
-            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
-          >
-            The conversation is<br />already happening.
-          </h2>
-          <p className="leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px', fontSize: '17px' }}>
-            Follow along, share your story, or just lurk quietly, that's okay too.
-            Every voice helps soften the silence.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {SOCIAL_PLATFORMS.map(({ label, icon }) => (
-              <button
-                key={label}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border text-xs font-medium transition-shadow hover:shadow-sm focus:outline-none"
-                style={{ borderColor: '#E2DAC8', color: '#1B3A2D' }}
-              >
-                {icon}
-                {label}
-              </button>
-            ))}
+        <RevealOnScroll>
+          <div>
+            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+              Community &amp; Social
+            </p>
+            <h2
+              id="social-heading"
+              className="font-heading mb-5"
+              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
+            >
+              The conversation is<br />already happening.
+            </h2>
+            <p className="leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px', fontSize: '17px' }}>
+              Follow along, share your story, or just lurk quietly, that's okay too.
+              Every voice helps soften the silence.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SOCIAL_PLATFORMS.map(({ label, icon }) => (
+                <motion.button
+                  key={label}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-medium focus:outline-none"
+                  style={{ borderColor: '#E2DAC8', color: '#1B3A2D', backgroundColor: '#FFFFFF' }}
+                  whileHover={{ scale: 1.05, backgroundColor: '#E8F5EE' }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  {icon}
+                  {label}
+                </motion.button>
+              ))}
+            </div>
           </div>
-        </div>
+        </RevealOnScroll>
 
         {/* Right — stacked social post cards */}
         <div className="flex flex-col gap-3">
           {SOCIAL_POSTS.map(({ platform, text, count }, i) => (
-            <article key={i} className="bg-white rounded-xl border p-4" style={{ borderColor: '#E2DAC8' }}>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full shrink-0" style={{ backgroundColor: '#4F6F5C' }} aria-hidden="true" />
-                <div>
-                  <p className="text-xs font-bold leading-tight" style={{ color: '#1B3A2D' }}>@mindfullyaware</p>
-                  <p className="text-xs" style={{ color: '#8A9A8E' }}>{platform}</p>
+            <RevealOnScroll key={i} delay={i * 0.1}>
+              <article className="bg-white rounded-xl border p-4" style={{ borderColor: '#E2DAC8' }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-8 h-8 rounded-full shrink-0" style={{ backgroundColor: '#4F6F5C' }} aria-hidden="true" />
+                  <div>
+                    <p className="text-xs font-bold leading-tight" style={{ color: '#1B3A2D' }}>@mindfullyaware</p>
+                    <p className="text-xs" style={{ color: '#8A9A8E' }}>{platform}</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-xs leading-relaxed mb-3" style={{ color: '#1B3A2D' }}>{text}</p>
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-1.5" aria-hidden="true">
-                  <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: '#2D7A5F' }} />
-                  <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: '#E8C547' }} />
+                <p className="text-xs leading-relaxed mb-3" style={{ color: '#1B3A2D' }}>{text}</p>
+                <div className="flex items-center gap-2">
+                  <div className="flex -space-x-1.5" aria-hidden="true">
+                    <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: '#2D7A5F' }} />
+                    <div className="w-5 h-5 rounded-full border-2 border-white" style={{ backgroundColor: '#E8C547' }} />
+                  </div>
+                  <span className="text-xs font-bold" style={{ color: '#1B3A2D' }}>{count}</span>
+                  <span className="text-xs" style={{ color: '#8A9A8E' }}>community voices</span>
                 </div>
-                <span className="text-xs font-bold" style={{ color: '#1B3A2D' }}>{count}</span>
-                <span className="text-xs" style={{ color: '#8A9A8E' }}>community voices</span>
-              </div>
-            </article>
+              </article>
+            </RevealOnScroll>
           ))}
         </div>
       </div>
@@ -1047,7 +1173,7 @@ function CommunityAndSocial() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: GET INVOLVED — 5-card grid + tabbed sign-up form
+   SECTION: GET INVOLVED
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function GetInvolvedSection() {
@@ -1071,107 +1197,125 @@ function GetInvolvedSection() {
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="mb-10">
-          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-            Get Involved
-          </p>
-          <h2
-            id="involved-heading"
-            className="font-heading mb-3"
-            style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
-          >
-            Build this with us
-          </h2>
-          <p style={{ color: '#5A7068', fontSize: '17px' }}>
-            We grow stronger with every voice, hand and partnership.
-          </p>
-        </div>
+        <RevealOnScroll>
+          <div className="mb-10">
+            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+              Get Involved
+            </p>
+            <h2
+              id="involved-heading"
+              className="font-heading mb-3"
+              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
+            >
+              Build this with us
+            </h2>
+            <p style={{ color: '#5A7068', fontSize: '17px' }}>
+              We grow stronger with every voice, hand and partnership.
+            </p>
+          </div>
+        </RevealOnScroll>
 
         {/* 5-card horizontal grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
-          {INVOLVE_CARDS.map(({ title, body, icon }) => (
-            <article key={title} className="bg-white rounded-xl p-4 border" style={{ borderColor: '#E2DAC8' }}>
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center mb-3 shrink-0"
-                style={{ backgroundColor: '#EDEAE4', color: '#5A7068' }}
+          {INVOLVE_CARDS.map(({ title, body, icon }, index) => (
+            <RevealOnScroll key={title} delay={index * 0.1}>
+              <motion.article
+                className="bg-white rounded-xl p-4 border"
+                style={{ borderColor: '#E2DAC8' }}
+                whileHover={{
+                  y: -4,
+                  scale: 1.02,
+                  boxShadow: '0 12px 32px rgba(27, 58, 45, 0.10)',
+                  transition: { duration: 0.2 },
+                }}
               >
-                {icon}
-              </div>
-              <h3 className="font-heading mb-1 leading-tight" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
-              <p className="leading-relaxed" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
-            </article>
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center mb-3 shrink-0"
+                  style={{ backgroundColor: '#EDEAE4', color: '#5A7068' }}
+                >
+                  {icon}
+                </div>
+                <h3 className="font-heading mb-1 leading-tight" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
+                <p className="leading-relaxed" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
+              </motion.article>
+            </RevealOnScroll>
           ))}
         </div>
 
         {/* Tabbed form */}
-        <div
-          className="bg-white rounded-2xl border p-8"
-          style={{ borderColor: '#E2DAC8', maxWidth: '480px', margin: '0 auto' }}
-        >
-          <div className="flex flex-wrap gap-2 mb-7">
-            {FORM_TABS.map((tab, i) => (
-              <button
-                key={tab.label}
-                onClick={() => handleTabChange(i)}
-                className="text-xs font-semibold px-4 py-1.5 rounded-full transition-colors focus:outline-none"
-                style={
-                  activeTab === i
-                    ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
-                    : { backgroundColor: 'transparent', color: '#5A7068', border: '1px solid #E2DAC8' }
-                }
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {submitted ? (
-            <div className="py-10 text-center">
-              <p className="font-heading font-bold text-lg mb-2" style={{ color: '#1B3A2D' }}>Thank you!</p>
-              <p className="text-sm mb-6" style={{ color: '#5A7068' }}>We'll be in touch soon.</p>
-              <button onClick={handleReset} className="text-xs font-semibold underline focus:outline-none" style={{ color: '#2D7A5F' }}>
-                Submit another response
-              </button>
+        <RevealOnScroll delay={0.2}>
+          <div
+            className="bg-white rounded-2xl border p-8"
+            style={{ borderColor: '#E2DAC8', maxWidth: '480px', margin: '0 auto' }}
+          >
+            <div className="flex flex-wrap gap-2 mb-7">
+              {FORM_TABS.map((tab, i) => (
+                <button
+                  key={tab.label}
+                  onClick={() => handleTabChange(i)}
+                  className="text-xs font-semibold px-4 py-1.5 rounded-full transition-colors focus:outline-none"
+                  style={
+                    activeTab === i
+                      ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
+                      : { backgroundColor: 'transparent', color: '#5A7068', border: '1px solid #E2DAC8' }
+                  }
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="inv-name" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Full Name</label>
-                  <input id="inv-name" type="text" name="name" value={form.name} onChange={handleChange} required className={iClass} style={iStyle} />
+
+            {submitted ? (
+              <div className="py-10 text-center">
+                <p className="font-heading font-bold text-lg mb-2" style={{ color: '#1B3A2D' }}>Thank you!</p>
+                <p className="text-sm mb-6" style={{ color: '#5A7068' }}>We'll be in touch soon.</p>
+                <button onClick={handleReset} className="text-xs font-semibold underline focus:outline-none" style={{ color: '#2D7A5F' }}>
+                  Submit another response
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="inv-name" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Full Name</label>
+                    <input id="inv-name" type="text" name="name" value={form.name} onChange={handleChange} required className={iClass} style={iStyle} />
+                  </div>
+                  <div>
+                    <label htmlFor="inv-email" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Email</label>
+                    <input id="inv-email" type="email" name="email" value={form.email} onChange={handleChange} required className={iClass} style={iStyle} />
+                  </div>
                 </div>
                 <div>
-                  <label htmlFor="inv-email" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Email</label>
-                  <input id="inv-email" type="email" name="email" value={form.email} onChange={handleChange} required className={iClass} style={iStyle} />
+                  <label htmlFor="inv-city" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>City</label>
+                  <input id="inv-city" type="text" name="city" value={form.city} onChange={handleChange} className={iClass} style={iStyle} />
                 </div>
-              </div>
-              <div>
-                <label htmlFor="inv-city" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>City</label>
-                <input id="inv-city" type="text" name="city" value={form.city} onChange={handleChange} className={iClass} style={iStyle} />
-              </div>
-              <div>
-                <label htmlFor="inv-message" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>
-                  {FORM_TABS[activeTab].fieldLabel}
-                </label>
-                <textarea id="inv-message" name="message" value={form.message} onChange={handleChange} rows={3} className={`${iClass} resize-none`} style={iStyle} />
-              </div>
-              <button
-                type="submit"
-                className="text-sm font-bold px-6 py-2.5 rounded-full transition-opacity hover:opacity-85 focus:outline-none"
-                style={{ backgroundColor: '#2D5A3D', color: '#FFFFFF' }}
-              >
-                Send Message
-              </button>
-            </form>
-          )}
-        </div>
+                <div>
+                  <label htmlFor="inv-message" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>
+                    {FORM_TABS[activeTab].fieldLabel}
+                  </label>
+                  <textarea id="inv-message" name="message" value={form.message} onChange={handleChange} rows={3} className={`${iClass} resize-none`} style={iStyle} />
+                </div>
+                <motion.button
+                  type="submit"
+                  className="text-sm font-bold px-6 py-2.5 rounded-full focus:outline-none"
+                  style={{ backgroundColor: '#2D5A3D', color: '#FFFFFF' }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  Send Message
+                </motion.button>
+              </form>
+            )}
+          </div>
+        </RevealOnScroll>
       </div>
     </section>
   )
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: SUPPORT OUR MISSION — gradient donate card + amount widget
+   SECTION: SUPPORT OUR MISSION
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function DonateMission() {
@@ -1185,85 +1329,90 @@ function DonateMission() {
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="relative">
-          {/* Dark gradient card */}
-          <div
-            className="rounded-2xl p-10 lg:p-14"
-            style={{ background: 'linear-gradient(135deg, #4F6F5C 0%, #3A5547 100%)' }}
-          >
-            <div className="lg:max-w-[57%]">
-              <p className="uppercase mb-5" style={{ color: '#E8C547', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-                Support our mission
-              </p>
-              <h2
-                id="donate-heading"
-                className="font-heading text-white leading-[1.1] mb-6"
-                style={{ fontSize: '44px', fontWeight: 700 }}
-              >
-                Help us create safer mental health support systems for underserved communities.
-              </h2>
-              <p className="leading-relaxed mb-8" style={{ color: '#D4DECE', fontSize: '17px' }}>
-                Every contribution funds peer-support circles, awareness campaigns, mental health
-                resources, and the long road toward affordable professional care. We publish how
-                every naira and dollar is used, transparency is part of the trust.
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'Registered nonprofit, your gift is purpose-driven',
-                  '100% of donations go to programs & community',
-                  'Quarterly impact reports shared publicly',
-                ].map(item => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <IcoCheck size={16} color="#E8C547" />
-                    <span className="text-sm" style={{ color: '#D4DECE' }}>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Floating donate widget — absolute on desktop, stacks below on mobile */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 w-full mt-6 lg:mt-0 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:right-10 lg:w-72">
-            <p className="text-sm font-bold mb-4" style={{ color: '#1B3A2D' }}>
-              Choose an amount
-            </p>
-            <div className="grid grid-cols-4 gap-2 mb-3">
-              {DONATE_AMOUNTS.map(a => (
-                <button
-                  key={a}
-                  onClick={() => setAmount(a)}
-                  className="py-2 rounded-lg text-xs font-semibold transition-colors focus:outline-none"
-                  style={
-                    amount === a
-                      ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
-                      : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
-                  }
+        <RevealOnScroll>
+          <div className="relative">
+            {/* Dark gradient card */}
+            <div
+              className="rounded-2xl p-10 lg:p-14"
+              style={{ background: 'linear-gradient(135deg, #4F6F5C 0%, #3A5547 100%)' }}
+            >
+              <div className="lg:max-w-[57%]">
+                <p className="uppercase mb-5" style={{ color: '#E8C547', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+                  Support our mission
+                </p>
+                <h2
+                  id="donate-heading"
+                  className="font-heading text-white leading-[1.1] mb-6"
+                  style={{ fontSize: '44px', fontWeight: 700 }}
                 >
-                  {a}
-                </button>
-              ))}
+                  Help us create safer mental health support systems for underserved communities.
+                </h2>
+                <p className="leading-relaxed mb-8" style={{ color: '#D4DECE', fontSize: '17px' }}>
+                  Every contribution funds peer-support circles, awareness campaigns, mental health
+                  resources, and the long road toward affordable professional care. We publish how
+                  every naira and dollar is used, transparency is part of the trust.
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    'Registered nonprofit, your gift is purpose-driven',
+                    '100% of donations go to programs & community',
+                    'Quarterly impact reports shared publicly',
+                  ].map(item => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <IcoCheck size={16} color="#E8C547" />
+                      <span className="text-sm" style={{ color: '#D4DECE' }}>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <button
-              onClick={() => setAmount('other')}
-              className="w-full py-2.5 rounded-lg text-sm font-medium mb-3 transition-colors focus:outline-none"
-              style={
-                amount === 'other'
-                  ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
-                  : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
-              }
-            >
-              Other Amount
-            </button>
-            <button
-              onClick={() => console.log('Donate:', amount)}
-              className="w-full py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-opacity hover:opacity-85 focus:outline-none"
-              style={{ backgroundColor: '#E8C547', color: '#1B3A2D' }}
-            >
-              <IcoHeart size={15} filled />
-              Donate Now
-            </button>
+
+            {/* Floating donate widget */}
+            <div className="bg-white rounded-2xl shadow-xl p-6 w-full mt-6 lg:mt-0 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:right-10 lg:w-72">
+              <p className="text-sm font-bold mb-4" style={{ color: '#1B3A2D' }}>
+                Choose an amount
+              </p>
+              <div className="grid grid-cols-4 gap-2 mb-3">
+                {DONATE_AMOUNTS.map(a => (
+                  <button
+                    key={a}
+                    onClick={() => setAmount(a)}
+                    className="py-2 rounded-lg text-xs font-semibold transition-colors focus:outline-none"
+                    style={
+                      amount === a
+                        ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
+                        : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
+                    }
+                  >
+                    {a}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setAmount('other')}
+                className="w-full py-2.5 rounded-lg text-sm font-medium mb-3 transition-colors focus:outline-none"
+                style={
+                  amount === 'other'
+                    ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
+                    : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
+                }
+              >
+                Other Amount
+              </button>
+              <motion.button
+                onClick={() => console.log('Donate:', amount)}
+                className="w-full py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 focus:outline-none"
+                style={{ backgroundColor: '#E8C547', color: '#1B3A2D' }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
+              >
+                <IcoHeart size={15} filled />
+                Donate Now
+              </motion.button>
+            </div>
           </div>
-        </div>
+        </RevealOnScroll>
       </div>
     </section>
   )
@@ -1282,52 +1431,70 @@ function BlogResources() {
       className="py-20 px-4"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-end justify-between flex-wrap gap-4 mb-12">
-          <div>
-            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-              Blog &amp; Resources
-            </p>
-            <h2
-              id="blog-heading"
-              className="font-heading leading-[1.1]"
-              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800 }}
+        <RevealOnScroll>
+          <div className="flex items-end justify-between flex-wrap gap-4 mb-12">
+            <div>
+              <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+                Blog &amp; Resources
+              </p>
+              <h2
+                id="blog-heading"
+                className="font-heading leading-[1.1]"
+                style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800 }}
+              >
+                Read, breathe, share.
+              </h2>
+            </div>
+            <a
+              href="#"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-75"
+              style={{ color: '#2D7A5F' }}
             >
-              Read, breathe, share.
-            </h2>
+              All Resources
+              <IcoArrowRight size={14} />
+            </a>
           </div>
-          <a
-            href="#"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold transition-opacity hover:opacity-75"
-            style={{ color: '#2D7A5F' }}
-          >
-            All Resources
-            <IcoArrowRight size={14} />
-          </a>
-        </div>
+        </RevealOnScroll>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {BLOG_POSTS.map(({ category, title, readTime, imgSrc, imgAlt }) => (
-            <article
-              key={title}
-              className="bg-white rounded-xl border overflow-hidden hover:shadow-md transition-shadow duration-200 cursor-pointer"
-              style={{ borderColor: '#E2DAC8' }}
-            >
-              <div className="aspect-video overflow-hidden">
-                <img src={imgSrc} alt={imgAlt} className="w-full h-full object-cover" width={560} height={315} />
-              </div>
-              <div className="p-5">
-                <p
-                  className="text-[10px] font-bold uppercase tracking-widest mb-3"
-                  style={{ color: BLOG_CATEGORY_COLOR[category] ?? '#5A7068' }}
-                >
-                  {category}
-                </p>
-                <h3 className="font-heading leading-snug mb-4" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>
-                  {title}
-                </h3>
-                <p className="text-xs" style={{ color: '#8A9A8E' }}>{readTime}</p>
-              </div>
-            </article>
+          {BLOG_POSTS.map(({ category, title, readTime, imgSrc, imgAlt }, index) => (
+            <RevealOnScroll key={title} delay={index * 0.1}>
+              <motion.article
+                className="bg-white rounded-xl border overflow-hidden cursor-pointer"
+                style={{ borderColor: '#E2DAC8' }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: '0 16px 40px rgba(27, 58, 45, 0.12)',
+                  transition: { duration: 0.25, ease: 'easeOut' },
+                }}
+              >
+                <div className="aspect-video overflow-hidden">
+                  <motion.img
+                    src={imgSrc}
+                    alt={imgAlt}
+                    className="w-full h-full object-cover"
+                    width={560}
+                    height={315}
+                    loading="lazy"
+                    decoding="async"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                  />
+                </div>
+                <div className="p-5">
+                  <p
+                    className="text-[10px] font-bold uppercase tracking-widest mb-3"
+                    style={{ color: BLOG_CATEGORY_COLOR[category] ?? '#5A7068' }}
+                  >
+                    {category}
+                  </p>
+                  <h3 className="font-heading leading-snug mb-4" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>
+                    {title}
+                  </h3>
+                  <p className="text-xs" style={{ color: '#8A9A8E' }}>{readTime}</p>
+                </div>
+              </motion.article>
+            </RevealOnScroll>
           ))}
         </div>
       </div>
@@ -1336,7 +1503,7 @@ function BlogResources() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: CONTACT — form + info column + newsletter
+   SECTION: CONTACT
    ═══════════════════════════════════════════════════════════════════════════ */
 
 function ContactSection() {
@@ -1362,155 +1529,149 @@ function ContactSection() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
         {/* Left info column */}
-        <div>
-          <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
-            Contact
-          </p>
-          <h2
-            id="contact-heading"
-            className="font-heading leading-[1.1] mb-5"
-            style={{ color: '#1B3A2D', fontSize: '44px', fontWeight: 700 }}
-          >
-            Please reach out, we read every message.
-          </h2>
-          <p className="leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px', fontSize: '17px' }}>
-            Whether it's a question, an idea, or just hello, we're glad you're here.
-          </p>
-
-          <a
-            href="mailto:hello@mindfullyaware.org"
-            className="inline-flex items-center gap-2.5 text-sm font-medium mb-8 hover:opacity-70 transition-opacity"
-            style={{ color: '#1B3A2D' }}
-          >
-            <IcoEnvelope size={16} />
-            hello@mindfullyaware.org
-          </a>
-
-          <div className="flex gap-2 mb-10">
-            {SOCIAL_PLATFORMS.map(({ label, icon }) => (
-              <button
-                key={label}
-                aria-label={label}
-                className="w-9 h-9 rounded-full flex items-center justify-center transition-shadow hover:shadow-sm focus:outline-none"
-                style={{ backgroundColor: '#EDE9E0', color: '#5A7068' }}
-              >
-                {icon}
-              </button>
-            ))}
-          </div>
-
-          {/* Newsletter card */}
-          <div className="rounded-xl border p-5" style={{ backgroundColor: '#F5EFE3', borderColor: '#E2DAC8' }}>
-            <p className="font-bold text-sm mb-1" style={{ color: '#1B3A2D' }}>Stay in the loop</p>
-            <p className="text-xs leading-relaxed mb-4" style={{ color: '#5A7068' }}>
-              Quiet, monthly notes. No noise, just stories and updates.
+        <RevealOnScroll>
+          <div>
+            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+              Contact
             </p>
-            {newsSubscribed ? (
-              <p className="text-xs font-semibold" style={{ color: '#2D7A5F' }}>✓ You're subscribed. Thank you!</p>
-            ) : (
-              <form onSubmit={handleNewsSubmit} className="flex gap-2">
-                <input
-                  type="email"
-                  value={newsEmail}
-                  onChange={e => setNewsEmail(e.target.value)}
-                  required
-                  placeholder="your@email.com"
-                  className="flex-1 min-w-0 rounded-full px-4 py-2 text-xs outline-none"
-                  style={{ border: '1px solid #C8BDAA', backgroundColor: '#FFFFFF', color: '#1B3A2D' }}
-                />
+            <h2
+              id="contact-heading"
+              className="font-heading leading-[1.1] mb-5"
+              style={{ color: '#1B3A2D', fontSize: '44px', fontWeight: 700 }}
+            >
+              Please reach out, we read every message.
+            </h2>
+            <p className="leading-relaxed mb-8" style={{ color: '#5A7068', maxWidth: '380px', fontSize: '17px' }}>
+              Whether it's a question, an idea, or just hello, we're glad you're here.
+            </p>
+
+            <a
+              href="mailto:hello@mindfullyaware.org"
+              className="inline-flex items-center gap-2.5 text-sm font-medium mb-8 hover:opacity-70 transition-opacity"
+              style={{ color: '#1B3A2D' }}
+            >
+              <IcoEnvelope size={16} />
+              hello@mindfullyaware.org
+            </a>
+
+            <div className="flex gap-2 mb-10">
+              {SOCIAL_PLATFORMS.map(({ label, icon }) => (
                 <button
-                  type="submit"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-white shrink-0 transition-opacity hover:opacity-85 focus:outline-none"
-                  style={{ backgroundColor: '#2D5A3D' }}
+                  key={label}
+                  aria-label={label}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-shadow hover:shadow-sm focus:outline-none"
+                  style={{ backgroundColor: '#EDE9E0', color: '#5A7068' }}
                 >
-                  <IcoSend size={12} />
-                  Subscribe
+                  {icon}
                 </button>
+              ))}
+            </div>
+
+            {/* Newsletter card */}
+            <div className="rounded-xl border p-5" style={{ backgroundColor: '#F5EFE3', borderColor: '#E2DAC8' }}>
+              <p className="font-bold text-sm mb-1" style={{ color: '#1B3A2D' }}>Stay in the loop</p>
+              <p className="text-xs leading-relaxed mb-4" style={{ color: '#5A7068' }}>
+                Quiet, monthly notes. No noise, just stories and updates.
+              </p>
+              {newsSubscribed ? (
+                <p className="text-xs font-semibold" style={{ color: '#2D7A5F' }}>✓ You're subscribed. Thank you!</p>
+              ) : (
+                <form onSubmit={handleNewsSubmit} className="flex gap-2">
+                  <input
+                    type="email"
+                    value={newsEmail}
+                    onChange={e => setNewsEmail(e.target.value)}
+                    required
+                    placeholder="your@email.com"
+                    className="flex-1 min-w-0 rounded-full px-4 py-2 text-xs outline-none"
+                    style={{ border: '1px solid #C8BDAA', backgroundColor: '#FFFFFF', color: '#1B3A2D' }}
+                  />
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-white shrink-0 transition-opacity hover:opacity-85 focus:outline-none"
+                    style={{ backgroundColor: '#2D5A3D' }}
+                  >
+                    <IcoSend size={12} />
+                    Subscribe
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </RevealOnScroll>
+
+        {/* Right — contact form card */}
+        <RevealOnScroll delay={0.15}>
+          <div className="bg-white rounded-2xl border p-8" style={{ borderColor: '#E2DAC8' }}>
+            {submitted ? (
+              <div className="py-10 text-center">
+                <p className="font-heading font-bold text-xl mb-2" style={{ color: '#1B3A2D' }}>Message sent!</p>
+                <p className="text-sm mb-6" style={{ color: '#5A7068' }}>
+                  Thank you for reaching out. We'll get back to you soon.
+                </p>
+                <button
+                  onClick={() => { setSubmitted(false); setForm(EMPTY_CONTACT_FORM) }}
+                  className="text-xs font-semibold underline focus:outline-none"
+                  style={{ color: '#2D7A5F' }}
+                >
+                  Send another message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label htmlFor="ct-name" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Full Name</label>
+                  <input id="ct-name" type="text" name="name" value={form.name} onChange={handleChange} required className={iClass} style={iStyle} />
+                </div>
+                <div>
+                  <label htmlFor="ct-email" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Email</label>
+                  <input id="ct-email" type="email" name="email" value={form.email} onChange={handleChange} required className={iClass} style={iStyle} />
+                </div>
+                <div>
+                  <label htmlFor="ct-message" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Message</label>
+                  <textarea id="ct-message" name="message" value={form.message} onChange={handleChange} rows={4} required className={`${iClass} resize-none`} style={iStyle} />
+                </div>
+                <motion.button
+                  type="submit"
+                  className="w-full py-3 rounded-full text-sm font-bold text-white focus:outline-none"
+                  style={{ backgroundColor: '#2D5A3D' }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  Send Message
+                </motion.button>
               </form>
             )}
           </div>
-        </div>
-
-        {/* Right — contact form card */}
-        <div className="bg-white rounded-2xl border p-8" style={{ borderColor: '#E2DAC8' }}>
-          {submitted ? (
-            <div className="py-10 text-center">
-              <p className="font-heading font-bold text-xl mb-2" style={{ color: '#1B3A2D' }}>Message sent!</p>
-              <p className="text-sm mb-6" style={{ color: '#5A7068' }}>
-                Thank you for reaching out. We'll get back to you soon.
-              </p>
-              <button
-                onClick={() => { setSubmitted(false); setForm(EMPTY_CONTACT_FORM) }}
-                className="text-xs font-semibold underline focus:outline-none"
-                style={{ color: '#2D7A5F' }}
-              >
-                Send another message
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label htmlFor="ct-name" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Full Name</label>
-                <input id="ct-name" type="text" name="name" value={form.name} onChange={handleChange} required className={iClass} style={iStyle} />
-              </div>
-              <div>
-                <label htmlFor="ct-email" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Email</label>
-                <input id="ct-email" type="email" name="email" value={form.email} onChange={handleChange} required className={iClass} style={iStyle} />
-              </div>
-              <div>
-                <label htmlFor="ct-message" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Message</label>
-                <textarea id="ct-message" name="message" value={form.message} onChange={handleChange} rows={4} required className={`${iClass} resize-none`} style={iStyle} />
-              </div>
-              <button
-                type="submit"
-                className="w-full py-3 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-85 focus:outline-none"
-                style={{ backgroundColor: '#2D5A3D' }}
-              >
-                Send Message
-              </button>
-            </form>
-          )}
-        </div>
+        </RevealOnScroll>
       </div>
     </section>
   )
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   PAGE — assembles all 14 sections in order
+   PAGE
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export default function HomePage() {
   return (
     <>
-      {/* ── 1. Navbar ── */}
       <Navbar />
       <main className="pt-[138px]">
-      {/* ── 2. Hero ── */}
-      <Hero />
-      {/* ── 3. Stats Bar ── */}
-      <StatsBar />
-      {/* ── 4. Our Story ── */}
-      <OurStory />
-      {/* ── 5. The Problem ── */}
-      <ProblemSection />
-      {/* ── 6. You Are Not Alone ── */}
-      <NotAloneSection />
-      {/* ── 7. What We're Building ── */}
-      <BuildingSection />
-      {/* ── 8. Voices from our Community ── */}
-      <VoicesBanner />
-      {/* ── 9. Community & Social ── */}
-      <CommunityAndSocial />
-      {/* ── 10. Get Involved ── */}
-      <GetInvolvedSection />
-      {/* ── 11. Support Our Mission ── */}
-      <DonateMission />
-      {/* ── 12. Blog & Resources ── */}
-      <BlogResources />
-      {/* ── 13. Contact ── */}
-      <ContactSection />
-</main>
+        <Hero />
+        <StatsBar />
+        <OurStory />
+        <ProblemSection />
+        <NotAloneSection />
+        <BuildingSection />
+        <VoicesBanner />
+        <CommunityAndSocial />
+        <GetInvolvedSection />
+        <DonateMission />
+        <BlogResources />
+        <ContactSection />
+      </main>
     </>
   )
 }
