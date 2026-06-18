@@ -54,7 +54,9 @@ export default function Navbar() {
               href={href}
               className='text-sm font-medium transition-opacity duration-150 hover:opacity-60 whitespace-nowrap'
               style={{ color: '#1B3A2D' }}>
-              {label}
+              <p className="font-['Helvetica_Neue_Light',_Helvetica,_Arial,_sans-serif] text-[18px]">
+               {label}
+              </p>
             </a>
           ))}
         </nav>
