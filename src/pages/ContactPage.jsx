@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useForm, ValidationError } from '@formspree/react'
 
 // ── FAQ data ────────────────────────────────────────────────────────────────
 const FAQS = [
@@ -38,10 +39,10 @@ const SUBJECTS = [
   'Press & Media',
 ]
 
-function ContactForm() {
+function ContactFormFields({ onReset }) {
+  const [state, formspreeSubmit] = useForm('xjgqwkpr');
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState('idle') // idle | loading | success
 
   const validate = () => {
     const e = {}
@@ -66,11 +67,11 @@ function ContactForm() {
     e.preventDefault()
     const e2 = validate()
     if (Object.keys(e2).length) { setErrors(e2); return }
-    setStatus('loading')
-    setTimeout(() => setStatus('success'), 1600)
+    setErrors({})
+    formspreeSubmit(e)
   }
 
-  if (status === 'success') {
+  if (state.succeeded) {
     return (
       <div className="flex flex-col items-center justify-center text-center py-20 px-6">
         <div
@@ -88,7 +89,7 @@ function ContactForm() {
           Thank you for reaching out. Our team will get back to you within 2–3 business days.
         </p>
         <button
-          onClick={() => { setForm({ name: '', email: '', subject: '', message: '' }); setStatus('idle') }}
+          onClick={onReset}
           className="text-sm font-semibold px-6 py-3 rounded-full transition-opacity hover:opacity-80"
           style={{ backgroundColor: '#2D5A3D', color: '#fff' }}
         >
@@ -100,9 +101,7 @@ function ContactForm() {
 
   const fieldClass = (field) =>
     `w-full rounded-lg px-4 py-3 text-sm outline-none border transition-colors focus:ring-2 ${
-      errors[field]
-        ? 'border-red-400 focus:ring-red-200'
-        : 'focus:ring-2 focus:ring-green-200'
+      errors[field] ? 'border-red-400 focus:ring-red-200' : 'focus:ring-2 focus:ring-green-200'
     }`
 
   const fieldStyle = (field) => ({
@@ -121,6 +120,7 @@ function ContactForm() {
         <input
           id="cf-name"
           type="text"
+          name="name"
           autoComplete="name"
           placeholder="Your name"
           value={form.name}
@@ -130,6 +130,7 @@ function ContactForm() {
           aria-describedby={errors.name ? 'cf-name-err' : undefined}
         />
         {errors.name && <p id="cf-name-err" className="mt-1 text-xs text-red-500">{errors.name}</p>}
+        <ValidationError prefix="Name" field="name" errors={state.errors} className="mt-1 text-xs text-red-500" />
       </div>
 
       {/* Email */}
@@ -140,6 +141,7 @@ function ContactForm() {
         <input
           id="cf-email"
           type="email"
+          name="email"
           autoComplete="email"
           placeholder="you@example.com"
           value={form.email}
@@ -149,6 +151,7 @@ function ContactForm() {
           aria-describedby={errors.email ? 'cf-email-err' : undefined}
         />
         {errors.email && <p id="cf-email-err" className="mt-1 text-xs text-red-500">{errors.email}</p>}
+        <ValidationError prefix="Email" field="email" errors={state.errors} className="mt-1 text-xs text-red-500" />
       </div>
 
       {/* Subject */}
@@ -158,6 +161,7 @@ function ContactForm() {
         </label>
         <select
           id="cf-subject"
+          name="subject"
           value={form.subject}
           onChange={handleChange('subject')}
           className={fieldClass('subject')}
@@ -168,6 +172,7 @@ function ContactForm() {
           {SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
         {errors.subject && <p id="cf-subject-err" className="mt-1 text-xs text-red-500">{errors.subject}</p>}
+        <ValidationError prefix="Subject" field="subject" errors={state.errors} className="mt-1 text-xs text-red-500" />
       </div>
 
       {/* Message */}
@@ -177,6 +182,7 @@ function ContactForm() {
         </label>
         <textarea
           id="cf-message"
+          name="message"
           rows={5}
           placeholder="Tell us how we can help…"
           value={form.message}
@@ -186,18 +192,24 @@ function ContactForm() {
           aria-describedby={errors.message ? 'cf-message-err' : undefined}
         />
         {errors.message && <p id="cf-message-err" className="mt-1 text-xs text-red-500">{errors.message}</p>}
+        <ValidationError prefix="Message" field="message" errors={state.errors} className="mt-1 text-xs text-red-500" />
       </div>
 
       <button
         type="submit"
-        disabled={status === 'loading'}
+        disabled={state.submitting}
         className="w-full py-3.5 rounded-xl text-sm font-bold text-white transition-opacity hover:opacity-85 disabled:opacity-60"
         style={{ backgroundColor: '#2D5A3D' }}
       >
-        {status === 'loading' ? 'Sending…' : 'Send Message'}
+        {state.submitting ? 'Sending…' : 'Send Message'}
       </button>
     </form>
   )
+}
+
+function ContactForm() {
+  const [resetKey, setResetKey] = useState(0)
+  return <ContactFormFields key={resetKey} onReset={() => setResetKey((k) => k + 1)} />
 }
 
 // ── Section: Page Hero ──────────────────────────────────────────────────────

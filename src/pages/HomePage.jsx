@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
+import { useForm, ValidationError } from '@formspree/react'
 import heroImg from '../images/hero-page-girl.png'
 import communityGirl from '../images/community-girl.png'
 
@@ -380,12 +381,16 @@ const INVOLVE_CARDS = [
 ]
 
 const FORM_TABS = [
-  { label: 'Volunteer Sign-Up',     fieldLabel: 'Why would you like to volunteer?'      },
-  { label: 'Partner Sign-Up',       fieldLabel: 'How would you like to partner?'        },
-  { label: 'Collaboration Sign-Up', fieldLabel: 'What would you like to collaborate on?' },
+  { key: 'volunteer',     label: 'Volunteer Sign-Up'     },
+  { key: 'partner',       label: 'Partner Sign-Up'       },
+  { key: 'collaboration', label: 'Collaboration Sign-Up' },
 ]
 
-const EMPTY_INVOLVE_FORM = { name: '', email: '', city: '', message: '' }
+const FORM_ENDPOINTS = {
+  volunteer: 'xeebgolb',
+  partner: 'mqevqayw',
+  collaboration: 'mwvdopwp',
+};
 
 const DONATE_AMOUNTS = ['$10', '$25', '$50', '$100']
 
@@ -1173,21 +1178,160 @@ function CommunityAndSocial() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   SIGN-UP FORM (Formspree)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+function SignUpForm({ endpointId, tabLabel }) {
+  const [state, handleSubmit] = useForm(endpointId)
+
+  if (state.succeeded) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-12 px-8"
+      >
+        <div
+          className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          style={{ backgroundColor: '#EFF7F2' }}
+        >
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M6 16l7 7 13-13" stroke="#2D7A5F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <h3
+          className="font-bold mb-2"
+          style={{ fontSize: '20px', color: '#1B3A2D', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+        >
+          Thank you for signing up!
+        </h3>
+        <p style={{ fontSize: '15px', color: '#5A7068' }}>
+          We've received your {tabLabel} application. We'll be in touch within 48 hours.
+        </p>
+      </motion.div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label htmlFor="inv-name" className="block text-sm font-medium mb-1.5" style={{ color: '#1B3A2D' }}>
+            Full Name
+          </label>
+          <input
+            id="inv-name"
+            type="text"
+            name="name"
+            required
+            placeholder="Your full name"
+            className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-shadow"
+            style={{ border: '1px solid #C8BDAA', backgroundColor: 'white', color: '#1B3A2D', fontSize: '15px' }}
+            onFocus={e => { e.target.style.boxShadow = '0 0 0 3px rgba(45,122,95,0.15)' }}
+            onBlur={e => { e.target.style.boxShadow = 'none' }}
+          />
+          <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-xs mt-1" />
+        </div>
+        <div>
+          <label htmlFor="inv-email" className="block text-sm font-medium mb-1.5" style={{ color: '#1B3A2D' }}>
+            Email Address
+          </label>
+          <input
+            id="inv-email"
+            type="email"
+            name="email"
+            required
+            placeholder="your@email.com"
+            className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-shadow"
+            style={{ border: '1px solid #C8BDAA', backgroundColor: 'white', color: '#1B3A2D', fontSize: '15px' }}
+            onFocus={e => { e.target.style.boxShadow = '0 0 0 3px rgba(45,122,95,0.15)' }}
+            onBlur={e => { e.target.style.boxShadow = 'none' }}
+          />
+          <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="inv-city" className="block text-sm font-medium mb-1.5" style={{ color: '#1B3A2D' }}>
+          City / Country
+        </label>
+        <input
+          id="inv-city"
+          type="text"
+          name="city"
+          placeholder="e.g. Lagos, Nigeria"
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-shadow"
+          style={{ border: '1px solid #C8BDAA', backgroundColor: 'white', color: '#1B3A2D', fontSize: '15px' }}
+          onFocus={e => { e.target.style.boxShadow = '0 0 0 3px rgba(45,122,95,0.15)' }}
+          onBlur={e => { e.target.style.boxShadow = 'none' }}
+        />
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="inv-message" className="block text-sm font-medium mb-1.5" style={{ color: '#1B3A2D' }}>
+          {tabLabel === 'Volunteer'
+            ? 'Why would you like to volunteer?'
+            : tabLabel === 'Partner'
+            ? 'How would you like to partner with us?'
+            : 'What would you like to collaborate on?'}
+        </label>
+        <textarea
+          id="inv-message"
+          name="message"
+          rows={4}
+          required
+          placeholder="Tell us a little about yourself and your interest..."
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-shadow resize-none"
+          style={{ border: '1px solid #C8BDAA', backgroundColor: 'white', color: '#1B3A2D', fontSize: '15px' }}
+          onFocus={e => { e.target.style.boxShadow = '0 0 0 3px rgba(45,122,95,0.15)' }}
+          onBlur={e => { e.target.style.boxShadow = 'none' }}
+        />
+        <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
+      </div>
+
+      <input type="hidden" name="form_type" value={tabLabel} />
+
+      <motion.button
+        type="submit"
+        disabled={state.submitting}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white transition-opacity"
+        style={{
+          backgroundColor: state.submitting ? '#547563' : '#2D5A3D',
+          fontSize: '15px',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+          cursor: state.submitting ? 'not-allowed' : 'pointer',
+        }}
+      >
+        {state.submitting ? (
+          <>
+            <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="3" strokeDasharray="30 70" />
+            </svg>
+            Sending...
+          </>
+        ) : (
+          <>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+            Send Message
+          </>
+        )}
+      </motion.button>
+    </form>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    SECTION: GET INVOLVED
    ═══════════════════════════════════════════════════════════════════════════ */
 
+const TAB_LABEL = { volunteer: 'Volunteer', partner: 'Partner', collaboration: 'Collaboration' }
+
 function GetInvolvedSection() {
-  const [activeTab, setActiveTab] = useState(0)
-  const [form, setForm] = useState(EMPTY_INVOLVE_FORM)
-  const [submitted, setSubmitted] = useState(false)
-
-  function handleChange(e) { setForm(prev => ({ ...prev, [e.target.name]: e.target.value })) }
-  function handleTabChange(i) { setActiveTab(i); setSubmitted(false) }
-  function handleSubmit(e) { e.preventDefault(); console.log({ tab: FORM_TABS[activeTab].label, ...form }); setSubmitted(true) }
-  function handleReset() { setSubmitted(false); setForm(EMPTY_INVOLVE_FORM) }
-
-  const iStyle = { border: '1px solid #C8BDAA', backgroundColor: '#FFFFFF', color: '#1B3A2D' }
-  const iClass = 'w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-colors'
+  const [activeTab, setActiveTab] = useState('volunteer')
 
   return (
     <section
@@ -1249,13 +1393,13 @@ function GetInvolvedSection() {
             style={{ borderColor: '#E2DAC8', maxWidth: '480px', margin: '0 auto' }}
           >
             <div className="flex flex-wrap gap-2 mb-7">
-              {FORM_TABS.map((tab, i) => (
+              {FORM_TABS.map((tab) => (
                 <button
-                  key={tab.label}
-                  onClick={() => handleTabChange(i)}
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
                   className="text-xs font-semibold px-4 py-1.5 rounded-full transition-colors focus:outline-none"
                   style={
-                    activeTab === i
+                    activeTab === tab.key
                       ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
                       : { backgroundColor: 'transparent', color: '#5A7068', border: '1px solid #E2DAC8' }
                   }
@@ -1264,49 +1408,11 @@ function GetInvolvedSection() {
                 </button>
               ))}
             </div>
-
-            {submitted ? (
-              <div className="py-10 text-center">
-                <p className="font-heading font-bold text-lg mb-2" style={{ color: '#1B3A2D' }}>Thank you!</p>
-                <p className="text-sm mb-6" style={{ color: '#5A7068' }}>We'll be in touch soon.</p>
-                <button onClick={handleReset} className="text-xs font-semibold underline focus:outline-none" style={{ color: '#2D7A5F' }}>
-                  Submit another response
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="inv-name" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Full Name</label>
-                    <input id="inv-name" type="text" name="name" value={form.name} onChange={handleChange} required className={iClass} style={iStyle} />
-                  </div>
-                  <div>
-                    <label htmlFor="inv-email" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>Email</label>
-                    <input id="inv-email" type="email" name="email" value={form.email} onChange={handleChange} required className={iClass} style={iStyle} />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="inv-city" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>City</label>
-                  <input id="inv-city" type="text" name="city" value={form.city} onChange={handleChange} className={iClass} style={iStyle} />
-                </div>
-                <div>
-                  <label htmlFor="inv-message" className="block text-xs font-medium mb-1.5" style={{ color: '#1B3A2D' }}>
-                    {FORM_TABS[activeTab].fieldLabel}
-                  </label>
-                  <textarea id="inv-message" name="message" value={form.message} onChange={handleChange} rows={3} className={`${iClass} resize-none`} style={iStyle} />
-                </div>
-                <motion.button
-                  type="submit"
-                  className="text-sm font-bold px-6 py-2.5 rounded-full focus:outline-none"
-                  style={{ backgroundColor: '#2D5A3D', color: '#FFFFFF' }}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  Send Message
-                </motion.button>
-              </form>
-            )}
+            <SignUpForm
+              key={activeTab}
+              endpointId={FORM_ENDPOINTS[activeTab]}
+              tabLabel={TAB_LABEL[activeTab]}
+            />
           </div>
         </RevealOnScroll>
       </div>
