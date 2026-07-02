@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useForm, ValidationError } from '@formspree/react'
+import { usePaystackPayment } from 'react-paystack'
 import heroImg from '../images/hero-page-girl.png'
 import communityGirl from '../images/community-girl.png'
 
@@ -391,8 +392,6 @@ const FORM_ENDPOINTS = {
   partner: 'mqevqayw',
   collaboration: 'mwvdopwp',
 };
-
-const DONATE_AMOUNTS = ['$10', '$25', '$50', '$100']
 
 const BLOG_POSTS = [
   {
@@ -1424,9 +1423,256 @@ function GetInvolvedSection() {
    SECTION: SUPPORT OUR MISSION
    ═══════════════════════════════════════════════════════════════════════════ */
 
-function DonateMission() {
-  const [amount, setAmount] = useState('$25')
+const PAYSTACK_PUBLIC_KEY = 'pk_test_57fb9ad42a73e764aed9dc3e155572681819f3d8';
+const NONPROFIT_EMAIL = 'hello@mindfullyaware.org'
 
+const PRESET_AMOUNTS = [
+  { label: '$10', value: 10, naira: 15000 },
+  { label: '$25', value: 25, naira: 37500 },
+  { label: '$50', value: 50, naira: 75000 },
+  { label: '$100', value: 100, naira: 150000 },
+]
+
+function DonationWidget() {
+  const [selectedAmount, setSelectedAmount] = useState(25)
+  const [customAmount, setCustomAmount] = useState('')
+  const [showCustom, setShowCustom] = useState(false)
+  const [donorEmail, setDonorEmail] = useState('')
+  const [donorName, setDonorName] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [emailError, setEmailError] = useState('')
+
+  // Amount in kobo (Paystack uses smallest currency unit)
+  const amountInKobo = showCustom && customAmount
+    ? Math.round(parseFloat(customAmount) * 100)
+    : (PRESET_AMOUNTS.find(a => a.value === selectedAmount)?.naira || 0) * 100
+
+  const config = {
+    email: donorEmail || NONPROFIT_EMAIL,
+    amount: amountInKobo,
+    publicKey: PAYSTACK_PUBLIC_KEY,
+    metadata: {
+      custom_fields: [
+        { display_name: 'Donor Name', variable_name: 'donor_name', value: donorName },
+        { display_name: 'Organization', variable_name: 'org', value: 'Mindfully Aware' },
+      ]
+    }
+  }
+
+  const initializePayment = usePaystackPayment(config)
+
+  const onSuccess = (reference) => {
+    console.log('Payment successful:', reference)
+    setSuccess(true)
+  }
+
+  const onClose = () => {
+    console.log('Payment modal closed')
+  }
+
+  const handleDonate = () => {
+    if (!donorEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(donorEmail)) {
+      setEmailError('Please enter a valid email address')
+      return
+    }
+    setEmailError('')
+    initializePayment({ onSuccess, onClose, config: { reference: `mindfully_${Date.now()}` } })
+  }
+
+  if (success) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-10 px-6"
+        style={{ backgroundColor: 'white', borderRadius: '16px' }}
+      >
+        <div
+          className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          style={{ backgroundColor: '#EFF7F2' }}
+        >
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M6 16l7 7 13-13" stroke="#2D7A5F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <h3
+          className="font-bold mb-2"
+          style={{ fontSize: '20px', color: '#1B3A2D', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+        >
+          Thank you for your donation!
+        </h3>
+        <p style={{ fontSize: '15px', color: '#5A7068', lineHeight: 1.6 }}>
+          Your contribution helps build safer mental health support systems across Africa. A receipt has been sent to {donorEmail}.
+        </p>
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => { setSuccess(false); setDonorEmail(''); setDonorName('') }}
+          className="mt-6 px-6 py-2.5 rounded-full text-sm font-semibold"
+          style={{ backgroundColor: '#EFF7F2', color: '#2D5A3D' }}
+        >
+          Donate Again
+        </motion.button>
+      </motion.div>
+    )
+  }
+
+  return (
+    <div
+      className="p-7"
+      style={{ backgroundColor: 'white', borderRadius: '16px', boxShadow: '0 8px 32px rgba(27,58,45,0.12)' }}
+    >
+      {/* Amount label */}
+      <p
+        className="font-semibold mb-4"
+        style={{ fontSize: '15px', color: '#1B3A2D', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      >
+        Choose an amount
+      </p>
+
+      {/* Preset amount pills */}
+      <div className="grid grid-cols-4 gap-2 mb-3">
+        {PRESET_AMOUNTS.map(({ label, value }) => (
+          <motion.button
+            key={value}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => { setSelectedAmount(value); setShowCustom(false) }}
+            className="py-2.5 rounded-lg text-sm font-semibold transition-colors"
+            style={{
+              backgroundColor: selectedAmount === value && !showCustom ? '#2D5A3D' : '#F5F0E8',
+              color: selectedAmount === value && !showCustom ? 'white' : '#1B3A2D',
+              fontSize: '14px',
+            }}
+          >
+            {label}
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Custom amount toggle */}
+      <motion.button
+        whileHover={{ scale: 1.01 }}
+        onClick={() => { setShowCustom(!showCustom); setSelectedAmount(null) }}
+        className="w-full py-2.5 rounded-lg text-sm font-medium mb-4"
+        style={{
+          backgroundColor: showCustom ? '#EFF7F2' : '#F5F0E8',
+          color: '#2D5A3D',
+          border: showCustom ? '1px solid #2D7A5F' : '1px solid transparent',
+          fontSize: '14px',
+        }}
+      >
+        Other Amount (USD)
+      </motion.button>
+
+      {/* Custom amount input */}
+      {showCustom && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="mb-4"
+        >
+          <input
+            type="number"
+            min="1"
+            placeholder="Enter amount in USD"
+            value={customAmount}
+            onChange={e => setCustomAmount(e.target.value)}
+            className="w-full rounded-lg px-4 py-3 text-sm outline-none"
+            style={{
+              border: '1px solid #C8BDAA',
+              backgroundColor: 'white',
+              color: '#1B3A2D',
+              fontSize: '15px',
+            }}
+            onFocus={e => e.target.style.boxShadow = '0 0 0 3px rgba(45,122,95,0.15)'}
+            onBlur={e => e.target.style.boxShadow = 'none'}
+          />
+        </motion.div>
+      )}
+
+      {/* Donor name */}
+      <div className="mb-3">
+        <input
+          type="text"
+          placeholder="Your name (optional)"
+          value={donorName}
+          onChange={e => setDonorName(e.target.value)}
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none"
+          style={{
+            border: '1px solid #C8BDAA',
+            backgroundColor: 'white',
+            color: '#1B3A2D',
+            fontSize: '15px',
+          }}
+          onFocus={e => e.target.style.boxShadow = '0 0 0 3px rgba(45,122,95,0.15)'}
+          onBlur={e => e.target.style.boxShadow = 'none'}
+        />
+      </div>
+
+      {/* Donor email — required for Paystack */}
+      <div className="mb-5">
+        <input
+          type="email"
+          placeholder="Your email address *"
+          value={donorEmail}
+          onChange={e => { setDonorEmail(e.target.value); setEmailError('') }}
+          className="w-full rounded-lg px-4 py-3 text-sm outline-none"
+          style={{
+            border: emailError ? '1px solid #DC2626' : '1px solid #C8BDAA',
+            backgroundColor: 'white',
+            color: '#1B3A2D',
+            fontSize: '15px',
+          }}
+          onFocus={e => e.target.style.boxShadow = '0 0 0 3px rgba(45,122,95,0.15)'}
+          onBlur={e => e.target.style.boxShadow = 'none'}
+        />
+        {emailError && (
+          <p className="text-xs mt-1" style={{ color: '#DC2626' }}>{emailError}</p>
+        )}
+      </div>
+
+      {/* Donate button */}
+      <motion.button
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        onClick={handleDonate}
+        disabled={!amountInKobo}
+        className="w-full py-3.5 rounded-lg font-semibold text-sm flex items-center justify-center gap-2"
+        style={{
+          backgroundColor: '#E8C547',
+          color: '#1B3A2D',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+          fontSize: '15px',
+          opacity: !amountInKobo ? 0.6 : 1,
+        }}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+        Donate Now
+      </motion.button>
+
+      {/* Trust badges */}
+      <div className="mt-5 space-y-2">
+        {[
+          'Registered nonprofit — your gift is purpose-driven',
+          '100% of donations go to programs & community',
+          'Secured by Paystack — bank-level encryption',
+        ].map(item => (
+          <div key={item} className="flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2D7A5F" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+            <span style={{ fontSize: '12px', color: '#5A7068' }}>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function DonateMission() {
   return (
     <section
       id="donate"
@@ -1474,48 +1720,8 @@ function DonateMission() {
             </div>
 
             {/* Floating donate widget */}
-            <div className="bg-white rounded-2xl shadow-xl p-6 w-full mt-6 lg:mt-0 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:right-10 lg:w-72">
-              <p className="text-sm font-bold mb-4" style={{ color: '#1B3A2D' }}>
-                Choose an amount
-              </p>
-              <div className="grid grid-cols-4 gap-2 mb-3">
-                {DONATE_AMOUNTS.map(a => (
-                  <button
-                    key={a}
-                    onClick={() => setAmount(a)}
-                    className="py-2 rounded-lg text-xs font-semibold transition-colors focus:outline-none"
-                    style={
-                      amount === a
-                        ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
-                        : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
-                    }
-                  >
-                    {a}
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={() => setAmount('other')}
-                className="w-full py-2.5 rounded-lg text-sm font-medium mb-3 transition-colors focus:outline-none"
-                style={
-                  amount === 'other'
-                    ? { backgroundColor: '#2D5A3D', color: '#FFFFFF' }
-                    : { backgroundColor: '#FEFAF1', color: '#1B3A2D' }
-                }
-              >
-                Other Amount
-              </button>
-              <motion.button
-                onClick={() => console.log('Donate:', amount)}
-                className="w-full py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 focus:outline-none"
-                style={{ backgroundColor: '#E8C547', color: '#1B3A2D' }}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.15 }}
-              >
-                <IcoHeart size={15} filled />
-                Donate Now
-              </motion.button>
+            <div className="w-full mt-6 lg:mt-0 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:right-10 lg:w-80">
+              <DonationWidget />
             </div>
           </div>
         </RevealOnScroll>
