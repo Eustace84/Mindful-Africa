@@ -24,8 +24,9 @@
 }
 
 nav {
- font-family:  Helvetica Neue 
-
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 18px;
 }
 
 @layer utilities {

@@ -4,6 +4,7 @@ import { useForm, ValidationError } from '@formspree/react'
 import { usePaystackPayment } from 'react-paystack'
 import heroImg from '../images/hero-page-girl.png'
 import communityGirl from '../images/community-girl.png'
+import logo from '../images/Logo.png';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SHARED ICON COMPONENTS
@@ -456,10 +457,16 @@ function Navbar() {
 
         {/* Logo */}
         <a href="#" onClick={close} className="flex items-center gap-[10px] shrink-0">
-          <LogoMark size={28} />
-          <span className="font-heading font-semibold text-lg" style={{ color: '#1B3A2D' }}>
-            Mindfully Aware
-          </span>
+          <img
+            className='mr-4'
+                           src={logo}
+                           alt='Mindfully Aware logo'
+                           style={{
+                             height: '48px',
+                             width: 'auto',
+                             objectFit: 'contain',
+                           }}
+                         />
         </a>
 
         {/* Desktop: nav links + // + CTA */}
@@ -468,7 +475,7 @@ function Navbar() {
             <a
               key={label}
               href={href}
-              className="text-sm font-medium whitespace-nowrap transition-opacity hover:opacity-70"
+              className="whitespace-nowrap transition-opacity hover:opacity-70"
               style={{ color: '#3A5446' }}
             >
               {label}
@@ -517,7 +524,7 @@ function Navbar() {
               key={label}
               href={href}
               onClick={close}
-              className="block px-1 py-3 text-sm font-medium transition-opacity hover:opacity-60"
+              className="block px-1 py-3 transition-opacity hover:opacity-60"
               style={{ color: '#1B3A2D', borderBottom: '1px solid #F0EBE0' }}
             >
               {label}
