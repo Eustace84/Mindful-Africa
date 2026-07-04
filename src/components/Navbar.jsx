@@ -40,16 +40,23 @@ export default function Navbar() {
           href='/'
           onClick={close}
           className='flex items-center gap-[10px] shrink-0'>
-          <img
-            className='mr-4'
-            src={logo}
-            alt='Mindfully Aware logo'
-            style={{
-              height: '48px',
-              width: 'auto',
-              objectFit: 'contain',
-            }}
-          />
+          <div className='flex items-center gap-2'>
+            <img
+              src={logo}
+              alt='Mindfully Aware logo'
+              style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+            />
+            <span
+              style={{
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontSize: '20px',
+                fontWeight: 400,
+                color: '#1B3A2D',
+                whiteSpace: 'nowrap',
+              }}>
+              Mindfully Aware
+            </span>
+          </div>
         </a>
 
         {/* Desktop: nav links + // + CTA */}
@@ -59,7 +66,12 @@ export default function Navbar() {
               key={label}
               href={href}
               className='whitespace-nowrap transition-opacity hover:opacity-70'
-              style={{ color: '#3A5446' }}>
+              style={{
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontSize: '18px',
+                fontWeight: 300,
+                color: '#1B3A2D',
+              }}>
               {label}
             </a>
           ))}
