@@ -52,7 +52,7 @@ export default function Footer() {
                 </span>
               </div>
             </div>
-            <p className='text-sm leading-relaxed' style={{ color: '#5A7068' }}>
+            <p className='text-base leading-relaxed' style={{ color: 'black' }}>
             A registered Africa nonProfit building safe, accessible mental health support systems for our communities. You are not alone
             </p>
           </div>
@@ -92,12 +92,12 @@ export default function Footer() {
         <div
           className='flex flex-col sm:flex-row items-center justify-between gap-4 pt-8'
           style={{ borderTop: '1px solid #E2DAC8' }}>
-          <p className='text-xs' style={{ color: '#8A9A8E' }}>
+          <p className='text-base' style={{ color: '#8A9A8E' }}>
             © {new Date().getFullYear()} Mindfully Aware. Made with care across Africa.
           </p>
 
-          <p className='text-xs italic' style={{ color: '#8A9A8E' }}>
-            Healing is a community we build together.
+          <p className='text-base' style={{ color: '#8A9A8E' }}>
+            "Healing is a community we build together".
           </p>
         </div>
       </div>

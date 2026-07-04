@@ -1,133 +1,156 @@
 import { useState, useEffect } from 'react'
-import logo from '../images/logo.png';
+import { motion } from 'framer-motion'
+import logo from '../images/logo.png'
 
 const NAV_LINKS = [
-  { label: 'About',               href: '/about'      },
-  { label: 'The Problem',         href: '/#problem'   },
-  { label: "What we're Building", href: '/#programs'  },
-  { label: 'Community',           href: '/#community' },
-  { label: 'Get Involved',        href: '/#involved'  },
-  { label: 'Contact',             href: '/contact'    },
+  { label: 'About',               href: '/about'        },
+  { label: 'The Problem',         href: '/#problem'      },
+  { label: "What we're Building", href: '/#building'     },
+  { label: 'Community',           href: '/#voices'       },
+  { label: 'Get Involved',        href: '/#get-involved' },
+  { label: 'Contact',             href: '/contact'       },
 ]
-
-
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const close = () => setOpen(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
-    <header
+    <motion.header
       role='banner'
-      className={`sticky top-0 z-50 transition-shadow duration-200 ${scrolled ? 'shadow-sm' : ''}`}
-      style={{ backgroundColor: '#FEFAF1', borderBottom: '1px solid #E2DAC8' }}>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3.5'>
-        <div className='flex items-center gap-2 mr-12'>
+      animate={{
+        boxShadow: scrolled
+          ? '0 2px 20px rgba(27, 58, 45, 0.08)'
+          : '0 0px 0px rgba(0,0,0,0)',
+      }}
+      transition={{ duration: 0.3 }}
+      className='sticky top-0 z-50 px-8 md:px-12 min-h-[138px] flex flex-col justify-center'
+      style={{ backgroundColor: '#FEFAF1' }}
+      aria-label='Main navigation'>
+      <div className='max-w-7xl mx-auto w-full flex items-center justify-between'>
+        {/* Logo */}
+        <a
+          href='/'
+          onClick={close}
+          className='flex items-center gap-[10px] shrink-0'>
           <img
+            className='mr-4'
             src={logo}
             alt='Mindfully Aware logo'
-            style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
-          />
-          <span
-            className='font-semibold text-lg'
             style={{
-              color: '#1B3A2D',
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-            }}>
-            Mindfully Aware
-          </span>
-        </div>
+              height: '48px',
+              width: 'auto',
+              objectFit: 'contain',
+            }}
+          />
+        </a>
 
-        {/* Desktop nav */}
-        <nav
-          className='hidden lg:flex items-center gap-4 xl:gap-7 mr-12'
-          aria-label='Main navigation'>
+        {/* Desktop: nav links + // + CTA */}
+        <div className='hidden md:flex items-center gap-7'>
           {NAV_LINKS.map(({ label, href }) => (
             <a
               key={label}
               href={href}
-              className='text-sm font-medium transition-opacity duration-150 hover:opacity-60 whitespace-nowrap'
-              style={{ color: '#1B3A2D' }}>
-              <p className="font-['Helvetica_Neue_Light',_Helvetica,_Arial,_sans-serif] text-[18px]">
-               {label}
-              </p>
+              className='whitespace-nowrap transition-opacity hover:opacity-70'
+              style={{ color: '#3A5446' }}>
+              {label}
             </a>
           ))}
-        </nav>
-
-        {/* Desktop CTA */}
-        <div className='hidden lg:block shrink-0'>
-          <button
-            className='text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-opacity hover:opacity-80'
-            style={{ backgroundColor: '#1E4D35' }}>
+          <span
+            aria-hidden='true'
+            className='select-none'
+            style={{
+              color: '#A0B0A8',
+              fontStyle: 'italic',
+              fontWeight: 300,
+              fontSize: '1.2rem',
+              letterSpacing: '0.06em',
+            }}>
+            //
+          </span>
+          <a
+            href='/#donate'
+            className='text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90'
+            style={{ backgroundColor: '#2D5A3D' }}>
             Support Our Mission
-          </button>
+          </a>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className='lg:hidden p-2 -mr-1.5 rounded-md'
+          className='md:hidden p-2 rounded-lg focus:outline-none'
           onClick={() => setOpen((prev) => !prev)}
-          aria-expanded={open}
-          aria-label={open ? 'Close menu' : 'Open menu'}>
-          <svg
-            width='22'
-            height='22'
-            viewBox='0 0 22 22'
-            fill='none'
-            stroke='#1B3A2D'
-            strokeWidth='1.8'
-            strokeLinecap='round'>
-            {open ? (
-              <>
-                <line x1='17' y1='5' x2='5' y2='17' />
-                <line x1='5' y1='5' x2='17' y2='17' />
-              </>
-            ) : (
-              <>
-                <line x1='3' y1='6' x2='19' y2='6' />
-                <line x1='3' y1='11' x2='19' y2='11' />
-                <line x1='3' y1='16' x2='19' y2='16' />
-              </>
-            )}
-          </svg>
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}>
+          {open ? (
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              strokeWidth={2}
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              style={{ stroke: '#1B3A2D' }}>
+              <line x1='18' y1='6' x2='6' y2='18' />
+              <line x1='6' y1='6' x2='18' y2='18' />
+            </svg>
+          ) : (
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              strokeWidth={2}
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              style={{ stroke: '#1B3A2D' }}>
+              <line x1='3' y1='6' x2='21' y2='6' />
+              <line x1='3' y1='12' x2='21' y2='12' />
+              <line x1='3' y1='18' x2='21' y2='18' />
+            </svg>
+          )}
         </button>
       </div>
 
-      {/* Mobile menu */}
-      <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ${open ? 'max-h-screen' : 'max-h-0'}`}
-        style={{
-          backgroundColor: '#FEFAF1',
-          borderTop: open ? '1px solid #E2DAC8' : 'none',
-        }}
-        aria-hidden={!open}>
-        <div className='px-4 py-4 space-y-0.5'>
+      {/* Mobile dropdown */}
+      {open && (
+        <div
+          className='md:hidden py-3 max-w-7xl mx-auto w-full'
+          style={{ borderTop: '1px solid #E2DAC8' }}>
           {NAV_LINKS.map(({ label, href }) => (
             <a
               key={label}
               href={href}
-              onClick={() => setOpen(false)}
-              className='block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors'
-              style={{ color: '#1B3A2D' }}>
+              onClick={close}
+              className='block px-1 py-3 transition-opacity hover:opacity-60'
+              style={{
+                fontFamily:
+                  '"Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontSize: '18px',
+                fontWeight: 300,
+                lineHeight: 1.5,
+                color: '#1B3A2D',
+              }}>
               {label}
             </a>
           ))}
-          <div className='pt-3 mt-1' style={{ borderTop: '1px solid #E2DAC8' }}>
-            <button
-              className='w-full mt-2 text-white text-sm font-semibold px-5 py-3 rounded-lg'
-              style={{ backgroundColor: '#1E4D35' }}>
-              Support Our Mission
-            </button>
-          </div>
+          <a
+            href='/#donate'
+            onClick={close}
+            className='block mt-4 py-3 text-sm font-semibold rounded-lg text-center text-white'
+            style={{ backgroundColor: '#2D5A3D' }}>
+            Support Our Mission
+          </a>
         </div>
-      </div>
-    </header>
+      )}
+    </motion.header>
   );
 }

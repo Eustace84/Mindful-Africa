@@ -4,7 +4,6 @@ import { useForm, ValidationError } from '@formspree/react'
 import { usePaystackPayment } from 'react-paystack'
 import heroImg from '../images/hero-page-girl.png'
 import communityGirl from '../images/community-girl.png'
-import logo from '../images/logo.png';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SHARED ICON COMPONENTS
@@ -168,19 +167,6 @@ function StatCounter({ prefix = '', from = 0, to, suffix = '', label }) {
     </div>
   )
 }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   NAVBAR DATA
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-const NAV_LINKS = [
-  { label: 'About',               href: '#our-story'     },
-  { label: 'The Problem',         href: '#problem'       },
-  { label: "What we're Building", href: '#building'      },
-  { label: 'Community',           href: '#voices'        },
-  { label: 'Get Involved',        href: '#get-involved'  },
-  { label: 'Contact',             href: '#contact'       },
-]
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SECTION DATA CONSTANTS
@@ -425,124 +411,6 @@ const BLOG_CATEGORY_COLOR = {
 }
 
 const EMPTY_CONTACT_FORM = { name: '', email: '', message: '' }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   SECTION: NAVBAR
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-function Navbar() {
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const close = () => setOpen(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  return (
-    <motion.nav
-      animate={{
-        boxShadow: scrolled
-          ? '0 2px 20px rgba(27, 58, 45, 0.08)'
-          : '0 0px 0px rgba(0,0,0,0)',
-      }}
-      transition={{ duration: 0.3 }}
-      className="fixed top-0 left-0 right-0 z-50 px-8 md:px-12 min-h-[138px] flex flex-col justify-center"
-      style={{ backgroundColor: '#FEFAF1' }}
-      aria-label="Main navigation"
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-
-        {/* Logo */}
-        <a href="#" onClick={close} className="flex items-center gap-[10px] shrink-0">
-          <img
-            className='mr-4'
-                           src={logo}
-                           alt='Mindfully Aware logo'
-                           style={{
-                             height: '48px',
-                             width: 'auto',
-                             objectFit: 'contain',
-                           }}
-                         />
-        </a>
-
-        {/* Desktop: nav links + // + CTA */}
-        <div className="hidden md:flex items-center gap-7">
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="whitespace-nowrap transition-opacity hover:opacity-70"
-              style={{ color: '#3A5446' }}
-            >
-              {label}
-            </a>
-          ))}
-          <span
-            aria-hidden="true"
-            className="select-none"
-            style={{ color: '#A0B0A8', fontStyle: 'italic', fontWeight: 300, fontSize: '1.2rem', letterSpacing: '0.06em' }}
-          >
-            //
-          </span>
-          <a
-            href="#donate"
-            className="text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90"
-            style={{ backgroundColor: '#2D5A3D' }}
-          >
-            Support Our Mission
-          </a>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden p-2 rounded-lg focus:outline-none"
-          onClick={() => setOpen(prev => !prev)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-        >
-          {open ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ stroke: '#1B3A2D' }}>
-              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          ) : (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ stroke: '#1B3A2D' }}>
-              <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          )}
-        </button>
-      </div>
-
-      {/* Mobile dropdown */}
-      {open && (
-        <div className="md:hidden py-3" style={{ borderTop: '1px solid #E2DAC8' }}>
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              onClick={close}
-              className="block px-1 py-3 transition-opacity hover:opacity-60"
-              style={{ color: '#1B3A2D', borderBottom: '1px solid #F0EBE0' }}
-            >
-              {label}
-            </a>
-          ))}
-          <a
-            href="#donate"
-            onClick={close}
-            className="block mt-4 py-3 text-sm font-semibold rounded-lg text-center text-white"
-            style={{ backgroundColor: '#2D5A3D' }}
-          >
-            Support Our Mission
-          </a>
-        </div>
-      )}
-    </motion.nav>
-  )
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SECTION: HERO
@@ -1976,8 +1844,7 @@ function ContactSection() {
 export default function HomePage() {
   return (
     <>
-      <Navbar />
-      <main className="pt-[138px]">
+      <main>
         <Hero />
         <StatsBar />
         <OurStory />
