@@ -753,7 +753,7 @@ function ProblemSection() {
                 }}
               >
                 <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0"
+                  className="w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0 shadow-lg"
                   style={{ backgroundColor: '#EDEAE4', color: '#5A7068' }}
                 >
                   {icon}

@@ -75,18 +75,29 @@ export default function Navbar() {
               {label}
             </a>
           ))}
-          <span
-            aria-hidden='true'
-            className='select-none'
-            style={{
-              color: '#A0B0A8',
-              fontStyle: 'italic',
-              fontWeight: 300,
-              fontSize: '1.2rem',
-              letterSpacing: '0.06em',
-            }}>
-            //
-          </span>
+          {/* Decorative curved flourish between nav links and CTA */}
+          <div className='hidden lg:flex items-center mx-4' aria-hidden='true'>
+            <svg width='60' height='48' viewBox='0 0 60 48' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              {/* First curved line — arcs one way */}
+              <path
+                d='M18 4 C24 16, 22 32, 14 44'
+                stroke='#547563'
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                fill='none'
+                opacity='0.7'
+              />
+              {/* Second curved line — arcs the opposite way, offset to the right */}
+              <path
+                d='M40 4 C34 16, 44 32, 36 44'
+                stroke='#547563'
+                strokeWidth='1.5'
+                strokeLinecap='round'
+                fill='none'
+                opacity='0.7'
+              />
+            </svg>
+          </div>
           <a
             href='/#donate'
             className='text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90'

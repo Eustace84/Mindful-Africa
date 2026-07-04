@@ -52,8 +52,11 @@ export default function Footer() {
                 </span>
               </div>
             </div>
-            <p className='text-base leading-relaxed' style={{ color: 'black' }}>
-            A registered Africa nonProfit building safe, accessible mental health support systems for our communities. You are not alone
+            <p
+              className='text-base leading-relaxed'
+              style={{ color: '2D7A5F' }}>
+              A registered Africa nonProfit building safe, accessible mental
+              health support systems for our communities. You are not alone
             </p>
           </div>
 
@@ -65,20 +68,26 @@ export default function Footer() {
                 style={{
                   fontSize: '15px',
                   fontWeight: 600,
-                  color: '#2D7A5F',
+                  color: 'black',
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
                 }}>
                 {col.title}
               </h3>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '14px' }} role='list'>
+              <ul
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '14px',
+                }}
+                role='list'>
                 {col.links.map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}
                       className='transition-colors duration-150'
                       style={{ fontSize: '15px', color: '#5A7068' }}
-                      onMouseEnter={e => e.target.style.color = '#1B3A2D'}
-                      onMouseLeave={e => e.target.style.color = '#5A7068'}>
+                      onMouseEnter={(e) => (e.target.style.color = '#1B3A2D')}
+                      onMouseLeave={(e) => (e.target.style.color = '#5A7068')}>
                       {link.label}
                     </a>
                   </li>
@@ -93,8 +102,11 @@ export default function Footer() {
           className='flex flex-col sm:flex-row items-center justify-between gap-4 pt-8'
           style={{ borderTop: '1px solid #E2DAC8' }}>
           <p className='text-base' style={{ color: '#8A9A8E' }}>
-            © {new Date().getFullYear()} Mindfully Aware. Made with care across Africa.
+            © {new Date().getFullYear()} Mindfully Aware. Made with care across
+            Africa.
           </p>
+
+          <p>Developed by EusTech</p>
 
           <p className='text-base' style={{ color: '#8A9A8E' }}>
             "Healing is a community we build together".
