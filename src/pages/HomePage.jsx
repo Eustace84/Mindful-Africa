@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useForm, ValidationError } from '@formspree/react'
 import { usePaystackPayment } from 'react-paystack'
-import heroImg from '../assets/images/hero-page-girl.png'
-import communityGirl from '../assets/images/community-girl.png'
-import logo from '../assets/images/Logo.png';
+import heroImg from '../images/hero-page-girl.png'
+import communityGirl from '../images/community-girl.png'
+import logo from '../images/logo.png';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SHARED ICON COMPONENTS
