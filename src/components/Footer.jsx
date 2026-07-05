@@ -106,7 +106,9 @@ export default function Footer() {
             Africa.
           </p>
 
-          <p>Developed by EusTech</p>
+          <p>
+            Developed by <span style={{color: '#2d7a5f', fontWeight: 'bold'}}>EusTech</span>
+          </p>
 
           <p className='text-base' style={{ color: '#8A9A8E' }}>
             "Healing is a community we build together".

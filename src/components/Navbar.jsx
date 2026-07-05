@@ -75,28 +75,33 @@ export default function Navbar() {
               {label}
             </a>
           ))}
-          {/* Decorative curved flourish between nav links and CTA */}
+          {/* Decorative flourish — matching exact Figma specs */}
           <div className='hidden lg:flex items-center mx-4' aria-hidden='true'>
-            <svg width='60' height='48' viewBox='0 0 60 48' fill='none' xmlns='http://www.w3.org/2000/svg'>
-              {/* First curved line — arcs one way */}
-              <path
-                d='M18 4 C24 16, 22 32, 14 44'
-                stroke='#547563'
-                strokeWidth='1.5'
-                strokeLinecap='round'
-                fill='none'
-                opacity='0.7'
-              />
-              {/* Second curved line — arcs the opposite way, offset to the right */}
-              <path
-                d='M40 4 C34 16, 44 32, 36 44'
-                stroke='#547563'
-                strokeWidth='1.5'
-                strokeLinecap='round'
-                fill='none'
-                opacity='0.7'
-              />
-            </svg>
+            {/* Left Curve - Large box with bottom-right radius (like your Image 2) */}
+            <div
+              style={{
+                width: '42px',
+                height: '56px',
+                borderRight: '2px solid #547563',
+                borderBottomRightRadius: '100px',
+                borderTopRightRadius: '0',
+                borderBottomLeftRadius: '0',
+                borderTopLeftRadius: '0',
+              }}
+            />
+            {/* Right Curve - Large box with top-left radius (like your Image 1) */}
+            <div
+              style={{
+                width: '42px',
+                height: '56px',
+                borderLeft: '2px solid #547563',
+                borderTopLeftRadius: '100px',
+                borderTopRightRadius: '0',
+                borderBottomLeftRadius: '0',
+                borderBottomRightRadius: '0',
+                marginLeft: '8px',
+              }}
+            />
           </div>
           <a
             href='/#donate'

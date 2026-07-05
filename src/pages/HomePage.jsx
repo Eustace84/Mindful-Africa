@@ -469,8 +469,13 @@ function Hero() {
           {/* Headline — each line slides up independently */}
           <h1
             id="hero-heading"
-            className="font-heading mb-8"
-            style={{ color: '#1B3A2D', fontSize: '72px', fontWeight: 800, lineHeight: 1.08 }}
+            className="leading-[1.1] mb-8"
+            style={{
+              fontFamily: "'Crimson Pro', serif",
+              fontWeight: 500,
+              fontSize: 'clamp(42px, 6vw, 68px)',
+              color: '#1B3A2D',
+            }}
           >
             <motion.span
               style={{ display: 'block' }}
@@ -504,7 +509,12 @@ function Hero() {
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.35 }}
             >
               shouldn't be{' '}
-              <em style={{ color: '#2D7A5F', fontStyle: 'italic', fontWeight: 800 }}>normal</em>
+              <em style={{
+                fontFamily: "'Crimson Pro', serif",
+                fontStyle: 'italic',
+                fontWeight: 500,
+                color: '#547563',
+              }}>normal</em>
             </motion.span>
           </h1>
 
@@ -716,57 +726,86 @@ function OurStory() {
 function ProblemSection() {
   return (
     <section
-      id="problem"
-      aria-labelledby="problem-heading"
+      id='problem'
+      aria-labelledby='problem-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className="py-20 px-4"
-    >
-      <div className="max-w-7xl mx-auto">
+      className='py-20 px-4'>
+      <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
-          <div className="mb-12">
-            <p className="uppercase mb-4" style={{ color: '#8A9A8E', fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' }}>
+          <div className='mb-12'>
+            <p
+              className='uppercase mb-4'
+              style={{
+                color: '#8A9A8E',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.15em',
+              }}>
               What We're Up Against
             </p>
             <h2
-              id="problem-heading"
-              className="font-heading mb-5"
-              style={{ color: '#1B3A2D', fontSize: '52px', fontWeight: 800, lineHeight: 1.1 }}
-            >
-              The weight too many<br />carry quietly.
+              id='problem-heading'
+              className='font-heading mb-5'
+              style={{
+                color: '#1B3A2D',
+                fontSize: '52px',
+                fontWeight: 800,
+                lineHeight: 1.1,
+              }}>
+              The weight too many
+              <br />
+              carry quietly.
             </h2>
-            <p className="leading-relaxed max-w-xs" style={{ color: '#5A7068', fontSize: '17px' }}>
-              Mental health challenges across Africa are real, common and largely unsupported.
-              Naming them is the first step to changing them.
+            <p
+              className='leading-relaxed max-w-xs'
+              style={{ color: '#5A7068', fontSize: '17px' }}>
+              Mental health challenges across Africa are real, common and
+              largely unsupported. Naming them is the first step to changing
+              them.
             </p>
           </div>
         </RevealOnScroll>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
           {PROBLEM_CARDS.map(({ title, body, icon }, index) => (
             <RevealOnScroll key={title} delay={index * 0.1}>
               <motion.article
-                className="bg-white rounded-xl p-5 border"
+                className='bg-white rounded-xl p-5 border '
                 style={{ borderColor: '#E2DAC8' }}
                 whileHover={{
                   y: -6,
                   boxShadow: '0 16px 40px rgba(27, 58, 45, 0.12)',
                   transition: { duration: 0.25, ease: 'easeOut' },
-                }}
-              >
+                }}>
                 <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0 shadow-lg"
-                  style={{ backgroundColor: '#EDEAE4', color: '#5A7068' }}
-                >
+                  className='w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0 shadow-2xl'
+                  style={{ backgroundColor: '#EDEAE4', color: '#5A7068' }}>
                   {icon}
                 </div>
-                <h3 className="font-heading mb-1.5" style={{ color: '#1B3A2D', fontSize: '17px', fontWeight: 700 }}>{title}</h3>
-                <p className="leading-relaxed" style={{ color: '#5A7068', fontSize: '14px', lineHeight: 1.6 }}>{body}</p>
+                <h3
+                  className='font-heading mb-1.5'
+                  style={{
+                    color: '#1B3A2D',
+                    fontSize: '17px',
+                    fontWeight: 700,
+                  }}>
+                  {title}
+                </h3>
+                <p
+                  className='leading-relaxed'
+                  style={{
+                    color: '#5A7068',
+                    fontSize: '14px',
+                    lineHeight: 1.6,
+                  }}>
+                  {body}
+                </p>
               </motion.article>
             </RevealOnScroll>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
