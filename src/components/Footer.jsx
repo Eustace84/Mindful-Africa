@@ -15,11 +15,17 @@ const COLS = [
     links: [
       { label: 'Instagram', href: 'https://instagram.com/mindfullyaware' },
       { label: 'Twitter / X', href: 'https://x.com/mindfullyaware' },
-      { label: 'LinkedIn', href: 'https://linkedin.com/company/mindfullyaware' },
-      { label: 'hello@mindfullyaware.org', href: 'mailto:hello@mindfullyaware.org' },
+      {
+        label: 'LinkedIn',
+        href: 'https://linkedin.com/company/mindfullyaware',
+      },
+      {
+        label: 'minddfulafrica@gmail.com',
+        href: 'mailto:minddfulafrica@gmail.com',
+      },
     ],
   },
-]
+];
 
 export default function Footer() {
   return (
@@ -45,8 +51,12 @@ export default function Footer() {
                 <span
                   className='font-semibold text-lg'
                   style={{
-                    color: '#1B3A2D',
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    color: '#547563',
+                    fontFamily: "'Helvetica Neue', sans-serif",
+                    fontWeight: 700,
+                    fontSize: '20px',
+                    lineHeight: '32px',
+                    letterSpacing: '0%',
                   }}>
                   Mindfully Aware
                 </span>
@@ -54,7 +64,14 @@ export default function Footer() {
             </div>
             <p
               className='text-base leading-relaxed'
-              style={{ color: '2D7A5F' }}>
+              style={{
+                color: '#5D665B',
+                fontFamily: 'Inria Serif',
+                fontWeight: 400,
+                fontSize: '16px',
+                lineHeight: '27px',
+                letterSpacing: '0.5px',
+              }}>
               A registered Africa nonProfit building safe, accessible mental
               health support systems for our communities. You are not alone
             </p>
@@ -66,10 +83,12 @@ export default function Footer() {
               <h3
                 className='mb-5'
                 style={{
-                  fontSize: '15px',
-                  fontWeight: 600,
-                  color: 'black',
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontFamily: 'Inria Serif',
+                  fontSize: '16px',
+                  fontWeight: 700,
+                  color: '#1D2825',
+                  lineHeight: '27px',
+                  letterSpacing: '0.5px',
                 }}>
                 {col.title}
               </h3>
@@ -85,7 +104,14 @@ export default function Footer() {
                     <a
                       href={link.href}
                       className='transition-colors duration-150'
-                      style={{ fontSize: '15px', color: '#5A7068' }}
+                      style={{
+                        fontFamily: 'Inria Serif',
+                        fontWeight: 400,
+                        fontSize: '16px',
+                        color: '#5D665B',
+                        lineHeight: '27px',
+                        letterSpacing: '0.5',
+                      }}
                       onMouseEnter={(e) => (e.target.style.color = '#1B3A2D')}
                       onMouseLeave={(e) => (e.target.style.color = '#5A7068')}>
                       {link.label}
@@ -101,16 +127,30 @@ export default function Footer() {
         <div
           className='flex flex-col sm:flex-row items-center justify-between gap-4 pt-8'
           style={{ borderTop: '1px solid #E2DAC8' }}>
-          <p className='text-base' style={{ color: '#8A9A8E' }}>
+          <p
+            className='text-base'
+            style={{
+              fontFamily: 'Inria Serif',
+              fontWeight: 400,
+              fontSize: '14px',
+              lineHeight: '27px',
+              letterSpacing: '0.5px',
+              color: '#000000',
+            }}>
             © {new Date().getFullYear()} Mindfully Aware. Made with care across
             Africa.
           </p>
 
           <p>
-            Developed by <span style={{color: '#2d7a5f', fontWeight: 'bold'}}>EusTech</span>
+            Developed by{' '}
+            <span style={{ color: '#2d7a5f', fontWeight: 'bold' }}>
+              EusTech
+            </span>
           </p>
 
-          <p className='text-base' style={{ color: '#8A9A8E' }}>
+          <p
+            className='text-base'
+            style={{ fontFamily: 'Inria Serif', color: '#000000', fontSize: '14px', lineHeight: '27px', letterSpacing: '0.5px' }}>
             "Healing is a community we build together".
           </p>
         </div>

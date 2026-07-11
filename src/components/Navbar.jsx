@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import logo from '../images/logo.png'
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import logo from '../images/logo.png';
 
 const NAV_LINKS = [
-  { label: 'About',               href: '/about'        },
-  { label: 'The Problem',         href: '/#problem'      },
-  { label: "What we're Building", href: '/#building'     },
-  { label: 'Community',           href: '/#voices'       },
-  { label: 'Get Involved',        href: '/#get-involved' },
-  { label: 'Contact',             href: '/contact'       },
-]
+  { label: 'About', href: '/about' },
+  { label: 'The Problem', href: '/#problem' },
+  { label: "What we're Building", href: '/#building' },
+  { label: 'Community', href: '/#voices' },
+  { label: 'Get Involved', href: '/#get-involved' },
+  { label: 'Contact', href: '/contact' },
+];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const close = () => setOpen(false)
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const close = () => setOpen(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <motion.header
@@ -31,7 +31,7 @@ export default function Navbar() {
           : '0 0px 0px rgba(0,0,0,0)',
       }}
       transition={{ duration: 0.3 }}
-      className='sticky top-0 z-50 px-8 md:px-12 min-h-[138px] flex flex-col justify-center'
+      className='sticky top-0 z-50 px-8 md:px-12 h-[128px] flex flex-col justify-center'
       style={{ backgroundColor: '#FEFAF1' }}
       aria-label='Main navigation'>
       <div className='max-w-7xl mx-auto w-full flex items-center justify-between'>
@@ -44,15 +44,23 @@ export default function Navbar() {
             <img
               src={logo}
               alt='Mindfully Aware logo'
-              style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+              style={{
+                height: '48px',
+                width: 'auto',
+                objectFit: 'contain',
+                marginBottom: '50px',
+              }}
             />
             <span
               style={{
                 fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontSize: '20px',
-                fontWeight: 400,
-                color: '#1B3A2D',
+                fontWeight: 700,
+                color: '#547563',
                 whiteSpace: 'nowrap',
+                letterSpacing: '0%',
+                lineHeight: '32px',
+                marginBottom: '50px',
               }}>
               Mindfully Aware
             </span>
@@ -71,6 +79,7 @@ export default function Navbar() {
                 fontSize: '18px',
                 fontWeight: 300,
                 color: '#1B3A2D',
+                marginBottom: '50px',
               }}>
               {label}
             </a>
@@ -81,7 +90,8 @@ export default function Navbar() {
             <div
               style={{
                 width: '42px',
-                height: '56px',
+                marginBottom: '50px',
+                height: '74px',
                 borderRight: '2px solid #547563',
                 borderBottomRightRadius: '100px',
                 borderTopRightRadius: '0',
@@ -93,20 +103,21 @@ export default function Navbar() {
             <div
               style={{
                 width: '42px',
-                height: '56px',
+                height: '74px',
                 borderLeft: '2px solid #547563',
                 borderTopLeftRadius: '100px',
                 borderTopRightRadius: '0',
                 borderBottomLeftRadius: '0',
                 borderBottomRightRadius: '0',
-                marginLeft: '8px',
+                marginLeft: '20px',
+                marginBottom: '50px',
               }}
             />
           </div>
           <a
             href='/#donate'
             className='text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90'
-            style={{ backgroundColor: '#2D5A3D' }}>
+            style={{ backgroundColor: '#2D5A3D', marginBottom: '50px' }}>
             Support Our Mission
           </a>
         </div>
@@ -173,8 +184,8 @@ export default function Navbar() {
           <a
             href='/#donate'
             onClick={close}
-            className='block mt-4 py-3 text-sm font-semibold rounded-lg text-center text-white'
-            style={{ backgroundColor: '#2D5A3D' }}>
+            className='block mt-4 py-3 text-sm font-semibold rounded-lg text-center text-white H-[52px]'
+            style={{ backgroundColor: '#547563' }}>
             Support Our Mission
           </a>
         </div>
