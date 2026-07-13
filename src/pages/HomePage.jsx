@@ -726,31 +726,41 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0 }}
-            className='inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border'
-            style={{ borderColor: '#C8BDAA' }}>
+            className='inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border '
+            style={{ borderColor: '#C6C6C6' }}>
             <span
               className='w-2 h-2 rounded-full shrink-0'
               style={{ backgroundColor: '#2D7A5F' }}
               aria-hidden='true'
             />
             <svg
-              width='13'
-              height='13'
-              viewBox='0 0 24 24'
+              width={10.68}
+              height={11.33}
+              style={{ color: '#547563' }}
+              viewBox='0 0 49 52'
               fill='none'
-              stroke='#8A9A8E'
-              strokeWidth={1.5}
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              aria-hidden='true'>
-              <path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' />
+              xmlns='http://www.w3.org/2000/svg'>
+              <path
+                d='M3.95752 50.5832C5.41585 37.4582 11.2492 27.2498 24.3742 21.4165'
+                stroke={'#4D635C'}
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
+              <path
+                d='M15.6242 41.8333C33.76 41.8333 46.2492 32.2433 47.7075 6.83333V1H36C9.75 1 1.04083 12.6667 1 27.25C1 30.1667 1 36 6.83333 41.8333H15.6242Z'
+                stroke={'#4D635C'}
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              />
             </svg>
             <span
               style={{
                 color: '#C6C6C6',
                 fontFamily: 'Bricolage Grotesque',
                 fontWeight: '500px',
-                fontSize: '16px',
+                fontSize: '15px',
                 lineHeight: '28px',
                 letterSpacing: '0% ',
               }}>
@@ -1313,7 +1323,7 @@ function BuildingSection() {
     <section
       id='building'
       aria-labelledby='building-heading'
-      style={{ backgroundColor: '#F9F4E3' }}
+      style={{ backgroundColor: '#FEFAF1' }}
       className='py-20 px-4'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
@@ -1468,14 +1478,14 @@ function VoicesBanner() {
             </p>
             <h2
               id='voices-heading'
-              className='font-heading text-[#DCE4E1] mb-3 text-center flex flex-wrap'
+              className='font-heading text-[#DCE4E1] mb-3  h2 text-center flex flex-wrap'
               style={{
                 fontFamily: 'DM Serif Text',
                 fontSize: '58px',
                 fontWeight: 600,
                 lineHeight: '56px',
                 letterSpacing: '0.5px',
-                maxWidth: '700px',
+                width: '1000px',
            
               }}>
               Voices from our community.

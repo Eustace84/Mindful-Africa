@@ -51,14 +51,22 @@ export default function Footer() {
                 />
                 <span
                   className='font-semibold text-lg'
+                  
+                  
+                  
                   style={{
-                    color: '#547563',
-                    fontFamily: "'Helvetica Neue', sans-serif",
-                    fontWeight: 700,
+                    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                     fontSize: '20px',
-                    lineHeight: '32px',
+                    fontWeight: 700,
+                    color: '#547563',
+                    whiteSpace: 'nowrap',
                     letterSpacing: '0%',
-                  }}>
+                    lineHeight: '32px',
+                    marginRight: '45px',
+                
+                  }}
+                
+                >
                   Mindfully Aware
                 </span>
               </div>
@@ -145,9 +153,7 @@ export default function Footer() {
 
           <p>
             Developed by{' '}
-            <span style={{ color: '#2d7a5f', fontWeight: 'bold' }}>
-              EusTech
-            </span>
+            <span style={{ color: '#000000', fontWeight: 'bold' }}>EusTech</span>
           </p>
 
           <p

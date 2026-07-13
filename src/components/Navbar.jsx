@@ -117,6 +117,8 @@ export default function Navbar() {
                 boxSizing: 'border-box',
                 transform: 'scale(-1)',
                 rotate: '160deg',
+                marginTop: '30px',
+             
               }}></div>
           </div>
           <a
