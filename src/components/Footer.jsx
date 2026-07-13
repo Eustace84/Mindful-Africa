@@ -30,10 +30,11 @@ const COLS = [
 export default function Footer() {
   return (
     <footer
+      className='mr-6 ml-6'
       role='contentinfo'
-      style={{ backgroundColor: '#FEFAF1', borderTop: '1px solid #E2DAC8' }}>
+      style={{ backgroundColor: '#F9F4E3', borderTop: '1px solid #D5D1C3' }}>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8'>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr] gap-10 mb-14'>
+        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr] gap-10 mb-14 '>
           {/* Brand */}
           <div>
             <div className='flex items-center gap-2.5 mb-5'>
@@ -72,8 +73,9 @@ export default function Footer() {
                 lineHeight: '27px',
                 letterSpacing: '0.5px',
               }}>
-              A registered Africa nonProfit building safe, accessible mental
-              health support systems for our communities. You are not alone
+              A registered Africa nonProfit building safe, accessible <br />{' '}
+              mental health support systems for our communities. You <br /> are
+              not alone
             </p>
           </div>
 
@@ -150,7 +152,13 @@ export default function Footer() {
 
           <p
             className='text-base'
-            style={{ fontFamily: 'Inria Serif', color: '#000000', fontSize: '14px', lineHeight: '27px', letterSpacing: '0.5px' }}>
+            style={{
+              fontFamily: 'Inria Serif',
+              color: '#000000',
+              fontSize: '14px',
+              lineHeight: '27px',
+              letterSpacing: '0.5px',
+            }}>
             "Healing is a community we build together".
           </p>
         </div>

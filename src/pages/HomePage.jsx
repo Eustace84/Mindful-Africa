@@ -66,7 +66,7 @@ function IcoCheck({ size = 16, color = '#E8C547' }) {
       strokeWidth={2.5}
       strokeLinecap='round'
       strokeLinejoin='round'
-      style={{ stroke: color }}
+      style={{ stroke: color, borderColor: '#F6ED85' }}
       aria-hidden='true'>
       <polyline points='20 6 9 17 4 12' />
     </svg>
@@ -179,29 +179,29 @@ function IcoTwitterX({ size = 14 }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   LOGO MARK
-   ═══════════════════════════════════════════════════════════════════════════ */
+// /* ═══════════════════════════════════════════════════════════════════════════
+//    LOGO MARK
+//    ═══════════════════════════════════════════════════════════════════════════ */
 
-function LogoMark({ size = 30 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox='0 0 30 30'
-      fill='none'
-      aria-hidden='true'>
-      <path
-        d='M7 15C7 9 12 5 17 7C13 9 11 13 13 19C9 19 7 17 7 15Z'
-        fill='#7C3AED'
-      />
-      <path
-        d='M23 15C23 21 18 25 13 23C17 21 19 17 17 11C21 11 23 13 23 15Z'
-        fill='#2D7A5F'
-      />
-    </svg>
-  );
-}
+// function LogoMark({ size = 30 }) {
+//   return (
+//     <svg
+//       width={size}
+//       height={size}
+//       viewBox='0 0 30 30'
+//       fill='none'
+//       aria-hidden='true'>
+//       <path
+//         d='M7 15C7 9 12 5 17 7C13 9 11 13 13 19C9 19 7 17 7 15Z'
+//         fill='#7C3AED'
+//       />
+//       <path
+//         d='M23 15C23 21 18 25 13 23C17 21 19 17 17 11C21 11 23 13 23 15Z'
+//         fill='#2D7A5F'
+//       />
+//     </svg>
+//   );
+// }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    REUSABLE SCROLL REVEAL WRAPPER
@@ -677,11 +677,7 @@ const BLOG_POSTS = [
   },
 ];
 
-const BLOG_CATEGORY_COLOR = {
-  Awareness: '#2D7A5F',
-  Resource: '#C9784A',
-  Story: '#7C3AED',
-};
+
 
 const EMPTY_CONTACT_FORM = { name: '', email: '', message: '' };
 
@@ -834,13 +830,14 @@ function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-            className='mb-10 text-justify'
+            className='mb-10 text-justify flex flex-col-reverse'
             style={{
               color: '#5D665B',
-              maxWidth: '480px',
+              maxWidth: '530px',
               lineHeight: '28px',
               fontSize: '20px',
               letterSpacing: '0.5px',
+              fontWeight: 400,
             }}>
             Mindfully Aware is building safe, accessible mental health support
             systems for African communities through awareness, education,
@@ -1054,9 +1051,10 @@ function OurStory() {
               style={{
                 fontFamily: 'Crimson Text',
                 color: '#547563',
-                fontSize: '20px',
+                fontSize: '18px',
                 fontWeight: 600,
                 letterSpacing: '0.5px',
+                lineHeight: '24px'
               }}>
               Our Story
             </p>
@@ -1065,8 +1063,8 @@ function OurStory() {
               className='font-heading mb-8'
               style={{
                 fontFamily: 'Crimson Pro',
-                color: '##1D2825',
-                fontSize: '50px',
+                color: '#1D2825',
+                fontSize: '54px',
                 fontWeight: 600,
                 lineHeight: '56px',
                 letterSpacing: '0.5px',
@@ -1074,14 +1072,7 @@ function OurStory() {
               Born from our own journey
               <br /> to freedom.
             </h2>
-            <div
-              className='space-y-5 mb-10'
-              style={{
-                fontFamily: 'roboto',
-                fontSize: '20px',
-                lineHeight: '27px',
-                letterSpacing: '0.5px',
-              }}>
+            <div className='space-y-5 mb-10' >
               {[
                 'Mindfully Aware was born from a journey to freedom. A freedom that revealed just how heavy the pain we had been carrying truly was.',
                 'The thought of others carrying that same weight alone, without support or safe spaces to be heard, became the motivation behind this journey.',
@@ -1090,12 +1081,27 @@ function OurStory() {
                 <p
                   key={para.slice(0, 20)}
                   className='leading-relaxed text-justify'
-                  style={{ color: '#5A7068', fontSize: '17px' }}>
+                  style={{
+                    color: '#5D665B',
+                    fontFamily: 'roboto',
+                    fontSize: '20px',
+                    lineHeight: '27px',
+                    letterSpacing: '0.5px',
+                    fontWeight: 400
+                  }}>
                   {para}
                 </p>
               ))}
             </div>
-            <p className='text-base font-bold' style={{ color: '#1B3A2D' }}>
+            <p
+              className='text-base font-bold'
+              style={{
+                color: '#5D665B',
+                fontFamily: 'Crimson Pro',
+                fontSize: '18px',
+                lineHeight: '27px',
+                letterSpacing: '0.5px',
+              }}>
               We are building the support we wish we had together.
             </p>
           </div>
@@ -1223,29 +1229,24 @@ function NotAloneSection() {
           <div>
             <div className='flex justify-center mb-8' aria-hidden='true'>
               <svg
-                width='48'
-                height='56'
-                viewBox='0 0 48 56'
+                width={49}
+                height={52}
+                viewBox='0 0 49 52'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'>
                 <path
-                  d='M24 52C24 52 4 40 4 22C4 11.5 13 3 24 3C35 3 44 11.5 44 22C44 40 24 52 24 52Z'
-                  stroke='#8A9A8E'
-                  strokeWidth='1.5'
+                  d='M3.95752 50.5832C5.41585 37.4582 11.2492 27.2498 24.3742 21.4165'
+                  stroke={'#4D635C'}
+                  strokeWidth='2'
                   strokeLinecap='round'
                   strokeLinejoin='round'
                 />
                 <path
-                  d='M24 52V22'
-                  stroke='#8A9A8E'
-                  strokeWidth='1.5'
+                  d='M15.6242 41.8333C33.76 41.8333 46.2492 32.2433 47.7075 6.83333V1H36C9.75 1 1.04083 12.6667 1 27.25C1 30.1667 1 36 6.83333 41.8333H15.6242Z'
+                  stroke={'#4D635C'}
+                  strokeWidth='2'
                   strokeLinecap='round'
-                />
-                <path
-                  d='M24 30C24 30 14 26 12 18'
-                  stroke='#8A9A8E'
-                  strokeWidth='1.5'
-                  strokeLinecap='round'
+                  strokeLinejoin='round'
                 />
               </svg>
             </div>
@@ -1449,7 +1450,7 @@ function VoicesBanner() {
       id='voices'
       aria-labelledby='voices-heading'
       style={{ backgroundColor: '#547563' }}
-      className='py-20 px-4'>
+      className='py-20 px-4 mr-2 ml-2'>
       <div className='max-w-2xl mx-auto text-center'>
         <RevealOnScroll>
           <div>
@@ -1467,14 +1468,15 @@ function VoicesBanner() {
             </p>
             <h2
               id='voices-heading'
-              className='font-heading text-[#DCE4E1] mb-3 text-center'
+              className='font-heading text-[#DCE4E1] mb-3 text-center flex flex-wrap'
               style={{
                 fontFamily: 'DM Serif Text',
-                fontSize: '64px',
+                fontSize: '58px',
                 fontWeight: 600,
                 lineHeight: '56px',
                 letterSpacing: '0.5px',
-                width: '800px',
+                maxWidth: '700px',
+           
               }}>
               Voices from our community.
             </h2>
@@ -1565,7 +1567,7 @@ function CommunityAndSocial() {
       id='community-social'
       aria-labelledby='social-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='py-20 px-4'>
+      className='py-20 px-4 mr-2 ml-2'>
       <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start'>
         {/* Left */}
         <RevealOnScroll>
@@ -1965,7 +1967,7 @@ function GetInvolvedSection() {
       id='get-involved'
       aria-labelledby='involved-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className='py-20 px-4'>
+      className='py-20 px-4 mr-2 ml-2'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
           <div className='mb-10'>
@@ -2096,7 +2098,7 @@ function GetInvolvedSection() {
 /* ═══════════════════════════════════════════════════════════════════════════
    SECTION: SUPPORT OUR MISSION
    ═══════════════════════════════════════════════════════════════════════════ */
-
+import { CiCircleCheck } from 'react-icons/ci';
 const PAYSTACK_PUBLIC_KEY = 'pk_test_57fb9ad42a73e764aed9dc3e155572681819f3d8';
 const NONPROFIT_EMAIL = 'hello@mindfullyaware.org';
 
@@ -2381,7 +2383,7 @@ function DonationWidget() {
           'Secured by Paystack — bank-level encryption',
         ].map((item) => (
           <div key={item} className='flex items-center gap-2'>
-            <svg
+            {/* <svg
               width='14'
               height='14'
               viewBox='0 0 24 24'
@@ -2390,8 +2392,8 @@ function DonationWidget() {
               strokeWidth='2.5'
               strokeLinecap='round'>
               <path d='M20 6L9 17l-5-5' />
-            </svg>
-            <span style={{ fontSize: '12px', color: '#5A7068' }}>{item}</span>
+            </svg> */}
+            {/* <span style={{ fontSize: '12px', color: '#5A7068' }}>{item}</span> */}
           </div>
         ))}
       </div>
@@ -2405,7 +2407,7 @@ function DonateMission() {
       id='donate'
       aria-labelledby='donate-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className='py-20 px-4'>
+      className='py-20 px-4 '>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
           <div className='relative'>
@@ -2413,7 +2415,14 @@ function DonateMission() {
             <div
               className='rounded-2xl p-10 lg:p-14'
               style={{
-                background: 'linear-gradient(135deg, #4F6F5C 0%, #3A5547 100%)',
+                background: `conic-gradient(
+      from -2.7deg at 100% 40.08%,
+      #547563 -5.69deg,
+      #F6ED85 17.09deg,
+      #547563 304.92deg,
+      #547563 354.31deg,
+      #F6ED85 377.09deg
+    )`,
               }}>
               <div className='lg:max-w-[57%]'>
                 <p
@@ -2430,24 +2439,24 @@ function DonateMission() {
                 </p>
                 <h2
                   id='donate-heading'
-                  className='font-heading text-white leading-[1.1] mb-6'
+                  className='font-heading text-white leading-[1.1] mb-6 h2'
                   style={{
-                    fontSize: '54px',
+                    fontSize: '48px',
                     fontWeight: 600,
                     color: '#FFFFFF',
                     fontFamily: 'Crimson Pro',
                     lineHeight: '56px',
                     letterSpacing: '0.5',
                   }}>
-                  Help us create safer mental health support systems for
-                  underserved communities.
+                  Help us create safer mental health support systems for under
+                  served communities.
                 </h2>
                 <p
-                  className='leading-relaxed mb-8'
+                  className='leading-relaxed mb-8 '
                   style={{
                     color: '#DCE4E1',
                     fontSize: '18px',
-                    fontFamily: '#DCE4E1',
+                    fontFamily: 'Crimson Text',
                     fontWeight: 400,
                     lineHeight: '27px',
                     letterSpacing: '0.5px',
@@ -2463,17 +2472,20 @@ function DonateMission() {
                     '100% of donations go to programs & community',
                     'Quarterly impact reports shared publicly',
                   ].map((item) => (
-                    <li key={item} className='flex items-start gap-2.5'>
-                      <IcoCheck size={16} color='#F6ED85' />
+                    <li key={item} className='flex items-start gap-2.5 '>
+                      <CiCircleCheck
+                        style={{ color: '#F6ED85', marginTop: '7px' }}
+                      />
                       <span
                         className='text-sm'
                         style={{
-                          color: '#DCE4E1', fontFamily: 'Crimson Pro',
+                          color: '#DCE4E1',
+                          fontFamily: 'Crimson Pro',
                           fontWeight: 400,
                           fontSize: '18px',
                           lineHeight: '28px',
                           letterSpacing: '0%',
-                         }}>
+                        }}>
                         {item}
                       </span>
                     </li>
@@ -2503,7 +2515,7 @@ function BlogResources() {
       id='blog'
       aria-labelledby='blog-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className='py-20 px-4'>
+      className='py-20 px-4 mr-2 ml-2'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
           <div className='flex items-end justify-between flex-wrap gap-4 mb-12'>
@@ -2545,65 +2557,78 @@ function BlogResources() {
         </RevealOnScroll>
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-          {BLOG_POSTS.map(
-            ({ category, title, readTime, imgSrc, imgAlt }, index) => (
-              <RevealOnScroll key={title} delay={index * 0.1}>
-                <motion.article
-                  className='bg- rounded-xl border overflow-hidden cursor-pointer'
-                  style={{ borderColor: '#E2DAC8' }}
-                  whileHover={{
-                    y: -6,
-                    boxShadow: '0 16px 40px rgba(27, 58, 45, 0.12)',
-                    transition: { duration: 0.25, ease: 'easeOut' },
-                  }}>
-                  <div className='aspect-video overflow-hidden'>
-                    <motion.img
-                      src={imgSrc}
-                      alt={imgAlt}
-                      className='w-full h-full object-cover'
-                      width={560}
-                      height={315}
-                      loading='lazy'
-                      decoding='async'
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
-                    />
-                  </div>
-                  <div className='p-5'>
-                    <p
-                      className='text-[10px] font-bold uppercase tracking-widest mb-3'
-                      style={{
-                        fontFamily: 'Crimson Pro',
-                        fontWeight: 300,
-                        fontSize: '18px',
-                        lineHeight: '100%',
-                        letterSpacing: '0.1',
-                        color: BLOG_CATEGORY_COLOR[category] ?? '#4D635C',
-                      }}>
-                      {category}
-                    </p>
-                    <h3
-                      className='font-heading leading-snug mb-4'
-                      style={{
-                        fontFamily: 'Crimson Pro',
-                        color: '#1D2825',
-                        fontSize: '18px',
-                        fontWeight: 500,
-                        lineHeight: '100%',
-                        letterSpacing: '0.1%',
-                      }}>
-                      {title}
-                    </h3>
-                    <p
-                      className='text-xs'
-                      style={{ color: '#7B8682', fontFamily: 'Crimson Pro', fontWeight: '400', fontSize: '16px', lineHeight: '100%', letterSpacing: '0.1%' }}>
-                      {readTime}
-                    </p>
-                  </div>
-                </motion.article>
-              </RevealOnScroll>
-            ),
-          )}
+          {BLOG_POSTS.map(({ category, title, readTime }, index) => (
+            <RevealOnScroll key={title} delay={index * 0.1}>
+              <motion.article
+                className='rounded-xl border overflow-hidden cursor-pointer'
+                style={{ borderColor: '#E2DAC8' }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: '0 16px 40px rgba(27, 58, 45, 0.12)',
+                  transition: { duration: 0.25, ease: 'easeOut' },
+                }}>
+                <div
+                  className='aspect-video overflow-hidden'
+                  style={{
+                    background: `
+    linear-gradient(
+      135deg,
+      #f9f4e3 0%,
+      #e2decf 50%,
+      #f9f4e3 100%
+    )
+  `,
+
+                    // Shadow coming from the top-right
+                    boxShadow: `
+    -6px 9px 4.5px rgba(249, 244, 227, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45)
+  `,
+
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                  }}></div>
+                <div className='p-5' style={{ backgroundColor: '#FFFDF9' }}>
+                  <p
+                    className='text-[10px] font-bold uppercase tracking-widest mb-3'
+                    style={{
+                      fontFamily: 'Crimson Pro',
+                      fontWeight: 300,
+                      fontSize: '18px',
+                      lineHeight: '100%',
+                      letterSpacing: '0.1%',
+                      color: '#4D635C',
+                    }}>
+                    {category}
+                  </p>
+                  <h3
+                    className='font-heading leading-snug mb-4'
+                    style={{
+                      fontFamily: 'Crimson Pro',
+                      color: '#1D2825',
+                      fontSize: '18px',
+                      fontWeight: 500,
+                      lineHeight: '100%',
+                      letterSpacing: '0.1%',
+                    }}>
+                    {title}
+                  </h3>
+                  <p
+                    className='text-xs'
+                    style={{
+                      color: '#7B8682',
+                      fontFamily: 'Crimson Pro',
+                      fontWeight: '400',
+                      fontSize: '16px',
+                      lineHeight: '100%',
+                      letterSpacing: '0.1%',
+                    }}>
+                    {readTime}
+                  </p>
+                </div>
+              </motion.article>
+            </RevealOnScroll>
+          ))}
         </div>
       </div>
     </section>
@@ -2647,7 +2672,7 @@ function ContactSection() {
       id='contact'
       aria-labelledby='contact-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='py-20 px-4'>
+      className='py-20 px-4 mr-2 ml-2'>
       <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start'>
         {/* Left info column */}
         <RevealOnScroll>
@@ -2930,7 +2955,7 @@ function ContactSection() {
 export default function HomePage() {
   return (
     <>
-      <main>
+      <main className='mr-4 ml-4'>
         <Hero />
         <StatsBar />
         <OurStory />

@@ -48,7 +48,6 @@ export default function Navbar() {
                 height: '48px',
                 width: 'auto',
                 objectFit: 'contain',
-                marginBottom: '50px',
               }}
             />
             <span
@@ -60,7 +59,7 @@ export default function Navbar() {
                 whiteSpace: 'nowrap',
                 letterSpacing: '0%',
                 lineHeight: '32px',
-                marginBottom: '50px',
+                marginRight: '45px',
               }}>
               Mindfully Aware
             </span>
@@ -68,7 +67,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop: nav links + // + CTA */}
-        <div className='hidden md:flex items-center gap-7'>
+        <div className='hidden lg:flex items-center gap-7'>
           {NAV_LINKS.map(({ label, href }) => (
             <a
               key={label}
@@ -78,53 +77,59 @@ export default function Navbar() {
                 fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontSize: '18px',
                 fontWeight: 300,
-                color: '#1B3A2D',
-                marginBottom: '50px',
+                color: '#7B8682',
+                lineHeight: '28px',
+                letterSpacing: '0%',
               }}>
               {label}
             </a>
           ))}
           {/* Decorative flourish — matching exact Figma specs */}
           <div className='hidden lg:flex items-center mx-4' aria-hidden='true'>
-            {/* Left Curve - Large box with bottom-right radius (like your Image 2) */}
             <div
               style={{
-                width: '42px',
-                marginBottom: '50px',
-                height: '74px',
-                borderRight: '2px solid #547563',
-                borderBottomRightRadius: '100px',
-                borderTopRightRadius: '0',
-                borderBottomLeftRadius: '0',
-                borderTopLeftRadius: '0',
-              }}
-            />
-            {/* Right Curve - Large box with top-left radius (like your Image 1) */}
+                width: 72,
+                height: 84,
+                position: 'relative',
+                color: '#547563',
+                // REMOVE THIS
+                // borderRight: "2px solid #4D635C",
+
+                borderBottom: '2px solid #4D635C',
+                borderBottomRightRadius: 72,
+                boxSizing: 'border-box',
+              }}></div>
+
+            {/* Right */}
             <div
               style={{
-                width: '42px',
-                height: '74px',
-                borderLeft: '2px solid #547563',
-                borderTopLeftRadius: '100px',
-                borderTopRightRadius: '0',
-                borderBottomLeftRadius: '0',
-                borderBottomRightRadius: '0',
-                marginLeft: '20px',
-                marginBottom: '50px',
-              }}
-            />
+                width: 72,
+                height: 84,
+                marginLeft: 8,
+                position: 'relative',
+                color: '#547563',
+
+                // REMOVE THIS
+                // borderLeft: "2px solid #4D635C",
+
+                borderTop: '2px solid #4D635C',
+                borderTopLeftRadius: 100,
+                boxSizing: 'border-box',
+                transform: 'scale(-1)',
+                rotate: '160deg',
+              }}></div>
           </div>
           <a
             href='/#donate'
             className='text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90'
-            style={{ backgroundColor: '#2D5A3D', marginBottom: '50px' }}>
+            style={{ backgroundColor: '#547563', color: '#FFFFFF' }}>
             Support Our Mission
           </a>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className='md:hidden p-2 rounded-lg focus:outline-none'
+          className='lg:hidden p-2 rounded-lg flex items-center focus:outline-none'
           onClick={() => setOpen((prev) => !prev)}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}>
@@ -162,19 +167,19 @@ export default function Navbar() {
       {/* Mobile dropdown */}
       {open && (
         <div
-          className='md:hidden py-3 max-w-7xl mx-auto w-full'
+          className='lg:hidden py-3 max-w-7xl mx-auto w-full bg-[#F9F4E3] mt-4'
           style={{ borderTop: '1px solid #E2DAC8' }}>
           {NAV_LINKS.map(({ label, href }) => (
             <a
               key={label}
               href={href}
               onClick={close}
-              className='block px-1 py-3 transition-opacity hover:opacity-60'
+              className='block px-1 py-3 text-center '
               style={{
                 fontFamily:
                   '"Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontSize: '18px',
-                fontWeight: 300,
+                fontWeight: 500,
                 lineHeight: 1.5,
                 color: '#1B3A2D',
               }}>
