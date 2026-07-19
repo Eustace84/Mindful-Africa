@@ -2466,7 +2466,7 @@ function DonateMission() {
                   <br /> communities.
                 </h2>
                 <p
-                  className='leading-relaxed mb-8 flex'
+                  className='leading-relaxed mb-8 '
                   style={{
                     color: '#DCE4E1',
                     fontSize: '18px',
@@ -2474,7 +2474,7 @@ function DonateMission() {
                     fontWeight: 400,
                     lineHeight: '27px',
                     letterSpacing: '1.1px',
-                    width: '500px',
+                    MaxWidth: '300px',
             
                   }}>
                   Every contribution funds peer-support circles,   awareness 
