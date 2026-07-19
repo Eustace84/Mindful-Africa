@@ -1478,15 +1478,14 @@ function VoicesBanner() {
             </p>
             <h2
               id='voices-heading'
-              className='font-heading text-[#DCE4E1] mb-3  h2 text-center flex flex-wrap'
+              className='font-heading text-[#DCE4E1] mb-3 flex flex-wrap'
               style={{
                 fontFamily: 'DM Serif Text',
                 fontSize: '58px',
                 fontWeight: 600,
                 lineHeight: '56px',
                 letterSpacing: '0.5px',
-                width: '1000px',
-           
+                maxWidth: '1000px',
               }}>
               Voices from our community.
             </h2>
@@ -1507,9 +1506,9 @@ function VoicesBanner() {
 
         <div
           className='font-heading font-extrabold leading-none mb-3 select-none'
-          style={{ color: '#E8C547', fontSize: '4rem' }}
+          style={{ color: '#F6ED85', fontSize: '4rem' }}
           aria-hidden='true'>
-          &#8220;
+          &#8221;
         </div>
 
         <AnimatePresence mode='wait'>
@@ -1520,18 +1519,21 @@ function VoicesBanner() {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.4 }}>
             <blockquote
-              className='italic leading-relaxed text-[#1D2825] mb-5 mx-auto text-center'
+              className='leading-relaxed text-[#1D2825] mb-5 mx-auto text-center'
               style={{
+                fontFamily: 'Crimson Text',
                 maxWidth: '560px',
-                fontSize: '22px',
+                fontSize: '20px',
                 lineHeight: '27px',
                 letterSpacing: '0.5px',
+                fontWeight: 400,
               }}>
               {CAROUSEL_TESTIMONIALS[active].quote}
             </blockquote>
             <p
               className='text-sm mb-10'
               style={{
+                fontFamily: 'Crimson Pro',
                 color: '#C6C6C6',
                 fontWeight: 400,
                 fontSize: '20px',
@@ -1544,7 +1546,7 @@ function VoicesBanner() {
         </AnimatePresence>
 
         <div
-          className='flex justify-center gap-2.5'
+          className='flex justify-center gap-2.5 '
           role='tablist'
           aria-label='Testimonials'>
           {CAROUSEL_TESTIMONIALS.map((_, i) => (
@@ -1612,8 +1614,8 @@ function CommunityAndSocial() {
             <p
               className='leading-relaxed mb-8'
               style={{
-                color: '#5A7068',
-                maxWidth: '380px',
+                color: '#5D665B',
+                maxWidth: '650px',
                 fontSize: '20px',
                 letterSpacing: '0.5px',
                 lineHeight: '27px',
@@ -2071,7 +2073,8 @@ function GetInvolvedSection() {
             className='bg-white rounded-2xl border p-8'
             style={{
               borderColor: '#E2DAC8',
-              maxWidth: '480px',
+              maxWidth: '942px',
+              height: 'auto',
               margin: '0 auto',
             }}>
             <div className='flex flex-wrap gap-2 mb-7'>
@@ -2458,22 +2461,25 @@ function DonateMission() {
                     lineHeight: '56px',
                     letterSpacing: '0.5',
                   }}>
-                  Help us create safer mental health support systems for under
-                  served communities.
+                  Help us create safer <br /> mental health <br />
+                  support systems for <br /> under served
+                  <br /> communities.
                 </h2>
                 <p
-                  className='leading-relaxed mb-8 '
+                  className='leading-relaxed mb-8 flex'
                   style={{
                     color: '#DCE4E1',
                     fontSize: '18px',
                     fontFamily: 'Crimson Text',
                     fontWeight: 400,
                     lineHeight: '27px',
-                    letterSpacing: '0.5px',
+                    letterSpacing: '1.1px',
+                    width: '500px',
+            
                   }}>
-                  Every contribution funds peer-support circles, awareness
-                  campaigns, mental health resources, and the long road toward
-                  affordable professional care. We publish how every naira and
+                  Every contribution funds peer-support circles,   awareness 
+                  campaigns, mental health resources, and the long road toward 
+                  affordable professional care. We publish how every naira and 
                   dollar is used, transparency is part of the trust.
                 </p>
                 <ul className='space-y-3'>

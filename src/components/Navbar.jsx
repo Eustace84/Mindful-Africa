@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import logo from '../images/logo.png';
 
 const NAV_LINKS = [
-  { label: 'About', href: '/about' },
+  { label: 'About', href: '/#about' },
   { label: 'The Problem', href: '/#problem' },
   { label: "What we're Building", href: '/#building' },
   { label: 'Community', href: '/#voices' },
@@ -31,7 +31,7 @@ export default function Navbar() {
           : '0 0px 0px rgba(0,0,0,0)',
       }}
       transition={{ duration: 0.3 }}
-      className='sticky top-0 z-50 px-8 md:px-12 h-[128px] flex flex-col justify-center'
+      className='sticky top-0 z-50 px-8 md:px-12 h-[120px] flex flex-col justify-center'
       style={{ backgroundColor: '#FEFAF1' }}
       aria-label='Main navigation'>
       <div className='max-w-7xl mx-auto w-full flex items-center justify-between'>
