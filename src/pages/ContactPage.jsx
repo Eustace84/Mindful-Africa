@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 // import { useForm, ValidationError } from '@formspree/react'
+
 import { motion, useInView } from 'framer-motion';
 
 // // ── FAQ data ────────────────────────────────────────────────────────────────

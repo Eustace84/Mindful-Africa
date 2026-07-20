@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import logo from '../images/logo.png';
-
+import { Link } from 'react-router-dom';
 const NAV_LINKS = [
   { label: 'About', href: '/about' },
   { label: 'The Problem', href: '/#problem' },
@@ -36,8 +36,8 @@ export default function Navbar() {
       aria-label='Main navigation'>
       <div className='max-w-7xl mx-auto w-full flex items-center justify-between'>
         {/* Logo */}
-        <a
-          href='/'
+        <Link
+          to='/'
           onClick={close}
           className='flex items-center gap-[10px] shrink-0'>
           <div className='flex items-center gap-2'>
@@ -64,26 +64,43 @@ export default function Navbar() {
               Mindfully Aware
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop: nav links + // + CTA */}
         <div className='hidden lg:flex items-center gap-7'>
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className='whitespace-nowrap transition-opacity hover:opacity-70'
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontSize: '18px',
-                fontWeight: 300,
-                color: '#7B8682',
-                lineHeight: '28px',
-                letterSpacing: '0%',
-              }}>
-              {label}
-            </a>
-          ))}
+          {NAV_LINKS.map(({ label, href }) =>
+            href.startsWith('/#') ? (
+              <a
+                key={label}
+                href={href}
+                className='whitespace-nowrap transition-opacity hover:opacity-70'
+                style={{
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontSize: '18px',
+                  fontWeight: 300,
+                  color: '#7B8682',
+                  lineHeight: '28px',
+                  letterSpacing: '0%',
+                }}>
+                {label}
+              </a>
+            ) : (
+              <Link
+                key={label}
+                to={href}
+                className='whitespace-nowrap transition-opacity hover:opacity-70'
+                style={{
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontSize: '18px',
+                  fontWeight: 300,
+                  color: '#7B8682',
+                  lineHeight: '28px',
+                  letterSpacing: '0%',
+                }}>
+                {label}
+              </Link>
+            ),
+          )}
           {/* Decorative flourish — matching exact Figma specs */}
           <div className='hidden lg:flex items-center mx-4' aria-hidden='true'>
             <div
@@ -170,23 +187,41 @@ export default function Navbar() {
         <div
           className='lg:hidden  max-w-7xl mx-auto w-full bg-[#F9F4E3] mt-60'
           style={{ borderTop: '1px solid #E2DAC8' }}>
-          {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              onClick={close}
-              className='block px-1 py-3 text-center'
-              style={{
-                fontFamily:
-                  '"Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontSize: '18px',
-                fontWeight: 500,
-                lineHeight: 1.5,
-                color: '#1B3A2D',
-              }}>
-              {label}
-            </a>
-          ))}
+          {NAV_LINKS.map(({ label, href }) =>
+            href.startsWith('/#') ? (
+              <a
+                key={label}
+                href={href}
+                onClick={close}
+                className='block px-1 py-3 text-center'
+                style={{
+                  fontFamily:
+                    '"Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontSize: '18px',
+                  fontWeight: 500,
+                  lineHeight: 1.5,
+                  color: '#1B3A2D',
+                }}>
+                {label}
+              </a>
+            ) : (
+              <Link
+                key={label}
+                to={href}
+                onClick={close}
+                className='block px-1 py-3 text-center'
+                style={{
+                  fontFamily:
+                    '"Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontSize: '18px',
+                  fontWeight: 500,
+                  lineHeight: 1.5,
+                  color: '#1B3A2D',
+                }}>
+                {label}
+              </Link>
+            ),
+          )}
           <a
             href='/#donate'
             onClick={close}
