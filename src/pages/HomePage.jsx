@@ -56,22 +56,22 @@ function IcoSend({ size = 12 }) {
   );
 }
 
-function IcoCheck({ size = 16, color = '#E8C547' }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox='0 0 24 24'
-      fill='none'
-      strokeWidth={2.5}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      style={{ stroke: color, borderColor: '#F6ED85' }}
-      aria-hidden='true'>
-      <polyline points='20 6 9 17 4 12' />
-    </svg>
-  );
-}
+// function IcoCheck({ size = 16, color = '#E8C547' }) {
+//   return (
+//     <svg
+//       width={size}
+//       height={size}
+//       viewBox='0 0 24 24'
+//       fill='none'
+//       strokeWidth={2.5}
+//       strokeLinecap='round'
+//       strokeLinejoin='round'
+//       style={{ stroke: color, borderColor: '#F6ED85' }}
+//       aria-hidden='true'>
+//       <polyline points='20 6 9 17 4 12' />
+//     </svg>
+//   );
+// }
 
 function IcoArrowRight({ size = 14 }) {
   return (
@@ -720,13 +720,13 @@ function Hero() {
       className='pt-12 pb-12 px-6 md:px-12'>
       <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center'>
         {/* Left column */}
-        <div>
+        <div className='order-2 md:order-1'>
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0 }}
-            className='inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border '
+            className='inline-flex  items-center gap-2 rounded-full px-4 py-1.5 mb-8 border '
             style={{ borderColor: '#C6C6C6' }}>
             <span
               className='w-2 h-2 rounded-full shrink-0'
@@ -771,7 +771,7 @@ function Hero() {
           {/* Headline — each line slides up independently */}
           <h1
             id='hero-heading'
-            className='leading-[1.1] mb-8 '
+            className='leading-[1.1] mb-8'
             style={{
               fontFamily: "'Crimson Pro', serif",
               fontWeight: 500,
@@ -917,7 +917,7 @@ function Hero() {
         </div>
 
         {/* Right column — image + floating quote card */}
-        <div className='relative'>
+        <div className='relative order-1 md:order-2'>
           <motion.div
             initial={{ opacity: 0, scale: 1.03 }}
             animate={{ opacity: 1, scale: 1 }}
