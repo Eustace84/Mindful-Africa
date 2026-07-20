@@ -2971,7 +2971,7 @@ function ContactSection() {
 export default function HomePage() {
   return (
     <>
-      <main className='mr-4 ml-4'>
+      <main className='mr-2 ml-2'>
         <Hero />
         <StatsBar />
         <OurStory />

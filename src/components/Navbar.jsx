@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import logo from '../images/logo.png';
 
 const NAV_LINKS = [
-  { label: 'About', href: '/#about' },
+  { label: 'About', href: '/about' },
   { label: 'The Problem', href: '/#problem' },
   { label: "What we're Building", href: '/#building' },
   { label: 'Community', href: '/#voices' },
@@ -118,7 +118,6 @@ export default function Navbar() {
                 transform: 'scale(-1)',
                 rotate: '160deg',
                 marginTop: '30px',
-             
               }}></div>
           </div>
           <a
@@ -169,14 +168,14 @@ export default function Navbar() {
       {/* Mobile dropdown */}
       {open && (
         <div
-          className='lg:hidden py-3 max-w-7xl mx-auto w-full bg-[#F9F4E3] mt-4'
+          className='lg:hidden  max-w-7xl mx-auto w-full bg-[#F9F4E3] mt-60'
           style={{ borderTop: '1px solid #E2DAC8' }}>
           {NAV_LINKS.map(({ label, href }) => (
             <a
               key={label}
               href={href}
               onClick={close}
-              className='block px-1 py-3 text-center '
+              className='block px-1 py-3 text-center'
               style={{
                 fontFamily:
                   '"Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif',
@@ -191,7 +190,7 @@ export default function Navbar() {
           <a
             href='/#donate'
             onClick={close}
-            className='block mt-4 py-3 text-sm font-semibold rounded-lg text-center text-white H-[52px]'
+            className='block mt-4 py-3 text-sm font-semibold  text-center text-white H-[52px]'
             style={{ backgroundColor: '#547563' }}>
             Support Our Mission
           </a>
