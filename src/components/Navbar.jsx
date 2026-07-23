@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import logo from '../images/logo.png';
 import { Link } from 'react-router-dom';
@@ -12,15 +12,35 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const close = () => setOpen(false);
+   const [open, setOpen] = useState(false);
+   const [scrolled, setScrolled] = useState(false);
+   const menuRef = useRef(null);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+   const close = () => setOpen(false);
+
+   // Close menu when clicking anywhere on the body
+   useEffect(() => {
+     const handleClickOutside = (event) => {
+       if (menuRef.current && !menuRef.current.contains(event.target)) {
+         close();
+       }
+     };
+
+     if (open) {
+       document.addEventListener('mousedown', handleClickOutside);
+     }
+
+     return () => {
+       document.removeEventListener('mousedown', handleClickOutside);
+     };
+   }, [open]);
+
+   // Scroll effect
+   useEffect(() => {
+     const onScroll = () => setScrolled(window.scrollY > 10);
+     window.addEventListener('scroll', onScroll, { passive: true });
+     return () => window.removeEventListener('scroll', onScroll);
+   }, []);
 
   return (
     <motion.header
@@ -67,7 +87,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop: nav links + // + CTA */}
-        <div className='hidden lg:flex items-center gap-7'>
+        <div className='hidden lg:flex items-center gap-10'>
           {NAV_LINKS.map(({ label, href }) =>
             href.startsWith('/#') ? (
               <a
@@ -102,7 +122,10 @@ export default function Navbar() {
             ),
           )}
           {/* Decorative flourish — matching exact Figma specs */}
-          <div className='hidden lg:flex items-center mx-4' aria-hidden='true'>
+
+          <div
+            className='hidden lg:flex items-center mx-4 justify-center'
+            aria-hidden='true'>
             <div
               style={{
                 width: 72,
@@ -115,6 +138,7 @@ export default function Navbar() {
                 borderBottom: '2px solid #4D635C',
                 borderBottomRightRadius: 72,
                 boxSizing: 'border-box',
+                transform: 'scaleY(-1) rotate(260deg)',
               }}></div>
 
             {/* Right */}
@@ -122,7 +146,7 @@ export default function Navbar() {
               style={{
                 width: 72,
                 height: 84,
-                marginLeft: 8,
+                marginLeft: 15,
                 position: 'relative',
                 color: '#547563',
 
@@ -132,54 +156,56 @@ export default function Navbar() {
                 borderTop: '2px solid #4D635C',
                 borderTopLeftRadius: 100,
                 boxSizing: 'border-box',
-                transform: 'scale(-1)',
-                rotate: '160deg',
-                marginTop: '30px',
+                transform: 'scale(-1) scaleY(-1) rotate(90deg)',
+                rotate: '360deg',
               }}></div>
           </div>
+
           <a
             href='/#donate'
-            className='text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90'
+            className='text-sm font-semibold px-5 py-3 rounded-lg text-white whitespace-nowrap transition-opacity hover:opacity-90 ml-4'
             style={{ backgroundColor: '#547563', color: '#FFFFFF' }}>
             Support Our Mission
           </a>
         </div>
 
         {/* Mobile hamburger */}
-        <button
-          className='lg:hidden p-2 rounded-lg flex items-center focus:outline-none'
-          onClick={() => setOpen((prev) => !prev)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}>
-          {open ? (
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              strokeWidth={2}
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              style={{ stroke: '#1B3A2D' }}>
-              <line x1='18' y1='6' x2='6' y2='18' />
-              <line x1='6' y1='6' x2='18' y2='18' />
-            </svg>
-          ) : (
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-              fill='none'
-              strokeWidth={2}
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              style={{ stroke: '#1B3A2D' }}>
-              <line x1='3' y1='6' x2='21' y2='6' />
-              <line x1='3' y1='12' x2='21' y2='12' />
-              <line x1='3' y1='18' x2='21' y2='18' />
-            </svg>
-          )}
-        </button>
+        <div ref={menuRef}>
+          <button
+            className='lg:hidden p-2 rounded-lg flex items-center focus:outline-none'
+            onClick={() => setOpen((prev) => !prev)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}>
+            {open ? (
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                strokeWidth={2}
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                style={{ stroke: '#1B3A2D' }}>
+                <line x1='18' y1='6' x2='6' y2='18' />
+                <line x1='6' y1='6' x2='18' y2='18' />
+              </svg>
+            ) : (
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 24 24'
+                fill='none'
+                strokeWidth={2}
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                style={{ stroke: '#1B3A2D' }}>
+                <line x1='3' y1='6' x2='21' y2='6' />
+                <line x1='3' y1='12' x2='21' y2='12' />
+                <line x1='3' y1='18' x2='21' y2='18' />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile dropdown */}

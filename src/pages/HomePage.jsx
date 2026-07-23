@@ -719,14 +719,14 @@ function Hero() {
       style={{ backgroundColor: '#FEFAF1' }}
       className='pt-12 pb-12 px-6 md:px-12'>
       <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center'>
-        {/* Left column */}
-        <div className='order-2 md:order-1'>
+        {/* ========== LEFT SIDE (Desktop) / Top on Mobile ========== */}
+        <div className='order-1 md:order-1'>
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0 }}
-            className='inline-flex  items-center gap-2 rounded-full px-4 py-1.5 mb-8 border '
+            className='inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border'
             style={{ borderColor: '#C6C6C6' }}>
             <span
               className='w-2 h-2 rounded-full shrink-0'
@@ -768,7 +768,7 @@ function Hero() {
             </span>
           </motion.div>
 
-          {/* Headline — each line slides up independently */}
+          {/* H1 */}
           <h1
             id='hero-heading'
             className='leading-[1.1] mb-8'
@@ -777,7 +777,6 @@ function Hero() {
               fontWeight: 500,
               fontSize: 'clamp(42px, 6vw, 68px)',
               color: '#1D2825',
-
               letterSpacing: '-2%',
               textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
             }}>
@@ -804,7 +803,6 @@ function Hero() {
                     bottom: '10px',
                     left: 0,
                     right: 0,
-
                     height: '8px',
                     backgroundColor: '#FDE290 ',
                     zIndex: 0,
@@ -835,12 +833,154 @@ function Hero() {
             </motion.span>
           </h1>
 
-          {/* Body copy */}
+          {/* Body + Buttons → HIDDEN on mobile (shown later) */}
+          <div className='hidden md:block'>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
+              className='mb-10 text-justify'
+              style={{
+                color: '#5D665B',
+                maxWidth: '530px',
+                lineHeight: '28px',
+                fontSize: '20px',
+                letterSpacing: '0.5px',
+                fontWeight: 400,
+              }}>
+              Mindfully Aware is building safe, accessible mental health support
+              systems for African communities through awareness, education,
+              community support, and meaningful conversations around mental
+              wellbeing.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.65 }}
+              className='flex flex-wrap gap-4'>
+              <motion.a
+                href='#community-social'
+                className='inline-flex items-center gap-2 text-white font-semibold rounded-full'
+                style={{
+                  backgroundColor: '#547563',
+                  fontSize: '22px',
+                  padding: '14px 32px',
+                  lineHeight: '28px',
+                  letterSpacing: '0%',
+                }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}>
+                <svg
+                  width='18'
+                  height='18'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='white'
+                  strokeWidth={1.8}
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  aria-hidden='true'>
+                  <path d='M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75' />
+                </svg>
+                Join Our Community
+              </motion.a>
+              <motion.a
+                href='#donate'
+                className='inline-flex items-center gap-2 font-semibold rounded-full border-2'
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  color: '#547563',
+                  borderColor: '#C6C6C6',
+                  fontSize: '16px',
+                  padding: '14px 32px',
+                }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}>
+                <svg
+                  width='18'
+                  height='18'
+                  viewBox='0 0 24 24'
+                  fill='#2D5A3D'
+                  stroke='none'
+                  aria-hidden='true'>
+                  <path d='M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z' />
+                </svg>
+                Support Us
+              </motion.a>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ========== IMAGE (2nd on mobile) ========== */}
+        <div className='relative order-2 md:order-2'>
+          <motion.div
+            initial={{ opacity: 0, scale: 1.03 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+            className='rounded-2xl overflow-hidden'
+            style={{ aspectRatio: '4/3' }}>
+            <motion.img
+              src={heroImg}
+              alt='Smiling African woman with community members in background'
+              className='w-full h-full object-cover'
+              width={600}
+              height={450}
+              loading='eager'
+              decoding='sync'
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            />
+          </motion.div>
+
+          {/* Desktop floating quote */}
+          <motion.div
+            className='hidden sm:block absolute'
+            style={{ bottom: '-44px', right: '16px' }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.8 }}>
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 1.4,
+              }}>
+              <HeroQuoteCard />
+            </motion.div>
+          </motion.div>
+
+          {/* Mobile quote */}
+          <motion.div
+            className='absolute'
+            style={{ bottom: '-44px', right: '16px' }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.8 }}>
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 1.4,
+              }}>
+              <HeroQuoteCard />
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* ========== BODY + BUTTONS (3rd on mobile only) ========== */}
+        <div className='order-3 md:hidden'>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-            className='mb-10 text-justify flex flex-col-reverse'
+            className='mb-10 text-justify'
             style={{
               color: '#5D665B',
               maxWidth: '530px',
@@ -855,7 +995,6 @@ function Hero() {
             wellbeing.
           </motion.p>
 
-          {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -868,7 +1007,6 @@ function Hero() {
                 backgroundColor: '#547563',
                 fontSize: '22px',
                 padding: '14px 32px',
-
                 lineHeight: '28px',
                 letterSpacing: '0%',
               }}
@@ -914,52 +1052,6 @@ function Hero() {
               Support Us
             </motion.a>
           </motion.div>
-        </div>
-
-        {/* Right column — image + floating quote card */}
-        <div className='relative order-1 md:order-2'>
-          <motion.div
-            initial={{ opacity: 0, scale: 1.03 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-            className='rounded-2xl overflow-hidden'
-            style={{ aspectRatio: '4/3' }}>
-            <motion.img
-              src={heroImg}
-              alt='Smiling African woman with community members in background'
-              className='w-full h-full object-cover'
-              width={600}
-              height={450}
-              loading='eager'
-              decoding='sync'
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-            />
-          </motion.div>
-
-          {/* Desktop: float outside bottom-right of image */}
-          <motion.div
-            className='hidden md:block absolute'
-            style={{ bottom: '-24px', right: '16px' }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.8 }}>
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 1.4,
-              }}>
-              <HeroQuoteCard />
-            </motion.div>
-          </motion.div>
-
-          {/* Mobile: stacks below image */}
-          <div className='md:hidden mt-4'>
-            <HeroQuoteCard />
-          </div>
         </div>
       </div>
     </section>
@@ -1460,7 +1552,7 @@ function VoicesBanner() {
       id='voices'
       aria-labelledby='voices-heading'
       style={{ backgroundColor: '#547563' }}
-      className='py-20 px-4 mr-2 ml-2'>
+      className='py-20 px-4'>
       <div className='max-w-2xl mx-auto text-center'>
         <RevealOnScroll>
           <div>
