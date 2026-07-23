@@ -4,6 +4,7 @@ import { useForm, ValidationError } from '@formspree/react';
 import { usePaystackPayment } from 'react-paystack';
 import heroImg from '../images/hero-page-girl.png';
 import communityGirl from '../images/community-girl.png';
+import { CiCircleCheck } from 'react-icons/ci';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SHARED ICON COMPONENTS
@@ -55,23 +56,6 @@ function IcoSend({ size = 12 }) {
     </svg>
   );
 }
-
-// function IcoCheck({ size = 16, color = '#E8C547' }) {
-//   return (
-//     <svg
-//       width={size}
-//       height={size}
-//       viewBox='0 0 24 24'
-//       fill='none'
-//       strokeWidth={2.5}
-//       strokeLinecap='round'
-//       strokeLinejoin='round'
-//       style={{ stroke: color, borderColor: '#F6ED85' }}
-//       aria-hidden='true'>
-//       <polyline points='20 6 9 17 4 12' />
-//     </svg>
-//   );
-// }
 
 function IcoArrowRight({ size = 14 }) {
   return (
@@ -179,30 +163,6 @@ function IcoTwitterX({ size = 14 }) {
   );
 }
 
-// /* ═══════════════════════════════════════════════════════════════════════════
-//    LOGO MARK
-//    ═══════════════════════════════════════════════════════════════════════════ */
-
-// function LogoMark({ size = 30 }) {
-//   return (
-//     <svg
-//       width={size}
-//       height={size}
-//       viewBox='0 0 30 30'
-//       fill='none'
-//       aria-hidden='true'>
-//       <path
-//         d='M7 15C7 9 12 5 17 7C13 9 11 13 13 19C9 19 7 17 7 15Z'
-//         fill='#7C3AED'
-//       />
-//       <path
-//         d='M23 15C23 21 18 25 13 23C17 21 19 17 17 11C21 11 23 13 23 15Z'
-//         fill='#2D7A5F'
-//       />
-//     </svg>
-//   );
-// }
-
 /* ═══════════════════════════════════════════════════════════════════════════
    REUSABLE SCROLL REVEAL WRAPPER
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -262,17 +222,21 @@ function useCountUp(from = 0, to, duration = 1800) {
 function StatCounter({ prefix = '', from = 0, to, suffix = '', label }) {
   const [count, ref] = useCountUp(from, to);
   return (
-    <div ref={ref} className='text-center py-10 px-6'>
+    <div ref={ref} className='text-center py-8 sm:py-10 px-4 sm:px-6'>
       <p
         className='font-heading mb-2'
-        style={{ color: '#2D7A5F', fontSize: '56px', fontWeight: 700 }}>
+        style={{
+          color: '#2D7A5F',
+          fontSize: 'clamp(40px, 8vw, 56px)',
+          fontWeight: 700,
+        }}>
         {prefix}
         {count}
         {suffix}
       </p>
       <p
         className='leading-snug max-w-[160px] mx-auto'
-        style={{ color: '#4A6358', fontSize: '16px' }}>
+        style={{ color: '#4A6358', fontSize: '15px' }}>
         {label}
       </p>
     </div>
@@ -677,8 +641,6 @@ const BLOG_POSTS = [
   },
 ];
 
-
-
 const EMPTY_CONTACT_FORM = { name: '', email: '', message: '' };
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -717,16 +679,16 @@ function Hero() {
       id='hero'
       aria-labelledby='hero-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='pt-12 pb-12 px-6 md:px-12'>
-      <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center'>
-        {/* ========== LEFT SIDE (Desktop) / Top on Mobile ========== */}
+      className='pt-10 pb-14 px-5 sm:px-8 md:px-12'>
+      <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center'>
+        {/* Left Side */}
         <div className='order-1 md:order-1'>
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0 }}
-            className='inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 border'
+            className='inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 sm:mb-8 border'
             style={{ borderColor: '#C6C6C6' }}>
             <span
               className='w-2 h-2 rounded-full shrink-0'
@@ -759,10 +721,9 @@ function Hero() {
               style={{
                 color: '#C6C6C6',
                 fontFamily: 'Bricolage Grotesque',
-                fontWeight: '500px',
-                fontSize: '15px',
-                lineHeight: '28px',
-                letterSpacing: '0% ',
+                fontWeight: '500',
+                fontSize: '14px',
+                lineHeight: '24px',
               }}>
               A registered African mental health nonprofit
             </span>
@@ -771,13 +732,13 @@ function Hero() {
           {/* H1 */}
           <h1
             id='hero-heading'
-            className='leading-[1.1] mb-8'
+            className='leading-[1.1] mb-6 sm:mb-8'
             style={{
               fontFamily: "'Crimson Pro', serif",
               fontWeight: 500,
-              fontSize: 'clamp(42px, 6vw, 68px)',
+              fontSize: 'clamp(36px, 8vw, 68px)',
               color: '#1D2825',
-              letterSpacing: '-2%',
+              letterSpacing: '-0.02em',
               textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
             }}>
             <motion.span
@@ -800,14 +761,13 @@ function Hero() {
                   aria-hidden='true'
                   style={{
                     position: 'absolute',
-                    bottom: '10px',
+                    bottom: '8px',
                     left: 0,
                     right: 0,
                     height: '8px',
-                    backgroundColor: '#FDE290 ',
+                    backgroundColor: '#FDE290',
                     zIndex: 0,
                     borderRadius: '3px',
-                    lineHeight: '40px',
                   }}
                 />
               </span>
@@ -821,31 +781,29 @@ function Hero() {
               <em
                 style={{
                   fontFamily: "'Crimson Pro', serif",
-                  fontStyle: 'bold',
+                  fontStyle: 'normal',
                   fontWeight: 500,
                   color: '#547563',
-                  fontSize: '68px',
-                  lineHeight: '40px',
-                  letterSpacing: '-2%',
+                  fontSize: 'clamp(36px, 8vw, 68px)',
                 }}>
                 normal
               </em>
             </motion.span>
           </h1>
 
-          {/* Body + Buttons → HIDDEN on mobile (shown later) */}
+          {/* Body + Buttons - Desktop only */}
           <div className='hidden md:block'>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-              className='mb-10 text-justify'
+              className='mb-8 text-justify'
               style={{
                 color: '#5D665B',
-                maxWidth: '530px',
+                maxWidth: '500px',
                 lineHeight: '28px',
-                fontSize: '20px',
-                letterSpacing: '0.5px',
+                fontSize: '18px',
+                letterSpacing: '-0.1px',
                 fontWeight: 400,
               }}>
               Mindfully Aware is building safe, accessible mental health support
@@ -864,10 +822,9 @@ function Hero() {
                 className='inline-flex items-center gap-2 text-white font-semibold rounded-full'
                 style={{
                   backgroundColor: '#547563',
-                  fontSize: '22px',
-                  padding: '14px 32px',
+                  fontSize: '18px',
+                  padding: '14px 28px',
                   lineHeight: '28px',
-                  letterSpacing: '0%',
                 }}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
@@ -894,7 +851,7 @@ function Hero() {
                   color: '#547563',
                   borderColor: '#C6C6C6',
                   fontSize: '16px',
-                  padding: '14px 32px',
+                  padding: '14px 28px',
                 }}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
@@ -914,8 +871,8 @@ function Hero() {
           </div>
         </div>
 
-        {/* ========== IMAGE (2nd on mobile) ========== */}
-        <div className='relative order-2 md:order-2'>
+        {/* Image */}
+        <div className='relative order-2 md:order-2 mb-12 md:mb-0'>
           <motion.div
             initial={{ opacity: 0, scale: 1.03 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -935,29 +892,10 @@ function Hero() {
             />
           </motion.div>
 
-          {/* Desktop floating quote */}
-          <motion.div
-            className='hidden sm:block absolute'
-            style={{ bottom: '-44px', right: '16px' }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.8 }}>
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 1.4,
-              }}>
-              <HeroQuoteCard />
-            </motion.div>
-          </motion.div>
-
-          {/* Mobile quote */}
+          {/* Floating Quote Card - works on all screens */}
           <motion.div
             className='absolute'
-            style={{ bottom: '-44px', right: '16px' }}
+            style={{ bottom: '-36px', right: '12px' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.8 }}>
@@ -974,20 +912,20 @@ function Hero() {
           </motion.div>
         </div>
 
-        {/* ========== BODY + BUTTONS (3rd on mobile only) ========== */}
+        {/* Body + Buttons - Mobile only */}
         <div className='order-3 md:hidden'>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-            className='mb-10 text-justify'
+            className='mb-8 text-justify'
             style={{
               color: '#5D665B',
-              maxWidth: '530px',
               lineHeight: '28px',
-              fontSize: '20px',
-              letterSpacing: '0.5px',
+              fontSize: '17px',
+              letterSpacing: '-0.1px',
               fontWeight: 400,
+              wordSpacing: '-1px',
             }}>
             Mindfully Aware is building safe, accessible mental health support
             systems for African communities through awareness, education,
@@ -999,23 +937,21 @@ function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.65 }}
-            className='flex flex-wrap gap-4'>
+            className='flex flex-col sm:flex-row gap-3'>
             <motion.a
               href='#community-social'
-              className='inline-flex items-center gap-2 text-white font-semibold rounded-full'
+              className='inline-flex items-center justify-center gap-2 text-white font-semibold rounded-full'
               style={{
                 backgroundColor: '#547563',
-                fontSize: '22px',
-                padding: '14px 32px',
-                lineHeight: '28px',
-                letterSpacing: '0%',
+                fontSize: '16px',
+                padding: '14px 24px',
               }}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}>
               <svg
-                width='18'
-                height='18'
+                width='16'
+                height='16'
                 viewBox='0 0 24 24'
                 fill='none'
                 stroke='white'
@@ -1029,20 +965,20 @@ function Hero() {
             </motion.a>
             <motion.a
               href='#donate'
-              className='inline-flex items-center gap-2 font-semibold rounded-full border-2'
+              className='inline-flex items-center justify-center gap-2 font-semibold rounded-full border-2'
               style={{
                 backgroundColor: '#FFFFFF',
                 color: '#547563',
                 borderColor: '#C6C6C6',
-                fontSize: '16px',
-                padding: '14px 32px',
+                fontSize: '15px',
+                padding: '14px 24px',
               }}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}>
               <svg
-                width='18'
-                height='18'
+                width='16'
+                height='16'
                 viewBox='0 0 24 24'
                 fill='#2D5A3D'
                 stroke='none'
@@ -1113,14 +1049,13 @@ function OurStory() {
       id='our-story'
       aria-labelledby='story-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='py-20 px-4'>
-      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start'>
-        {/* Left — image + floating quote card */}
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
+      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start'>
         <RevealOnScroll>
-          <div className='relative pb-16'>
+          <div className='relative pb-12 sm:pb-16'>
             <div
               className='rounded-3xl overflow-hidden shadow-2xl'
-              style={{ height: '440px' }}>
+              style={{ height: 'min(440px, 70vw)' }}>
               <motion.img
                 src={communityGirl}
                 alt='Smiling African woman, portrait photo representing the Mindfully Aware community story'
@@ -1134,8 +1069,8 @@ function OurStory() {
               />
             </div>
             <div
-              className='absolute right-4 bottom-4 z-10 bg-white rounded-xl shadow-lg p-5'
-              style={{ maxWidth: '270px' }}>
+              className='absolute right-3 bottom-3 sm:right-4 sm:bottom-4 z-10 bg-white rounded-xl shadow-lg p-4 sm:p-5'
+              style={{ maxWidth: '260px' }}>
               <p
                 className='text-sm leading-relaxed'
                 style={{ color: '#1B3A2D' }}>
@@ -1145,36 +1080,32 @@ function OurStory() {
           </div>
         </RevealOnScroll>
 
-        {/* Right — text content */}
         <RevealOnScroll delay={0.15}>
-          <div className=' w-[100%]' style={{ marginRight: '100px' }}>
+          <div>
             <p
-              className='uppercase mb-5 font-semibold'
+              className='uppercase mb-4 font-semibold'
               style={{
                 fontFamily: 'Crimson Text',
                 color: '#547563',
-                fontSize: '18px',
-                fontWeight: 600,
+                fontSize: '16px',
                 letterSpacing: '0.5px',
-                lineHeight: '24px'
               }}>
               Our Story
             </p>
             <h2
               id='story-heading'
-              className='font-heading mb-8'
+              className='font-heading mb-6 sm:mb-8'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#1D2825',
-                fontSize: '54px',
+                fontSize: 'clamp(32px, 7vw, 54px)',
                 fontWeight: 600,
-                lineHeight: '56px',
-                letterSpacing: '0.5px',
+                lineHeight: '1.15',
               }}>
               Born from our own journey
               <br /> to freedom.
             </h2>
-            <div className='space-y-5 mb-10' >
+            <div className='space-y-5 mb-8'>
               {[
                 'Mindfully Aware was born from a journey to freedom. A freedom that revealed just how heavy the pain we had been carrying truly was.',
                 'The thought of others carrying that same weight alone, without support or safe spaces to be heard, became the motivation behind this journey.',
@@ -1185,11 +1116,10 @@ function OurStory() {
                   className='leading-relaxed text-justify'
                   style={{
                     color: '#5D665B',
-                    fontFamily: 'roboto',
-                    fontSize: '20px',
+                    fontFamily: 'Roboto, sans-serif',
+                    fontSize: '17px',
                     lineHeight: '27px',
-                    letterSpacing: '0.5px',
-                    fontWeight: 400
+                    fontWeight: 400,
                   }}>
                   {para}
                 </p>
@@ -1200,9 +1130,8 @@ function OurStory() {
               style={{
                 color: '#5D665B',
                 fontFamily: 'Crimson Pro',
-                fontSize: '18px',
+                fontSize: '17px',
                 lineHeight: '27px',
-                letterSpacing: '0.5px',
               }}>
               We are building the support we wish we had together.
             </p>
@@ -1223,57 +1152,57 @@ function ProblemSection() {
       id='problem'
       aria-labelledby='problem-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className='py-20 px-4'>
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
-          <div className='mb-12'>
+          <div className='mb-10 sm:mb-12'>
             <p
-              className='uppercase mb-4'
+              className='uppercase mb-3'
               style={{
                 fontFamily: 'Crimson Text',
                 color: '#547563',
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 600,
                 letterSpacing: '0.5px',
-                lineHeight: '24px',
               }}>
               What We're Up Against
             </p>
             <h2
               id='problem-heading'
-              className='font-heading mb-5'
+              className='font-heading mb-4 sm:mb-5'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#1D2825',
-                fontSize: '54px',
+                fontSize: 'clamp(32px, 7vw, 54px)',
                 fontWeight: 600,
-                lineHeight: '56px',
-                letterSpacing: '0.5px',
+                lineHeight: '1.15',
               }}>
               The weight too many
               <br />
               carry quietly.
             </h2>
             <p
-              className='leading-relaxed w-[48%]'
+              className='leading-relaxed w-full md:w-[55%] max-w-xl'
               style={{
                 color: '#5D665B',
-                fontSize: '20px',
-                fontFamily: 'Roboto',
+                fontSize: '17px',
+                fontFamily: 'Roboto, sans-serif',
                 lineHeight: '27px',
                 fontWeight: 400,
+                wordSpacing: '-1px',
               }}>
-              Mental health challenges across Africa are real, common <br /> and
-              largely unsupported. Naming them is the first step to <br />{' '}
-              changing them.
+              Mental health challenges across Africa are real, common and
+              largely unsupported. Naming them is the first step to changing
+              them.
             </p>
           </div>
         </RevealOnScroll>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch'>
+
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch'>
           {PROBLEM_CARDS.map(({ title, body, icon }, index) => (
             <RevealOnScroll key={title} delay={index * 0.1} className='h-full'>
               <motion.article
-                className='h-full flex flex-col bg-white rounded-xl p-5 border shadow-2xl'
+                className='h-full flex flex-col bg-white rounded-xl p-5 border shadow-lg'
                 style={{ borderColor: '#E2DAC8' }}
                 whileHover={{
                   y: -6,
@@ -1281,7 +1210,7 @@ function ProblemSection() {
                   transition: { duration: 0.25, ease: 'easeOut' },
                 }}>
                 <div
-                  className='w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0 shadow-2xl'
+                  className='w-9 h-9 rounded-full flex items-center justify-center mb-4 shrink-0'
                   style={{ backgroundColor: '#DCE4E199', color: '#1D2825' }}>
                   {icon}
                 </div>
@@ -1290,10 +1219,9 @@ function ProblemSection() {
                   style={{
                     fontFamily: 'Crimson Pro',
                     color: '#1D2825',
-                    fontSize: '20px',
+                    fontSize: '19px',
                     fontWeight: 600,
                     lineHeight: '24px',
-                    letterSpacing: '0.5px',
                   }}>
                   {title}
                 </h3>
@@ -1325,11 +1253,13 @@ function NotAloneSection() {
       id='not-alone'
       aria-labelledby='not-alone-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='py-28 px-4'>
+      className='py-16 sm:py-20 md:py-28 px-5 sm:px-6'>
       <div className='max-w-3xl mx-auto text-center'>
         <RevealOnScroll>
           <div>
-            <div className='flex justify-center mb-8' aria-hidden='true'>
+            <div
+              className='flex justify-center mb-6 sm:mb-8'
+              aria-hidden='true'>
               <svg
                 width={49}
                 height={52}
@@ -1354,45 +1284,39 @@ function NotAloneSection() {
             </div>
             <h2
               id='not-alone-heading'
-              className='font-heading mb-10  '
+              className='font-heading mb-8 sm:mb-10'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#1D2825',
-                fontSize: '68px',
+                fontSize: 'clamp(36px, 8vw, 68px)',
                 fontWeight: 700,
-                lineHeight: '57px',
-                letterSpacing: '-2%',
+                lineHeight: '1.1',
+                letterSpacing: '-0.02em',
                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
               }}>
               You do not have to carry
               <br />
-              <p
-                style={{
-                  color: '#4D635C',
-
-                  fontWeight: 800,
-                }}>
+              <span style={{ color: '#4D635C', fontWeight: 800 }}>
                 everything <span style={{ color: '#1B3A2D' }}>alone.</span>
-              </p>{' '}
+              </span>
             </h2>
           </div>
         </RevealOnScroll>
 
-        <div className='max-w-4xl mx-auto px-6'>
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 items-stretch'>
+        <div className='max-w-4xl mx-auto'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 items-stretch'>
             {ALONE_QUOTES.map((quote, i) => (
               <RevealOnScroll key={i} delay={i * 0.1}>
                 <div
-                  className='bg-white rounded-xl border px-6 py-6 flex items-center justify-center shadow-2xl'
+                  className='bg-white rounded-xl border px-5 py-6 flex items-center justify-center shadow-lg h-full'
                   style={{ borderColor: '#FFFDF9' }}>
                   <p
-                    className='text-sm italic leading-relaxed text-center'
+                    className='italic leading-relaxed text-center'
                     style={{
                       color: '#1D2825',
-                      fontSize: '20px',
+                      fontSize: '17px',
                       lineHeight: '24px',
-                      letterSpacing: '0.5px',
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Roboto, sans-serif',
                     }}>
                     "{quote}"
                   </p>
@@ -1416,16 +1340,16 @@ function BuildingSection() {
       id='building'
       aria-labelledby='building-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='py-20 px-4'>
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
-          <div className='mb-12'>
+          <div className='mb-10 sm:mb-12'>
             <p
-              className='uppercase mb-4'
+              className='uppercase mb-3'
               style={{
                 fontFamily: 'Crimson Text',
                 color: '#547563',
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 600,
                 letterSpacing: '0.5px',
               }}>
@@ -1433,35 +1357,33 @@ function BuildingSection() {
             </p>
             <h2
               id='building-heading'
-              className='font-heading mb-5'
+              className='font-heading mb-4 sm:mb-5'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#1D2825',
-                fontSize: '54px',
-                fontWeight: 800,
-                lineHeight: '56px',
-                letterSpacing: '0.5px',
+                fontSize: 'clamp(32px, 7vw, 54px)',
+                fontWeight: 700,
+                lineHeight: '1.15',
               }}>
               Support systems,
               <br />
               rooted in community.
             </h2>
             <p
-              className='leading-relaxed w-[100%]'
+              className='leading-relaxed max-w-2xl'
               style={{
                 color: '#5D665B',
-                fontSize: '20px',
+                fontSize: '17px',
                 fontWeight: 400,
                 lineHeight: '27px',
-                letterSpacing: '0.5px',
               }}>
-              We're early and growing. Here's what's taking shape with our{' '}
-              <br />
+              We're early and growing. Here's what's taking shape with our
               community, volunteers and partners.
             </p>
           </div>
         </RevealOnScroll>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch '>
+
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch'>
           {BUILDING_CARDS.map(({ title, body, icon }, index) => (
             <RevealOnScroll key={title} delay={index * 0.1} className='h-full'>
               <motion.article
@@ -1477,21 +1399,17 @@ function BuildingSection() {
                   transition: { duration: 0.25, ease: 'easeOut' },
                 }}>
                 <div
-                  className='w-9 h-9 rounded-lg flex items-center justify-center mb-4 shrink-0 shadow-lg'
-                  style={{
-                    backgroundColor: '#F6ED85',
-                    color: '#1B3A2D',
-                  }}>
+                  className='w-9 h-9 rounded-lg flex items-center justify-center mb-4 shrink-0 shadow-md'
+                  style={{ backgroundColor: '#F6ED85', color: '#1B3A2D' }}>
                   {icon}
                 </div>
                 <h3
                   className='font-heading mb-1.5'
                   style={{
                     color: '#1D2825',
-                    fontSize: '20px',
+                    fontSize: '19px',
                     fontWeight: 600,
                     lineHeight: '24px',
-                    letterSpacing: '0.5px',
                     fontFamily: 'Crimson Pro',
                   }}>
                   {title}
@@ -1515,9 +1433,7 @@ function BuildingSection() {
                     className='text-xs font-medium'
                     style={{
                       color: '#547563',
-                      letterSpacing: '0%',
-                      lineHeight: '28px',
-                      fontSize: '16px',
+                      fontSize: '14px',
                       fontWeight: 500,
                     }}>
                     Actively growing
@@ -1552,44 +1468,39 @@ function VoicesBanner() {
       id='voices'
       aria-labelledby='voices-heading'
       style={{ backgroundColor: '#547563' }}
-      className='py-20 px-4'>
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6'>
       <div className='max-w-2xl mx-auto text-center'>
         <RevealOnScroll>
           <div>
             <p
-              className='uppercase mb-6'
+              className='uppercase mb-4 sm:mb-6'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#F6ED85',
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 400,
                 letterSpacing: '0.5px',
-                lineHeight: '27px',
               }}>
               Dear Anonymous
             </p>
             <h2
               id='voices-heading'
-              className='font-heading text-[#DCE4E1] mb-3 flex flex-wrap'
+              className='font-heading text-[#DCE4E1] mb-3'
               style={{
-                fontFamily: 'DM Serif Text',
-                fontSize: '58px',
+                fontFamily: 'DM Serif Text, serif',
+                fontSize: 'clamp(32px, 7vw, 58px)',
                 fontWeight: 600,
-                lineHeight: '56px',
-                letterSpacing: '0.5px',
-                maxWidth: '1000px',
+                lineHeight: '1.15',
               }}>
               Voices from our community.
             </h2>
             <p
-              className='text-sm mb-10 w-[100%]'
+              className='mb-8 sm:mb-10'
               style={{
-                fontSize: '20px',
+                fontSize: '17px',
                 lineHeight: '27px',
-                letterSpacing: '0.5px',
                 color: '#DCE4E1',
                 fontFamily: 'Crimson Pro',
-                fontWeight: 400,
               }}>
               Stories shared with permission, names withheld with care.
             </p>
@@ -1598,7 +1509,7 @@ function VoicesBanner() {
 
         <div
           className='font-heading font-extrabold leading-none mb-3 select-none'
-          style={{ color: '#F6ED85', fontSize: '4rem' }}
+          style={{ color: '#F6ED85', fontSize: 'clamp(3rem, 10vw, 4rem)' }}
           aria-hidden='true'>
           &#8221;
         </div>
@@ -1615,22 +1526,17 @@ function VoicesBanner() {
               style={{
                 fontFamily: 'Crimson Text',
                 maxWidth: '560px',
-                fontSize: '20px',
+                fontSize: '18px',
                 lineHeight: '27px',
-                letterSpacing: '0.5px',
-                fontWeight: 400,
               }}>
               {CAROUSEL_TESTIMONIALS[active].quote}
             </blockquote>
             <p
-              className='text-sm mb-10'
+              className='mb-8 sm:mb-10'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#C6C6C6',
-                fontWeight: 400,
-                fontSize: '20px',
-                lineHeight: '27px',
-                letterSpacing: '0.5px',
+                fontSize: '17px',
               }}>
               {CAROUSEL_TESTIMONIALS[active].attribution}
             </p>
@@ -1638,7 +1544,7 @@ function VoicesBanner() {
         </AnimatePresence>
 
         <div
-          className='flex justify-center gap-2.5 '
+          className='flex justify-center gap-2.5'
           role='tablist'
           aria-label='Testimonials'>
           {CAROUSEL_TESTIMONIALS.map((_, i) => (
@@ -1671,45 +1577,41 @@ function CommunityAndSocial() {
       id='community-social'
       aria-labelledby='social-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='py-20 px-4 mr-2 ml-2'>
-      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start'>
-        {/* Left */}
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
+      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start'>
         <RevealOnScroll>
           <div>
             <p
-              className='uppercase mb-4'
+              className='uppercase mb-3'
               style={{
                 fontFamily: 'Crimson Text',
                 color: '#547563',
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 600,
                 letterSpacing: '0.5px',
-                lineHeight: '24px',
               }}>
               Community &amp; Social
             </p>
             <h2
               id='social-heading'
-              className='font-heading mb-5'
+              className='font-heading mb-4 sm:mb-5'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#1D2825',
-                fontSize: '54px',
+                fontSize: 'clamp(32px, 7vw, 54px)',
                 fontWeight: 600,
-                lineHeight: '56px',
-                letterSpacing: '0.5px',
+                lineHeight: '1.15',
               }}>
               The conversation is
               <br />
               already happening.
             </h2>
             <p
-              className='leading-relaxed mb-8'
+              className='leading-relaxed mb-6 sm:mb-8'
               style={{
                 color: '#5D665B',
                 maxWidth: '650px',
-                fontSize: '20px',
-                letterSpacing: '0.5px',
+                fontSize: '17px',
                 lineHeight: '27px',
               }}>
               Follow along, share your story, or just lurk quietly, that's okay
@@ -1719,16 +1621,14 @@ function CommunityAndSocial() {
               {SOCIAL_PLATFORMS.map(({ label, icon }) => (
                 <motion.button
                   key={label}
-                  className='inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-medium focus:outline-none'
+                  className='inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium focus:outline-none'
                   style={{
                     borderColor: '#E2DAC8',
                     color: '#1D2825',
                     backgroundColor: '#F9F4E3',
                     fontFamily: 'Crimson Pro',
                     fontWeight: 500,
-                    fontSize: '18px',
-                    lineHeight: '28px',
-                    letterSpacing: '0%',
+                    fontSize: '15px',
                   }}
                   whileHover={{ scale: 1.05, backgroundColor: '#E8F5EE' }}
                   whileTap={{ scale: 0.97 }}
@@ -1741,7 +1641,6 @@ function CommunityAndSocial() {
           </div>
         </RevealOnScroll>
 
-        {/* Right — stacked social post cards */}
         <div className='flex flex-col gap-3'>
           {SOCIAL_POSTS.map(({ platform, text, count }, i) => (
             <RevealOnScroll key={i} delay={i * 0.1}>
@@ -1759,31 +1658,21 @@ function CommunityAndSocial() {
                   />
                   <div>
                     <p
-                      className='text-xs font-bold leading-tight'
+                      className='font-bold leading-tight'
                       style={{
                         color: '#1D2825',
-                        fontSize: '18px',
-                        fontWeight: 400,
+                        fontSize: '16px',
                         fontFamily: 'Crimson Pro',
-                        lineHeight: '28px',
-                        letterSpacing: '0%',
                       }}>
                       @mindfullyaware
                     </p>
-                    <p
-                      className='text-[16px]'
-                      style={{
-                        color: '#1D2825',
-                        lineHeight: '28px',
-                        letterSpacing: '0%',
-                        fontWeight: 400,
-                      }}>
+                    <p style={{ color: '#1D2825', fontSize: '14px' }}>
                       {platform}
                     </p>
                   </div>
                 </div>
                 <p
-                  className='text-xs leading-relaxed mb-3'
+                  className='text-sm leading-relaxed mb-3'
                   style={{ color: '#1B3A2D' }}>
                   {text}
                 </p>
@@ -1828,7 +1717,7 @@ function SignUpForm({ endpointId, tabLabel }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className='text-center py-12 px-8'>
+        className='text-center py-10 px-6'>
         <div
           className='w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4'
           style={{ backgroundColor: '#EFF7F2' }}>
@@ -2071,18 +1960,17 @@ function GetInvolvedSection() {
       id='get-involved'
       aria-labelledby='involved-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className='py-20 px-4 mr-2 ml-2'>
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
-          <div className='mb-10'>
+          <div className='mb-8 sm:mb-10'>
             <p
-              className='uppercase mb-4'
+              className='uppercase mb-3'
               style={{
                 fontFamily: 'Crimson Text',
                 color: '#547563',
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 600,
-                lineHeight: '24px',
                 letterSpacing: '0.5px',
               }}>
               Get Involved
@@ -2092,10 +1980,9 @@ function GetInvolvedSection() {
               className='font-heading mb-3'
               style={{
                 fontFamily: 'Crimson Pro',
-                fontWeight: '600',
-                fontSize: '54px',
-                lineHeight: '56px',
-                letterSpacing: '0.5px',
+                fontWeight: 600,
+                fontSize: 'clamp(32px, 7vw, 54px)',
+                lineHeight: '1.15',
                 color: '#1D2825',
               }}>
               Build this with us
@@ -2103,22 +1990,19 @@ function GetInvolvedSection() {
             <p
               style={{
                 color: '#5D665B',
-                fontSize: '20px',
+                fontSize: '17px',
                 lineHeight: '27px',
-                letterSpacing: '0.5px',
-                fontWeight: 400,
               }}>
               We grow stronger with every voice, hand and partnership.
             </p>
           </div>
         </RevealOnScroll>
 
-        {/* 5-card horizontal grid */}
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10'>
+        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8 sm:mb-10'>
           {INVOLVE_CARDS.map(({ title, body, icon }, index) => (
             <RevealOnScroll key={title} delay={index * 0.1}>
               <motion.article
-                className='bg-white rounded-xl p-4 border'
+                className='bg-white rounded-xl p-4 border h-full'
                 style={{ borderColor: '#E2DAC8' }}
                 whileHover={{
                   y: -4,
@@ -2136,10 +2020,8 @@ function GetInvolvedSection() {
                   style={{
                     fontFamily: 'Crimson Pro',
                     color: '#1D2825',
-                    fontSize: '20px',
+                    fontSize: '17px',
                     fontWeight: 600,
-                    lineHeight: '24px',
-                    letterSpacing: '0.5px',
                   }}>
                   {title}
                 </h3>
@@ -2148,9 +2030,8 @@ function GetInvolvedSection() {
                   style={{
                     fontFamily: 'Crimson Pro',
                     color: '#5D665B',
-                    fontSize: '18px',
-                    lineHeight: '27px',
-                    letterSpacing: '0.5px',
+                    fontSize: '14px',
+                    lineHeight: '22px',
                   }}>
                   {body}
                 </p>
@@ -2159,17 +2040,15 @@ function GetInvolvedSection() {
           ))}
         </div>
 
-        {/* Tabbed form */}
         <RevealOnScroll delay={0.2}>
           <div
-            className='bg-white rounded-2xl border p-8'
+            className='bg-white rounded-2xl border p-5 sm:p-8'
             style={{
               borderColor: '#E2DAC8',
               maxWidth: '942px',
-              height: 'auto',
               margin: '0 auto',
             }}>
-            <div className='flex flex-wrap gap-2 mb-7'>
+            <div className='flex flex-wrap gap-2 mb-6 sm:mb-7'>
               {FORM_TABS.map((tab) => (
                 <button
                   key={tab.key}
@@ -2203,7 +2082,7 @@ function GetInvolvedSection() {
 /* ═══════════════════════════════════════════════════════════════════════════
    SECTION: SUPPORT OUR MISSION
    ═══════════════════════════════════════════════════════════════════════════ */
-import { CiCircleCheck } from 'react-icons/ci';
+
 const PAYSTACK_PUBLIC_KEY = 'pk_test_57fb9ad42a73e764aed9dc3e155572681819f3d8';
 const NONPROFIT_EMAIL = 'hello@mindfullyaware.org';
 
@@ -2223,7 +2102,6 @@ function DonationWidget() {
   const [success, setSuccess] = useState(false);
   const [emailError, setEmailError] = useState('');
 
-  // Amount in kobo (Paystack uses smallest currency unit)
   const amountInKobo =
     showCustom && customAmount
       ? Math.round(parseFloat(customAmount) * 100)
@@ -2325,13 +2203,12 @@ function DonationWidget() {
 
   return (
     <div
-      className='p-7'
+      className='p-6 sm:p-7'
       style={{
         backgroundColor: 'white',
         borderRadius: '16px',
         boxShadow: '0 8px 32px rgba(27,58,45,0.12)',
       }}>
-      {/* Amount label */}
       <p
         className='font-semibold mb-4'
         style={{
@@ -2342,7 +2219,6 @@ function DonationWidget() {
         Choose an amount
       </p>
 
-      {/* Preset amount pills */}
       <div className='grid grid-cols-4 gap-2 mb-3'>
         {PRESET_AMOUNTS.map(({ label, value }) => (
           <motion.button
@@ -2366,7 +2242,6 @@ function DonationWidget() {
         ))}
       </div>
 
-      {/* Custom amount toggle */}
       <motion.button
         whileHover={{ scale: 1.01 }}
         onClick={() => {
@@ -2383,7 +2258,6 @@ function DonationWidget() {
         Other Amount (USD)
       </motion.button>
 
-      {/* Custom amount input */}
       {showCustom && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -2410,7 +2284,6 @@ function DonationWidget() {
         </motion.div>
       )}
 
-      {/* Donor name */}
       <div className='mb-3'>
         <input
           type='text'
@@ -2431,7 +2304,6 @@ function DonationWidget() {
         />
       </div>
 
-      {/* Donor email — required for Paystack */}
       <div className='mb-5'>
         <input
           type='email'
@@ -2460,7 +2332,6 @@ function DonationWidget() {
         )}
       </div>
 
-      {/* Donate button */}
       <motion.button
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.97 }}
@@ -2479,29 +2350,6 @@ function DonationWidget() {
         </svg>
         Donate Now
       </motion.button>
-
-      {/* Trust badges */}
-      <div className='mt-5 space-y-2'>
-        {[
-          'Registered nonprofit — your gift is purpose-driven',
-          '100% of donations go to programs & community',
-          'Secured by Paystack — bank-level encryption',
-        ].map((item) => (
-          <div key={item} className='flex items-center gap-2'>
-            {/* <svg
-              width='14'
-              height='14'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='#2D7A5F'
-              strokeWidth='2.5'
-              strokeLinecap='round'>
-              <path d='M20 6L9 17l-5-5' />
-            </svg> */}
-            {/* <span style={{ fontSize: '12px', color: '#5A7068' }}>{item}</span> */}
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
@@ -2512,67 +2360,59 @@ function DonateMission() {
       id='donate'
       aria-labelledby='donate-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className='py-20 px-4 '>
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
           <div className='relative'>
-            {/* Dark gradient card */}
             <div
-              className='rounded-2xl p-10 lg:p-14'
+              className='rounded-2xl p-6 sm:p-10 lg:p-14'
               style={{
                 background: `conic-gradient(
-      from -2.7deg at 100% 40.08%,
-      #547563 -5.69deg,
-      #F6ED85 17.09deg,
-      #547563 304.92deg,
-      #547563 354.31deg,
-      #F6ED85 377.09deg
-    )`,
+                  from -2.7deg at 100% 40.08%,
+                  #547563 -5.69deg,
+                  #F6ED85 17.09deg,
+                  #547563 304.92deg,
+                  #547563 354.31deg,
+                  #F6ED85 377.09deg
+                )`,
               }}>
               <div className='lg:max-w-[57%]'>
                 <p
-                  className='uppercase mb-5'
+                  className='uppercase mb-4 sm:mb-5'
                   style={{
                     fontFamily: 'Crimson Text',
                     color: '#F6ED85',
-                    fontSize: '18px',
+                    fontSize: '16px',
                     fontWeight: 600,
                     letterSpacing: '0.5px',
-                    lineHeight: '24px',
                   }}>
                   Support our mission
                 </p>
                 <h2
                   id='donate-heading'
-                  className='font-heading text-white leading-[1.1] mb-6 h2'
+                  className='font-heading text-white leading-[1.1] mb-5 sm:mb-6'
                   style={{
-                    fontSize: '48px',
+                    fontSize: 'clamp(28px, 6vw, 48px)',
                     fontWeight: 600,
                     color: '#FFFFFF',
                     fontFamily: 'Crimson Pro',
-                    lineHeight: '56px',
-                    letterSpacing: '0.5',
+                    lineHeight: '1.15',
                   }}>
-                  Help us create safer <br /> mental health <br />
-                  support systems for <br /> under served
-                  <br /> communities.
+                  Help us create safer mental health support systems for
+                  underserved communities.
                 </h2>
                 <p
-                  className='leading-relaxed mb-8 '
+                  className='leading-relaxed mb-6 sm:mb-8'
                   style={{
                     color: '#DCE4E1',
-                    fontSize: '18px',
+                    fontSize: '16px',
                     fontFamily: 'Crimson Text',
-                    fontWeight: 400,
                     lineHeight: '27px',
-                    letterSpacing: '1.1px',
-                    MaxWidth: '300px',
-            
                   }}>
-                  Every contribution funds peer-support circles,   awareness 
-                  campaigns, mental health resources, and the long road toward 
-                  affordable professional care. We publish how every naira and 
-                  dollar is used, transparency is part of the trust.
+                  Every contribution funds peer-support circles, awareness
+                  campaigns, mental health resources, and the long road toward
+                  affordable professional care. We publish how every naira and
+                  dollar is used — transparency is part of the trust.
                 </p>
                 <ul className='space-y-3'>
                   {[
@@ -2580,19 +2420,21 @@ function DonateMission() {
                     '100% of donations go to programs & community',
                     'Quarterly impact reports shared publicly',
                   ].map((item) => (
-                    <li key={item} className='flex items-start gap-2.5 '>
+                    <li key={item} className='flex items-start gap-2.5'>
                       <CiCircleCheck
-                        style={{ color: '#F6ED85', marginTop: '7px' }}
+                        style={{
+                          color: '#F6ED85',
+                          marginTop: '4px',
+                          flexShrink: 0,
+                        }}
                       />
                       <span
                         className='text-sm'
                         style={{
                           color: '#DCE4E1',
                           fontFamily: 'Crimson Pro',
-                          fontWeight: 400,
-                          fontSize: '18px',
-                          lineHeight: '28px',
-                          letterSpacing: '0%',
+                          fontSize: '16px',
+                          lineHeight: '24px',
                         }}>
                         {item}
                       </span>
@@ -2602,8 +2444,7 @@ function DonateMission() {
               </div>
             </div>
 
-            {/* Floating donate widget */}
-            <div className='w-full mt-6 lg:mt-0 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:right-10 lg:w-80'>
+            <div className='w-full mt-8 lg:mt-0 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:right-8 lg:w-80'>
               <DonationWidget />
             </div>
           </div>
@@ -2623,20 +2464,19 @@ function BlogResources() {
       id='blog'
       aria-labelledby='blog-heading'
       style={{ backgroundColor: '#F9F4E3' }}
-      className='py-20 px-4 mr-2 ml-2'>
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
       <div className='max-w-7xl mx-auto'>
         <RevealOnScroll>
-          <div className='flex items-end justify-between flex-wrap gap-4 mb-12'>
+          <div className='flex items-end justify-between flex-wrap gap-4 mb-10 sm:mb-12'>
             <div>
               <p
-                className='uppercase mb-4'
+                className='uppercase mb-3'
                 style={{
                   fontFamily: 'Crimson Text',
                   color: '#547563',
-                  fontSize: '18px',
+                  fontSize: '16px',
                   fontWeight: 600,
                   letterSpacing: '0.5px',
-                  lineHeight: '24px',
                 }}>
                 Blog &amp; Resources
               </p>
@@ -2646,10 +2486,9 @@ function BlogResources() {
                 style={{
                   fontFamily: 'Crimson Pro',
                   color: '#1D2825',
-                  fontSize: '54px',
+                  fontSize: 'clamp(32px, 7vw, 54px)',
                   fontWeight: 600,
-                  lineHeight: '56px',
-                  letterSpacing: '0.5px',
+                  lineHeight: '1.15',
                 }}>
                 Read, breathe, share.
               </h2>
@@ -2664,7 +2503,7 @@ function BlogResources() {
           </div>
         </RevealOnScroll>
 
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6'>
           {BLOG_POSTS.map(({ category, title, readTime }, index) => (
             <RevealOnScroll key={title} delay={index * 0.1}>
               <motion.article
@@ -2678,33 +2517,17 @@ function BlogResources() {
                 <div
                   className='aspect-video overflow-hidden'
                   style={{
-                    background: `
-    linear-gradient(
-      135deg,
-      #f9f4e3 0%,
-      #e2decf 50%,
-      #f9f4e3 100%
-    )
-  `,
-
-                    // Shadow coming from the top-right
-                    boxShadow: `
-    -6px 9px 4.5px rgba(249, 244, 227, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.45)
-  `,
-
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                  }}></div>
+                    background: `linear-gradient(135deg, #f9f4e3 0%, #e2decf 50%, #f9f4e3 100%)`,
+                    boxShadow: `-6px 9px 4.5px rgba(249, 244, 227, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.45)`,
+                  }}
+                />
                 <div className='p-5' style={{ backgroundColor: '#FFFDF9' }}>
                   <p
-                    className='text-[10px] font-bold uppercase tracking-widest mb-3'
+                    className='font-bold uppercase tracking-widest mb-3'
                     style={{
                       fontFamily: 'Crimson Pro',
                       fontWeight: 300,
-                      fontSize: '18px',
-                      lineHeight: '100%',
-                      letterSpacing: '0.1%',
+                      fontSize: '15px',
                       color: '#4D635C',
                     }}>
                     {category}
@@ -2714,10 +2537,8 @@ function BlogResources() {
                     style={{
                       fontFamily: 'Crimson Pro',
                       color: '#1D2825',
-                      fontSize: '18px',
+                      fontSize: '17px',
                       fontWeight: 500,
-                      lineHeight: '100%',
-                      letterSpacing: '0.1%',
                     }}>
                     {title}
                   </h3>
@@ -2726,10 +2547,7 @@ function BlogResources() {
                     style={{
                       color: '#7B8682',
                       fontFamily: 'Crimson Pro',
-                      fontWeight: '400',
-                      fontSize: '16px',
-                      lineHeight: '100%',
-                      letterSpacing: '0.1%',
+                      fontSize: '14px',
                     }}>
                     {readTime}
                   </p>
@@ -2780,67 +2598,58 @@ function ContactSection() {
       id='contact'
       aria-labelledby='contact-heading'
       style={{ backgroundColor: '#FEFAF1' }}
-      className='py-20 px-4 mr-2 ml-2'>
-      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start'>
-        {/* Left info column */}
+      className='py-14 sm:py-16 md:py-20 px-5 sm:px-6 md:px-8'>
+      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start'>
         <RevealOnScroll>
           <div>
             <p
-              className='uppercase mb-4'
+              className='uppercase mb-3'
               style={{
                 fontFamily: 'Crimson Text',
                 color: '#547563',
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 600,
                 letterSpacing: '0.5px',
-                lineHeight: '24px',
               }}>
               Contact
             </p>
             <h2
               id='contact-heading'
-              className='font-heading leading-[1.1] mb-5'
+              className='font-heading leading-[1.1] mb-4 sm:mb-5'
               style={{
                 fontFamily: 'Crimson Pro',
                 color: '#1D2825',
-                fontSize: '54px',
+                fontSize: 'clamp(32px, 7vw, 54px)',
                 fontWeight: 600,
-                lineHeight: '56px',
-                letterSpacing: '0.5px',
+                lineHeight: '1.15',
               }}>
               Please reach out, we read every message.
             </h2>
             <p
-              className='leading-relaxed mb-8'
+              className='leading-relaxed mb-6 sm:mb-8'
               style={{
                 color: '#5D665B',
                 maxWidth: '560px',
-                fontSize: '20px',
+                fontSize: '17px',
                 lineHeight: '27px',
-                letterSpacing: '0.5px',
-                fontWeight: 400,
               }}>
               Whether it's a question, an idea, or just hello, we're glad you're
               here.
             </p>
 
             <a
-              href='mailto:minddfulafrica@gmail.com
-'
-              className='inline-flex items-center gap-2.5 text-sm font-medium mb-8 hover:opacity-70 transition-opacity'
+              href='mailto:minddfulafrica@gmail.com'
+              className='inline-flex items-center gap-2.5 text-sm font-medium mb-6 sm:mb-8 hover:opacity-70 transition-opacity'
               style={{
                 color: '#5D665B',
-                fontFamily: 'Inria Serif',
-                fontWeight: '400',
-                fontSize: '18px',
-                lineHeight: '27px',
-                letterSpacing: '0.5px',
+                fontFamily: 'Inria Serif, serif',
+                fontSize: '16px',
               }}>
               <IcoEnvelope size={16} />
               minddfulafrica@gmail.com
             </a>
 
-            <div className='flex gap-2 mb-10'>
+            <div className='flex gap-2 mb-8 sm:mb-10'>
               {SOCIAL_PLATFORMS.map(({ label, icon }) => (
                 <button
                   key={label}
@@ -2852,19 +2661,15 @@ function ContactSection() {
               ))}
             </div>
 
-            {/* Newsletter card */}
             <div
               className='rounded-xl border p-5'
-              style={{ backgroundColor: '##F9F4E3', borderColor: '#D5D1C3' }}>
+              style={{ backgroundColor: '#F9F4E3', borderColor: '#D5D1C3' }}>
               <p
                 className='font-bold text-sm mb-1'
                 style={{
                   fontFamily: 'Crimson Pro',
                   color: '#1D2825',
-                  fontWeight: 500,
-                  fontSize: '18px',
-                  lineHeight: '27px',
-                  letterSpacing: '0.5px',
+                  fontSize: '17px',
                 }}>
                 Stay in the loop
               </p>
@@ -2872,10 +2677,8 @@ function ContactSection() {
                 className='text-xs leading-relaxed mb-4'
                 style={{
                   fontFamily: 'Crimson Pro',
-                  fontWeight: 400,
-                  fontSize: '16px',
-                  lineHeight: '27px',
-                  letterSpacing: '0.5px',
+                  fontSize: '14px',
+                  lineHeight: '22px',
                 }}>
                 Quiet, monthly notes. No noise, just stories and updates.
               </p>
@@ -2905,12 +2708,8 @@ function ContactSection() {
                     className='inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold text-white shrink-0 transition-opacity hover:opacity-85 focus:outline-none'
                     style={{
                       backgroundColor: '#547563',
-                      color: '#FFFFFF',
                       fontFamily: 'Crimson Pro',
-                      size: '18px',
-                      lineHeight: '27px',
-                      letterSpacing: '0.5px',
-                      fontWeight: 500,
+                      fontSize: '14px',
                     }}>
                     <IcoSend size={12} />
                     Subscribe
@@ -2921,10 +2720,9 @@ function ContactSection() {
           </div>
         </RevealOnScroll>
 
-        {/* Right — contact form card */}
         <RevealOnScroll delay={0.15}>
           <div
-            className='bg-[#FFFDF9] rounded-2xl border p-8'
+            className='bg-[#FFFDF9] rounded-2xl border p-6 sm:p-8'
             style={{ borderColor: '#D5D1C3' }}>
             {submitted ? (
               <div className='py-10 text-center'>
@@ -2945,10 +2743,7 @@ function ContactSection() {
                   style={{
                     color: '#547563',
                     fontFamily: 'Crimson Pro',
-                    fontWeight: 500,
-                    fontSize: '18px',
-                    lineHeight: '27px',
-                    letterSpacing: '0.5px',
+                    fontSize: '15px',
                   }}>
                   Send another message
                 </button>
@@ -2962,10 +2757,7 @@ function ContactSection() {
                     style={{
                       fontFamily: 'Crimson Pro',
                       color: '#000000',
-                      fontWeight: 500,
-                      fontSize: '18px',
-                      lineHeight: '27px',
-                      letterSpacing: '0.5px',
+                      fontSize: '16px',
                     }}>
                     Full Name
                   </label>
@@ -2987,10 +2779,7 @@ function ContactSection() {
                     style={{
                       fontFamily: 'Crimson Pro',
                       color: '#000000',
-                      fontWeight: 500,
-                      fontSize: '18px',
-                      lineHeight: '27px',
-                      letterSpacing: '0.5px',
+                      fontSize: '16px',
                     }}>
                     Email
                   </label>
@@ -3012,10 +2801,7 @@ function ContactSection() {
                     style={{
                       fontFamily: 'Crimson Pro',
                       color: '#000000',
-                      fontWeight: 500,
-                      fontSize: '18px',
-                      lineHeight: '27px',
-                      letterSpacing: '0.5px',
+                      fontSize: '16px',
                     }}>
                     Message
                   </label>
@@ -3036,10 +2822,7 @@ function ContactSection() {
                   style={{
                     backgroundColor: '#547563',
                     fontFamily: 'Crimson Pro',
-                    fontWeight: 500,
-                    lineHeight: '27px',
-                    fontSize: '18px',
-                    letterSpacing: '0.5px',
+                    fontSize: '16px',
                     color: '#FFFFFF',
                   }}
                   whileHover={{ scale: 1.04 }}
@@ -3063,7 +2846,7 @@ function ContactSection() {
 export default function HomePage() {
   return (
     <>
-      <main className='mr-2 ml-2'>
+      <main>
         <Hero />
         <StatsBar />
         <OurStory />
